@@ -29,6 +29,10 @@ const translations = {
     tour5_desc:"От уютных гестхаусов до курортов уровня Sheraton и Nova Maldives — подберём вариант под ваш бюджет.",
     tour6_name:"Азербайджан: Баку + Нафталан", tour6_duration:"по выбору", tour6_price:"от $761",
     tour6_desc:"Современный Баку и лечебный курорт Нафталан — отдых и оздоровление в одном путешествии.",
+    tour7_name:"Узбекистан: Самарканд", tour7_duration:"2 ночи / 3 дня", tour7_price:"от $135",
+    tour7_desc:"Регистан на закате, архитектура Тимуридов и мастерская керамики в Гиждуване — короткая поездка вглубь Шёлкового пути.",
+    tour8_name:"Узбекистан: Хива", tour8_duration:"3 ночи / 4 дня", tour8_price:"от $165",
+    tour8_desc:"Ичан-Кала целиком — минареты, медресе и крепостные стены древнего города-оазиса в пустыне Кызылкум.",
     tours_cta:"Забронировать",
     tours_note_text:"Цены и даты действительны на момент публикации и могут измениться — уточняйте у менеджера при бронировании.",
     tours_note_link1:"Смотреть все туры →", tours_note_link2:"Написать менеджеру →",
@@ -104,6 +108,10 @@ const translations = {
     tour5_desc:"Qulay gesthauslardan Sheraton va Nova Maldives darajasidagi kurortlargacha — byudjetingizga mos variant tanlaymiz.",
     tour6_name:"Ozarbayjon: Boku + Naftalan", tour6_duration:"moslashuvchan", tour6_price:"$761 dan",
     tour6_desc:"Zamonaviy Boku va shifobaxsh Naftalan kurorti — bitta safarda dam olish va sog'lomlashtirish.",
+    tour7_name:"O'zbekiston: Samarqand", tour7_duration:"2 tun / 3 kun", tour7_price:"$135 dan",
+    tour7_desc:"Quyosh botishida Registon, Temuriylar me'morchiligi va Gijduvondagi kulolchilik ustaxonasi — Ipak yo'li bo'ylab qisqa safar.",
+    tour8_name:"O'zbekiston: Xiva", tour8_duration:"3 tun / 4 kun", tour8_price:"$165 dan",
+    tour8_desc:"Ichan-Qal'a to'liq — qadimiy voha shahrining minoralari, madrasalari va qal'a devorlari Qizilqum cho'lida.",
     tours_cta:"Bron qilish",
     tours_note_text:"Narxlar va sanalar e'lon qilingan vaqtga tegishli va o'zgarishi mumkin — bron qilishda menejerdan aniqlashtiring.",
     tours_note_link1:"Barcha turlarni ko'rish →", tours_note_link2:"Menejerga yozish →",
@@ -179,6 +187,10 @@ const translations = {
     tour5_desc:"From cozy guesthouses to resorts like Sheraton and Nova Maldives — we'll match a stay to your budget.",
     tour6_name:"Azerbaijan: Baku + Naftalan", tour6_duration:"flexible", tour6_price:"from $761",
     tour6_desc:"Modern Baku and the healing resort of Naftalan — relaxation and wellness in one trip.",
+    tour7_name:"Uzbekistan: Samarkand", tour7_duration:"2 nights / 3 days", tour7_price:"from $135",
+    tour7_desc:"Registan at sunset, Timurid architecture, and a ceramics workshop in Gijduvan — a short trip deep into the Silk Road.",
+    tour8_name:"Uzbekistan: Khiva", tour8_duration:"3 nights / 4 days", tour8_price:"from $165",
+    tour8_desc:"The whole of Ichan-Kala — minarets, madrasas, and fortress walls of an ancient oasis city in the Kyzylkum desert.",
     tours_cta:"Book now",
     tours_note_text:"Prices and dates are valid as of the publication date and may change — please confirm with a manager when booking.",
     tours_note_link1:"See all tours →", tours_note_link2:"Message a manager →",
@@ -392,7 +404,6 @@ document.querySelectorAll('[data-reveal]').forEach(el=> revealObserver.observe(e
 
 /* ============ AUTH OVERLAY (hard gate — no bypass) ============ */
 const authOverlay = document.getElementById('auth-overlay');
-const authNote = document.getElementById('auth-coming-note');
 const authStatus = document.getElementById('auth-status');
 function closeAuthOverlay(e){
   if(e) e.preventDefault();
@@ -444,90 +455,6 @@ async function afterAuthSuccess(name, contact, source){
   authStatus.classList.add('show');
   setTimeout(closeAuthOverlay, 850);
 }
-
-// --- Google Sign-In (Google Identity Services) ---
-// Get a free Client ID at https://console.cloud.google.com/apis/credentials
-const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
-function handleGoogleCredentialResponse(response){
-  let name = '', email = '';
-  try{
-    const base64 = response.credential.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
-    const payload = JSON.parse(atob(base64));
-    name = payload.name || ''; email = payload.email || '';
-  } catch(err){}
-  afterAuthSuccess(name, email, 'google');
-}
-window.addEventListener('load', function(){
-  if(window.google && google.accounts && google.accounts.id && !GOOGLE_CLIENT_ID.startsWith('YOUR_')){
-    google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleGoogleCredentialResponse });
-  }
-  // Sign in with Apple JS — needs a paid Apple Developer account (Services ID + registered redirect URI)
-  if(window.AppleID && !APPLE_CLIENT_ID.startsWith('YOUR_')){
-    AppleID.auth.init({ clientId: APPLE_CLIENT_ID, scope: 'name email', redirectURI: APPLE_REDIRECT_URI, usePopup: true });
-  }
-});
-
-// --- Telegram Login (manual widget API) ---
-// Get your bot_id (the number before the ":" in your bot token) from @BotFather,
-// and run /setdomain in @BotFather pointing to your live site's domain.
-const TELEGRAM_BOT_ID = 'YOUR_BOT_ID';
-function handleTelegramAuth(data){
-  if(!data) return;
-  const name = [data.first_name, data.last_name].filter(Boolean).join(' ');
-  afterAuthSuccess(name, data.username ? '@'+data.username : String(data.id), 'telegram');
-}
-
-// --- Sign in with Apple JS ---
-// Requires a paid Apple Developer account: a Services ID (used as clientId, e.g. "com.viamortour.web")
-// with "Sign In with Apple" enabled, and your live site's exact HTTPS URL registered as the redirect URI.
-const APPLE_CLIENT_ID = 'YOUR_APPLE_SERVICES_ID';
-const APPLE_REDIRECT_URI = 'https://YOUR_DOMAIN/';
-async function handleAppleAuth(){
-  try{
-    const res = await AppleID.auth.signIn();
-    let name = '', email = '';
-    if(res.user){
-      const n = res.user.name || {};
-      name = [n.firstName, n.lastName].filter(Boolean).join(' ');
-      email = res.user.email || '';
-    }
-    let sub = '';
-    if(res.authorization && res.authorization.id_token){
-      try{
-        const base64 = res.authorization.id_token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
-        const payload = JSON.parse(atob(base64));
-        email = email || payload.email || '';
-        sub = payload.sub || '';
-      } catch(e){}
-    }
-    afterAuthSuccess(name, email || sub, 'apple');
-  } catch(err){
-    // user cancelled the Apple popup — do nothing
-  }
-}
-
-// --- Wire up each provider button ---
-document.querySelector('.auth-btn[data-provider="google"]').addEventListener('click', ()=>{
-  if(window.google && google.accounts && google.accounts.id && !GOOGLE_CLIENT_ID.startsWith('YOUR_')){
-    google.accounts.id.prompt();
-  } else {
-    authNote.classList.add('show');
-  }
-});
-document.querySelector('.auth-btn[data-provider="telegram"]').addEventListener('click', ()=>{
-  if(window.Telegram && Telegram.Login && !TELEGRAM_BOT_ID.startsWith('YOUR_')){
-    Telegram.Login.auth({ bot_id: TELEGRAM_BOT_ID, request_access: true }, handleTelegramAuth);
-  } else {
-    authNote.classList.add('show');
-  }
-});
-document.querySelector('.auth-btn[data-provider="apple"]').addEventListener('click', ()=>{
-  if(window.AppleID && !APPLE_CLIENT_ID.startsWith('YOUR_')){
-    handleAppleAuth();
-  } else {
-    authNote.classList.add('show');
-  }
-});
 
 // --- Basic sanity checks for the manual ФИО+phone form (blocks obvious junk input) ---
 function isValidPhone(phone){
