@@ -179,7 +179,14 @@
 
     <div class="live-badge"><span class="live-dot"></span><span data-i18n="tours_live_badge">ОБНОВЛЯЕМ ЕЖЕДНЕВНО</span><span class="live-date mono" id="live-date"></span></div>
 
-    <div class="tours-grid">
+    <div class="tours-carousel">
+    <button class="carousel-arrow prev" id="tours-prev" aria-label="Previous">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="carousel-arrow next" id="tours-next" aria-label="Next">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+    <div class="tours-grid" id="tours-grid">
       <!-- Tour 1: Georgia -->
       <div class="ticket" id="tour-georgia" data-reveal>
         <div class="ticket-stub"><span class="mono">TAS–BUS–TBS</span></div>
@@ -269,36 +276,7 @@
           <a href="https://t.me/Masturabilen" target="_blank" rel="noopener" class="ticket-cta" data-i18n="tours_cta">Забронировать</a>
         </div>
       </div>
-
-      <!-- Tour 7: Samarkand -->
-      <div class="ticket" id="tour-samarkand" data-reveal>
-        <div class="ticket-stub"><span class="mono">TAS–SKD</span></div>
-        <div class="ticket-body">
-          <svg class="ticket-icon" viewBox="0 0 40 40" fill="none" stroke="var(--gold)" stroke-width="1.6"><path d="M20 4l4 12h13l-10.5 7.6L30.5 36 20 28.3 9.5 36l4-12.4L3 16h13z"/></svg>
-          <h3 data-i18n="tour7_name">Узбекистан: Самарканд</h3>
-          <p class="desc" data-i18n="tour7_desc">Регистан на закате, архитектура Тимуридов и мастерская керамики в Гиждуване — короткая поездка вглубь Шёлкового пути.</p>
-          <div class="ticket-meta">
-            <span class="duration mono" data-i18n="tour7_duration">2 ночи / 3 дня</span>
-            <span class="price" data-i18n="tour7_price">от $135</span>
-          </div>
-          <a href="https://t.me/Masturabilen" target="_blank" rel="noopener" class="ticket-cta" data-i18n="tours_cta">Забронировать</a>
-        </div>
-      </div>
-
-      <!-- Tour 8: Khiva -->
-      <div class="ticket" id="tour-khiva" data-reveal>
-        <div class="ticket-stub"><span class="mono">TAS–UGC</span></div>
-        <div class="ticket-body">
-          <svg class="ticket-icon" viewBox="0 0 40 40" fill="none" stroke="var(--clay)" stroke-width="1.6"><path d="M6 34h28M9 34V18l11-11 11 11v16M20 7v4M15 34V22h10v12"/></svg>
-          <h3 data-i18n="tour8_name">Узбекистан: Хива</h3>
-          <p class="desc" data-i18n="tour8_desc">Ичан-Кала целиком — минареты, медресе и крепостные стены древнего города-оазиса в пустыне Кызылкум.</p>
-          <div class="ticket-meta">
-            <span class="duration mono" data-i18n="tour8_duration">3 ночи / 4 дня</span>
-            <span class="price" data-i18n="tour8_price">от $165</span>
-          </div>
-          <a href="https://t.me/Masturabilen" target="_blank" rel="noopener" class="ticket-cta" data-i18n="tours_cta">Забронировать</a>
-        </div>
-      </div>
+    </div>
     </div>
 
     <div class="tours-note" data-reveal>

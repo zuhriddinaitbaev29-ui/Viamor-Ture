@@ -29,10 +29,6 @@ const translations = {
     tour5_desc:"От уютных гестхаусов до курортов уровня Sheraton и Nova Maldives — подберём вариант под ваш бюджет.",
     tour6_name:"Азербайджан: Баку + Нафталан", tour6_duration:"по выбору", tour6_price:"от $761",
     tour6_desc:"Современный Баку и лечебный курорт Нафталан — отдых и оздоровление в одном путешествии.",
-    tour7_name:"Узбекистан: Самарканд", tour7_duration:"2 ночи / 3 дня", tour7_price:"от $135",
-    tour7_desc:"Регистан на закате, архитектура Тимуридов и мастерская керамики в Гиждуване — короткая поездка вглубь Шёлкового пути.",
-    tour8_name:"Узбекистан: Хива", tour8_duration:"3 ночи / 4 дня", tour8_price:"от $165",
-    tour8_desc:"Ичан-Кала целиком — минареты, медресе и крепостные стены древнего города-оазиса в пустыне Кызылкум.",
     tours_cta:"Забронировать",
     tours_note_text:"Цены и даты действительны на момент публикации и могут измениться — уточняйте у менеджера при бронировании.",
     tours_note_link1:"Смотреть все туры →", tours_note_link2:"Написать менеджеру →",
@@ -108,10 +104,6 @@ const translations = {
     tour5_desc:"Qulay gesthauslardan Sheraton va Nova Maldives darajasidagi kurortlargacha — byudjetingizga mos variant tanlaymiz.",
     tour6_name:"Ozarbayjon: Boku + Naftalan", tour6_duration:"moslashuvchan", tour6_price:"$761 dan",
     tour6_desc:"Zamonaviy Boku va shifobaxsh Naftalan kurorti — bitta safarda dam olish va sog'lomlashtirish.",
-    tour7_name:"O'zbekiston: Samarqand", tour7_duration:"2 tun / 3 kun", tour7_price:"$135 dan",
-    tour7_desc:"Quyosh botishida Registon, Temuriylar me'morchiligi va Gijduvondagi kulolchilik ustaxonasi — Ipak yo'li bo'ylab qisqa safar.",
-    tour8_name:"O'zbekiston: Xiva", tour8_duration:"3 tun / 4 kun", tour8_price:"$165 dan",
-    tour8_desc:"Ichan-Qal'a to'liq — qadimiy voha shahrining minoralari, madrasalari va qal'a devorlari Qizilqum cho'lida.",
     tours_cta:"Bron qilish",
     tours_note_text:"Narxlar va sanalar e'lon qilingan vaqtga tegishli va o'zgarishi mumkin — bron qilishda menejerdan aniqlashtiring.",
     tours_note_link1:"Barcha turlarni ko'rish →", tours_note_link2:"Menejerga yozish →",
@@ -187,10 +179,6 @@ const translations = {
     tour5_desc:"From cozy guesthouses to resorts like Sheraton and Nova Maldives — we'll match a stay to your budget.",
     tour6_name:"Azerbaijan: Baku + Naftalan", tour6_duration:"flexible", tour6_price:"from $761",
     tour6_desc:"Modern Baku and the healing resort of Naftalan — relaxation and wellness in one trip.",
-    tour7_name:"Uzbekistan: Samarkand", tour7_duration:"2 nights / 3 days", tour7_price:"from $135",
-    tour7_desc:"Registan at sunset, Timurid architecture, and a ceramics workshop in Gijduvan — a short trip deep into the Silk Road.",
-    tour8_name:"Uzbekistan: Khiva", tour8_duration:"3 nights / 4 days", tour8_price:"from $165",
-    tour8_desc:"The whole of Ichan-Kala — minarets, madrasas, and fortress walls of an ancient oasis city in the Kyzylkum desert.",
     tours_cta:"Book now",
     tours_note_text:"Prices and dates are valid as of the publication date and may change — please confirm with a manager when booking.",
     tours_note_link1:"See all tours →", tours_note_link2:"Message a manager →",
@@ -382,6 +370,29 @@ document.getElementById('dest-detail-cta').addEventListener('click', function(e)
     }
   }
 });
+
+/* ============ TOURS CAROUSEL ============ */
+const toursGrid = document.getElementById('tours-grid');
+const toursPrev = document.getElementById('tours-prev');
+const toursNext = document.getElementById('tours-next');
+function scrollToursBy(dir){
+  const card = toursGrid.querySelector('.ticket');
+  if(!card) return;
+  const step = card.getBoundingClientRect().width + 26; // card width + gap
+  toursGrid.scrollBy({ left: dir * step, behavior: 'smooth' });
+}
+function updateCarouselArrows(){
+  const max = toursGrid.scrollWidth - toursGrid.clientWidth - 4;
+  toursPrev.disabled = toursGrid.scrollLeft <= 4;
+  toursNext.disabled = toursGrid.scrollLeft >= max;
+}
+if(toursGrid && toursPrev && toursNext){
+  toursPrev.addEventListener('click', ()=> scrollToursBy(-1));
+  toursNext.addEventListener('click', ()=> scrollToursBy(1));
+  toursGrid.addEventListener('scroll', updateCarouselArrows);
+  window.addEventListener('resize', updateCarouselArrows);
+  updateCarouselArrows();
+}
 
 /* ============ LIVE DATE STAMP ============ */
 const liveDateEl = document.getElementById('live-date');
