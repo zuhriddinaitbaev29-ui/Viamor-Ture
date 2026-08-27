@@ -31,6 +31,9 @@ const translations = {
     tour6_desc:"Современный Баку и лечебный курорт Нафталан — отдых и оздоровление в одном путешествии.",
     tours_cta:"Забронировать",
     inc_flight:"Перелёт", inc_hotel:"Отель", inc_transfer:"Трансфер", inc_insurance:"Страховка",
+    filter_all_countries:"Все страны",
+    filter_budget_all:"Любой бюджет", filter_budget_1:"до $700", filter_budget_2:"$700–950", filter_budget_3:"от $950",
+    filter_empty:"Туров по этим критериям пока нет — напишите менеджеру, подберём индивидуально.",
     tours_note_text:"Цены и даты действительны на момент публикации и могут измениться — уточняйте у менеджера при бронировании.",
     tours_note_link1:"Смотреть все туры →", tours_note_link2:"Написать менеджеру →",
     how_eyebrow:"КАК ЭТО РАБОТАЕТ", how_title:"От заявки до посадки — 4 шага",
@@ -107,6 +110,9 @@ const translations = {
     tour6_desc:"Zamonaviy Boku va shifobaxsh Naftalan kurorti — bitta safarda dam olish va sog'lomlashtirish.",
     tours_cta:"Bron qilish",
     inc_flight:"Parvoz", inc_hotel:"Mehmonxona", inc_transfer:"Transfer", inc_insurance:"Sug'urta",
+    filter_all_countries:"Barcha davlatlar",
+    filter_budget_all:"Har qanday byudjet", filter_budget_1:"$700 gacha", filter_budget_2:"$700–950", filter_budget_3:"$950 dan",
+    filter_empty:"Bu mezonlar bo'yicha turlar hozircha yo'q — menejerga yozing, alohida tanlab beramiz.",
     tours_note_text:"Narxlar va sanalar e'lon qilingan vaqtga tegishli va o'zgarishi mumkin — bron qilishda menejerdan aniqlashtiring.",
     tours_note_link1:"Barcha turlarni ko'rish →", tours_note_link2:"Menejerga yozish →",
     how_eyebrow:"BU QANDAY ISHLAYDI", how_title:"Arizadan parvozgacha — 4 qadam",
@@ -183,6 +189,9 @@ const translations = {
     tour6_desc:"Modern Baku and the healing resort of Naftalan — relaxation and wellness in one trip.",
     tours_cta:"Book now",
     inc_flight:"Flight", inc_hotel:"Hotel", inc_transfer:"Transfer", inc_insurance:"Insurance",
+    filter_all_countries:"All countries",
+    filter_budget_all:"Any budget", filter_budget_1:"under $700", filter_budget_2:"$700–950", filter_budget_3:"$950+",
+    filter_empty:"No tours match these filters yet — message our manager and we'll find one for you.",
     tours_note_text:"Prices and dates are valid as of the publication date and may change — please confirm with a manager when booking.",
     tours_note_link1:"See all tours →", tours_note_link2:"Message a manager →",
     how_eyebrow:"HOW IT WORKS", how_title:"From inquiry to boarding — 4 steps",
@@ -429,6 +438,47 @@ if(toursGrid && toursPrev && toursNext){
   updateActiveTicket();
 }
 
+/* ============ TOURS FILTER (country + budget) ============ */
+const filterCountry = document.getElementById('filter-country');
+const filterChips = document.querySelectorAll('.filter-chip');
+const filterEmpty = document.getElementById('filter-empty');
+let activeBudgetRange = 'all';
+
+function applyTourFilters(){
+  const country = filterCountry.value;
+  const tickets = toursGrid.querySelectorAll('.ticket');
+  let visibleCount = 0;
+  tickets.forEach(t=>{
+    const matchesCountry = country === 'all' || t.dataset.country === country;
+    let matchesBudget = true;
+    if(activeBudgetRange !== 'all'){
+      const [min, max] = activeBudgetRange.split('-').map(Number);
+      const price = Number(t.dataset.budget);
+      matchesBudget = price >= min && price <= max;
+    }
+    const visible = matchesCountry && matchesBudget;
+    t.style.display = visible ? '' : 'none';
+    if(visible) visibleCount++;
+  });
+  filterEmpty.classList.toggle('show', visibleCount === 0);
+  toursGrid.scrollTo({ left: 0 });
+  updateCarouselArrows();
+  updateActiveTicket();
+  stopToursAutoplay();
+  startToursAutoplay();
+}
+if(filterCountry && filterChips.length){
+  filterCountry.addEventListener('change', applyTourFilters);
+  filterChips.forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      filterChips.forEach(c=> c.classList.remove('active'));
+      chip.classList.add('active');
+      activeBudgetRange = chip.dataset.budget;
+      applyTourFilters();
+    });
+  });
+}
+
 /* ============ ANIMATED STAT COUNTERS ============ */
 function animateCount(el, target, suffix, duration){
   const start = performance.now();
@@ -601,4 +651,4 @@ document.getElementById('contact-form').addEventListener('submit', async functio
   } catch(err){
     noteErr.classList.add('show');
   }
-});
+})      

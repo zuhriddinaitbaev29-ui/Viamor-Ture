@@ -344,6 +344,27 @@
 
   /* ============ TOURS LIVE NOTE ============ */
   .live-badge{display:inline-flex; align-items:center; gap:7px; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; color:var(--teal); margin-bottom:6px;}
+
+  /* ============ TOURS FILTER ============ */
+  .tours-filter{display:flex; flex-wrap:wrap; align-items:center; gap:14px; margin:22px 0 28px;}
+  .filter-select{
+    padding:11px 18px; border-radius:30px; border:1px solid var(--border); background:var(--surface);
+    color:var(--ink); font-family:'Manrope',sans-serif; font-size:14px; font-weight:600; cursor:pointer;
+  }
+  .filter-select:focus{outline:none; border-color:var(--teal);}
+  .filter-budget-group{display:flex; flex-wrap:wrap; gap:8px;}
+  .filter-chip{
+    padding:10px 16px; border-radius:30px; border:1px solid var(--border); background:var(--surface);
+    color:var(--ink-soft); font-family:'IBM Plex Mono',monospace; font-size:12.5px; cursor:pointer;
+    transition:background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .filter-chip:hover{border-color:var(--teal);}
+  .filter-chip.active{background:var(--ink); color:var(--bg); border-color:var(--ink);}
+  .filter-empty{
+    display:none; padding:26px; text-align:center; color:var(--ink-soft); font-size:14.5px;
+    background:var(--bg-alt); border-radius:var(--radius); margin-bottom:22px;
+  }
+  .filter-empty.show{display:block;}
   .live-badge .live-date{color:var(--ink-soft); margin-left:4px;}
 
   /* ============ FAQ ============ */
@@ -446,4 +467,4 @@
     opacity:0; max-height:0; overflow:hidden; transition:opacity .3s ease, max-height .3s ease, margin .3s ease;
   }
   .auth-coming-note.show{opacity:1; max-height:120px; margin-top:16px;}
-  .auth-coming-note a{color:var(--teal); font-weight:600; border-bottom:1px solid var(--teal);}
+  .auth-coming-note a{color:var(--teal); font-weight:600; border-bottom:1px solid var(--teal);} 

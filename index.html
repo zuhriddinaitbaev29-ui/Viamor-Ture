@@ -201,6 +201,25 @@
 
     <div class="live-badge"><span class="live-dot"></span><span data-i18n="tours_live_badge">ОБНОВЛЯЕМ ЕЖЕДНЕВНО</span><span class="live-date mono" id="live-date"></span></div>
 
+    <div class="tours-filter" data-reveal>
+      <select id="filter-country" class="filter-select">
+        <option value="all" data-i18n="filter_all_countries">Все страны</option>
+        <option value="georgia" data-i18n="dest_georgia">Грузия</option>
+        <option value="turkey" data-i18n="dest_turkey">Турция</option>
+        <option value="uae" data-i18n="dest_uae">ОАЭ</option>
+        <option value="egypt" data-i18n="dest_egypt">Египет</option>
+        <option value="maldives" data-i18n="dest_maldives">Мальдивы</option>
+        <option value="azerbaijan" data-i18n="dest_azerbaijan">Азербайджан</option>
+      </select>
+      <div class="filter-budget-group">
+        <button class="filter-chip active" data-budget="all" data-i18n="filter_budget_all">Любой бюджет</button>
+        <button class="filter-chip" data-budget="0-700" data-i18n="filter_budget_1">до $700</button>
+        <button class="filter-chip" data-budget="700-950" data-i18n="filter_budget_2">$700–950</button>
+        <button class="filter-chip" data-budget="950-99999" data-i18n="filter_budget_3">от $950</button>
+      </div>
+    </div>
+    <p class="filter-empty" id="filter-empty" data-i18n="filter_empty">Туров по этим критериям пока нет — напишите менеджеру, подберём индивидуально.</p>
+
     <div class="tours-carousel">
     <button class="carousel-arrow prev" id="tours-prev" aria-label="Previous">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
@@ -210,7 +229,7 @@
     </button>
     <div class="tours-grid" id="tours-grid">
       <!-- Tour 1: Georgia -->
-      <div class="ticket" id="tour-georgia" data-reveal>
+      <div class="ticket" id="tour-georgia" data-reveal data-country="georgia" data-budget="827">
         <div class="ticket-illustration">
           <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="sky-georgia" x1="0" y1="0" x2="0" y2="1">
@@ -242,7 +261,7 @@
       </div>
 
       <!-- Tour 2: Turkey -->
-      <div class="ticket" id="tour-turkey" data-reveal>
+      <div class="ticket" id="tour-turkey" data-reveal data-country="turkey" data-budget="754">
         <div class="ticket-illustration">
           <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="sky-turkey" x1="0" y1="0" x2="0" y2="1">
@@ -274,7 +293,7 @@
       </div>
 
       <!-- Tour 3: UAE -->
-      <div class="ticket" id="tour-uae" data-reveal>
+      <div class="ticket" id="tour-uae" data-reveal data-country="uae" data-budget="1059">
         <div class="ticket-illustration">
           <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="sky-uae" x1="0" y1="0" x2="0" y2="1">
@@ -306,7 +325,7 @@
       </div>
 
       <!-- Tour 4: Egypt -->
-      <div class="ticket" id="tour-egypt" data-reveal>
+      <div class="ticket" id="tour-egypt" data-reveal data-country="egypt" data-budget="519">
         <div class="ticket-illustration">
           <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="sky-egypt" x1="0" y1="0" x2="0" y2="1">
@@ -338,7 +357,7 @@
       </div>
 
       <!-- Tour 5: Maldives -->
-      <div class="ticket" id="tour-maldives" data-reveal>
+      <div class="ticket" id="tour-maldives" data-reveal data-country="maldives" data-budget="960">
         <div class="ticket-illustration">
           <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="sky-maldives" x1="0" y1="0" x2="0" y2="1">
@@ -370,7 +389,7 @@
       </div>
 
       <!-- Tour 6: Azerbaijan -->
-      <div class="ticket" id="tour-azerbaijan" data-reveal>
+      <div class="ticket" id="tour-azerbaijan" data-reveal data-country="azerbaijan" data-budget="761">
         <div class="ticket-illustration">
           <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="sky-azerbaijan" x1="0" y1="0" x2="0" y2="1">
@@ -584,4 +603,4 @@
 <script type="text/javascript" src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js" async></script>
 <script type="module" src="script.js"></script>
 </body>
-</html>
+</html>   
