@@ -30,6 +30,7 @@ const translations = {
     tour6_name:"Азербайджан: Баку + Нафталан", tour6_duration:"по выбору", tour6_price:"от $761",
     tour6_desc:"Современный Баку и лечебный курорт Нафталан — отдых и оздоровление в одном путешествии.",
     tours_cta:"Забронировать",
+    inc_flight:"Перелёт", inc_hotel:"Отель", inc_transfer:"Трансфер", inc_insurance:"Страховка",
     tours_note_text:"Цены и даты действительны на момент публикации и могут измениться — уточняйте у менеджера при бронировании.",
     tours_note_link1:"Смотреть все туры →", tours_note_link2:"Написать менеджеру →",
     how_eyebrow:"КАК ЭТО РАБОТАЕТ", how_title:"От заявки до посадки — 4 шага",
@@ -105,6 +106,7 @@ const translations = {
     tour6_name:"Ozarbayjon: Boku + Naftalan", tour6_duration:"moslashuvchan", tour6_price:"$761 dan",
     tour6_desc:"Zamonaviy Boku va shifobaxsh Naftalan kurorti — bitta safarda dam olish va sog'lomlashtirish.",
     tours_cta:"Bron qilish",
+    inc_flight:"Parvoz", inc_hotel:"Mehmonxona", inc_transfer:"Transfer", inc_insurance:"Sug'urta",
     tours_note_text:"Narxlar va sanalar e'lon qilingan vaqtga tegishli va o'zgarishi mumkin — bron qilishda menejerdan aniqlashtiring.",
     tours_note_link1:"Barcha turlarni ko'rish →", tours_note_link2:"Menejerga yozish →",
     how_eyebrow:"BU QANDAY ISHLAYDI", how_title:"Arizadan parvozgacha — 4 qadam",
@@ -180,6 +182,7 @@ const translations = {
     tour6_name:"Azerbaijan: Baku + Naftalan", tour6_duration:"flexible", tour6_price:"from $761",
     tour6_desc:"Modern Baku and the healing resort of Naftalan — relaxation and wellness in one trip.",
     tours_cta:"Book now",
+    inc_flight:"Flight", inc_hotel:"Hotel", inc_transfer:"Transfer", inc_insurance:"Insurance",
     tours_note_text:"Prices and dates are valid as of the publication date and may change — please confirm with a manager when booking.",
     tours_note_link1:"See all tours →", tours_note_link2:"Message a manager →",
     how_eyebrow:"HOW IT WORKS", how_title:"From inquiry to boarding — 4 steps",
@@ -386,13 +389,51 @@ function updateCarouselArrows(){
   toursPrev.disabled = toursGrid.scrollLeft <= 4;
   toursNext.disabled = toursGrid.scrollLeft >= max;
 }
+function updateActiveTicket(){
+  const tickets = toursGrid.querySelectorAll('.ticket');
+  const center = toursGrid.scrollLeft + toursGrid.clientWidth / 2;
+  let closest = null, closestDist = Infinity;
+  tickets.forEach(t=>{
+    const mid = t.offsetLeft + t.offsetWidth / 2;
+    const dist = Math.abs(mid - center);
+    if(dist < closestDist){ closestDist = dist; closest = t; }
+  });
+  tickets.forEach(t=> t.classList.toggle('active', t === closest));
+}
 if(toursGrid && toursPrev && toursNext){
   toursPrev.addEventListener('click', ()=> scrollToursBy(-1));
   toursNext.addEventListener('click', ()=> scrollToursBy(1));
-  toursGrid.addEventListener('scroll', updateCarouselArrows);
-  window.addEventListener('resize', updateCarouselArrows);
+  toursGrid.addEventListener('scroll', ()=>{ updateCarouselArrows(); updateActiveTicket(); });
+  window.addEventListener('resize', ()=>{ updateCarouselArrows(); updateActiveTicket(); });
   updateCarouselArrows();
+  updateActiveTicket();
 }
+
+/* ============ ANIMATED STAT COUNTERS ============ */
+function animateCount(el, target, suffix, duration){
+  const start = performance.now();
+  function frame(now){
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(target * eased) + suffix;
+    if(progress < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+const statNumbers = [
+  { el: document.getElementById('stat1-value'), target: 15, suffix: '+' },
+  { el: document.getElementById('stat2-value'), target: 5, suffix: '' }
+];
+const statObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      statNumbers.forEach(s=>{ if(s.el) animateCount(s.el, s.target, s.suffix, 1200); });
+      statObserver.disconnect();
+    }
+  });
+},{ threshold:0.5 });
+const statRowEl = document.querySelector('.stat-row');
+if(statRowEl) statObserver.observe(statRowEl);
 
 /* ============ LIVE DATE STAMP ============ */
 const liveDateEl = document.getElementById('live-date');

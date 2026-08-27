@@ -12,6 +12,12 @@
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+<svg style="display:none" aria-hidden="true">
+  <symbol id="ic-flight" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16l20-8-8 20-3-8-9-4z"/></symbol>
+  <symbol id="ic-hotel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V9l9-6 9 6v12M3 21h18M8 21v-6h8v6"/></symbol>
+  <symbol id="ic-transfer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16V9a2 2 0 012-2h9l4 4v5M3 16h1M20 16h1M7 16a2 2 0 104 0 2 2 0 10-4 0M14 16a2 2 0 104 0 2 2 0 10-4 0"/></symbol>
+  <symbol id="ic-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3.5v6c0 5-3.5 8.5-8 10.5-4.5-2-8-5.5-8-10.5v-6L12 2z"/></symbol>
+</svg>
 
 <div class="auth-overlay show" id="auth-overlay">
   <div class="auth-modal">
@@ -148,8 +154,8 @@
     <div data-reveal>
       <p data-i18n="about_text">Viamor Tour — тревел-агентство в Ташкенте. Каждый день собираем турпакеты по лучшим ценам: перелёт, отель, трансфер и страховка — одним пакетом. Работаем напрямую с крупными авиакомпаниями — вылеты из Ташкента без лишних пересадок.</p>
       <div class="stat-row">
-        <div class="stat"><b data-i18n="stat1_value">15+</b><span class="mono" data-i18n="stat1_label">НАПРАВЛЕНИЙ</span></div>
-        <div class="stat"><b data-i18n="stat2_value">5</b><span class="mono" data-i18n="stat2_label">АВИАКОМПАНИЙ</span></div>
+        <div class="stat"><b id="stat1-value" data-i18n="stat1_value">15+</b><span class="mono" data-i18n="stat1_label">НАПРАВЛЕНИЙ</span></div>
+        <div class="stat"><b id="stat2-value" data-i18n="stat2_value">5</b><span class="mono" data-i18n="stat2_label">АВИАКОМПАНИЙ</span></div>
         <div class="stat"><b data-i18n="stat3_value">Каждый день</b><span class="mono" data-i18n="stat3_label">НОВЫЕ ЦЕНЫ</span></div>
       </div>
       <div class="partners-row">
@@ -189,12 +195,29 @@
     <div class="tours-grid" id="tours-grid">
       <!-- Tour 1: Georgia -->
       <div class="ticket" id="tour-georgia" data-reveal>
+        <div class="ticket-illustration">
+          <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="sky-georgia" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--teal)"/><stop offset="100%" stop-color="var(--bg-alt)"/>
+            </linearGradient></defs>
+            <rect width="400" height="260" fill="url(#sky-georgia)"/>
+            <circle class="illu-sun" cx="335" cy="55" r="24" fill="var(--surface)"/>
+            <path d="M0 205 Q100 180 200 205 T400 200 V260 H0 Z" fill="var(--navy)" opacity=".14"/>
+            <g transform="translate(70,55) scale(6.2)" fill="none" stroke="var(--navy)" stroke-width="1" opacity=".55"><path d="M3 30l9-13 6 7 8-14 11 20z"/><circle cx="30" cy="8" r="3" fill="var(--navy)" stroke="none"/></g>
+          </svg>
+          <span class="ticket-stars">★★★–★★★★</span>
+        </div>
         <div class="ticket-stub"><span class="mono">TAS–BUS–TBS</span></div>
         <div class="ticket-body">
-          <svg class="ticket-icon" viewBox="0 0 40 40" fill="none" stroke="var(--teal)" stroke-width="1.6"><path d="M3 30l9-13 6 7 8-14 11 20z"/><circle cx="30" cy="8" r="3"/></svg>
           <h3 data-i18n="tour1_name">Грузия: Батуми + Тбилиси</h3>
           <p class="desc" data-i18n="tour1_desc">Море и горы в одном туре: пляжный отдых в Батуми и прогулки по атмосферному Тбилиси. Ближайшие вылеты — 16, 23 и 30 августа.</p>
-          <div class="ticket-meta">
+          <div class="ticket-includes">
+            <span><svg class="inc-icon"><use href="#ic-flight"/></svg><span data-i18n="inc_flight">Перелёт</span></span>
+            <span><svg class="inc-icon"><use href="#ic-hotel"/></svg><span data-i18n="inc_hotel">Отель</span></span>
+            <span><svg class="inc-icon"><use href="#ic-transfer"/></svg><span data-i18n="inc_transfer">Трансфер</span></span>
+            <span><svg class="inc-icon"><use href="#ic-shield"/></svg><span data-i18n="inc_insurance">Страховка</span></span>
+          </div>
+                    <div class="ticket-meta">
             <span class="duration mono" data-i18n="tour1_duration">8 ночей</span>
             <span class="price" data-i18n="tour1_price">от $827</span>
           </div>
@@ -204,12 +227,29 @@
 
       <!-- Tour 2: Turkey -->
       <div class="ticket" id="tour-turkey" data-reveal>
+        <div class="ticket-illustration">
+          <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="sky-turkey" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--gold)"/><stop offset="100%" stop-color="var(--bg-alt)"/>
+            </linearGradient></defs>
+            <rect width="400" height="260" fill="url(#sky-turkey)"/>
+            <circle class="illu-sun" cx="330" cy="50" r="20" fill="var(--surface)"/>
+            <path d="M0 205 Q100 180 200 205 T400 200 V260 H0 Z" fill="var(--navy)" opacity=".14"/>
+            <g transform="translate(75,50) scale(6.2)" fill="none" stroke="var(--navy)" stroke-width="1" opacity=".55"><circle cx="20" cy="14" r="6"/><path d="M2 32c4-6 10-9 18-9s14 3 18 9"/></g>
+          </svg>
+          <span class="ticket-stars">★★★–★★★★★</span>
+        </div>
         <div class="ticket-stub"><span class="mono">TAS–AYT</span></div>
         <div class="ticket-body">
-          <svg class="ticket-icon" viewBox="0 0 40 40" fill="none" stroke="var(--gold)" stroke-width="1.6"><circle cx="20" cy="14" r="6"/><path d="M2 32c4-6 10-9 18-9s14 3 18 9"/></svg>
           <h3 data-i18n="tour2_name">Турция: Анталья</h3>
           <p class="desc" data-i18n="tour2_desc">Прямые вылеты из Ташкента, десятки отелей на выбор — от бюджетных 3* до люксовых 5* курортов с all inclusive.</p>
-          <div class="ticket-meta">
+          <div class="ticket-includes">
+            <span><svg class="inc-icon"><use href="#ic-flight"/></svg><span data-i18n="inc_flight">Перелёт</span></span>
+            <span><svg class="inc-icon"><use href="#ic-hotel"/></svg><span data-i18n="inc_hotel">Отель</span></span>
+            <span><svg class="inc-icon"><use href="#ic-transfer"/></svg><span data-i18n="inc_transfer">Трансфер</span></span>
+            <span><svg class="inc-icon"><use href="#ic-shield"/></svg><span data-i18n="inc_insurance">Страховка</span></span>
+          </div>
+                    <div class="ticket-meta">
             <span class="duration mono" data-i18n="tour2_duration">7 ночей / 8 дней</span>
             <span class="price" data-i18n="tour2_price">от $754</span>
           </div>
@@ -219,12 +259,29 @@
 
       <!-- Tour 3: UAE -->
       <div class="ticket" id="tour-uae" data-reveal>
+        <div class="ticket-illustration">
+          <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="sky-uae" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--clay)"/><stop offset="100%" stop-color="var(--navy)"/>
+            </linearGradient></defs>
+            <rect width="400" height="260" fill="url(#sky-uae)"/>
+            <circle class="illu-sun" cx="335" cy="50" r="16" fill="var(--surface)"/>
+            <path d="M0 205 Q100 180 200 205 T400 200 V260 H0 Z" fill="var(--navy)" opacity=".14"/>
+            <g transform="translate(65,45) scale(6.2)" fill="none" stroke="var(--navy)" stroke-width="1" opacity=".6"><path d="M6 34V16h5v18M15 34V10h5v24M24 34V20h5v14M33 34V6h2v28"/></g>
+          </svg>
+          <span class="ticket-stars">★★★★★ Amwaj Rotana</span>
+        </div>
         <div class="ticket-stub"><span class="mono">TAS–DXB</span></div>
         <div class="ticket-body">
-          <svg class="ticket-icon" viewBox="0 0 40 40" fill="none" stroke="var(--clay)" stroke-width="1.6"><path d="M6 34V16h5v18M15 34V10h5v24M24 34V20h5v14M33 34V6h2v28"/></svg>
           <h3 data-i18n="tour3_name">ОАЭ: Дубай</h3>
           <p class="desc" data-i18n="tour3_desc">Amwaj Rotana Jumeirah Beach 5* — в самом сердце JBR, в 3 минутах от пляжа и променада The Walk.</p>
-          <div class="ticket-meta">
+          <div class="ticket-includes">
+            <span><svg class="inc-icon"><use href="#ic-flight"/></svg><span data-i18n="inc_flight">Перелёт</span></span>
+            <span><svg class="inc-icon"><use href="#ic-hotel"/></svg><span data-i18n="inc_hotel">Отель</span></span>
+            <span><svg class="inc-icon"><use href="#ic-transfer"/></svg><span data-i18n="inc_transfer">Трансфер</span></span>
+            <span><svg class="inc-icon"><use href="#ic-shield"/></svg><span data-i18n="inc_insurance">Страховка</span></span>
+          </div>
+                    <div class="ticket-meta">
             <span class="duration mono" data-i18n="tour3_duration">7 ночей</span>
             <span class="price" data-i18n="tour3_price">от $1 059</span>
           </div>
@@ -234,12 +291,29 @@
 
       <!-- Tour 4: Egypt -->
       <div class="ticket" id="tour-egypt" data-reveal>
+        <div class="ticket-illustration">
+          <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="sky-egypt" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--gold)"/><stop offset="100%" stop-color="var(--teal)"/>
+            </linearGradient></defs>
+            <rect width="400" height="260" fill="url(#sky-egypt)"/>
+            <circle class="illu-sun" cx="335" cy="55" r="22" fill="var(--surface)"/>
+            <path d="M0 205 Q100 180 200 205 T400 200 V260 H0 Z" fill="var(--navy)" opacity=".14"/>
+            <g transform="translate(70,50) scale(6.2)" fill="none" stroke="var(--navy)" stroke-width="1" opacity=".55"><path d="M4 32h32M8 32l12-20 12 20"/></g>
+          </svg>
+          <span class="ticket-stars">★★★★–★★★★★</span>
+        </div>
         <div class="ticket-stub"><span class="mono">TAS–SSH</span></div>
         <div class="ticket-body">
-          <svg class="ticket-icon" viewBox="0 0 40 40" fill="none" stroke="var(--teal)" stroke-width="1.6"><path d="M4 32h32M8 32l12-20 12 20"/></svg>
           <h3 data-i18n="tour4_name">Египет: Шарм-эль-Шейх</h3>
           <p class="desc" data-i18n="tour4_desc">Всё включено на Красном море: питание, напитки и трансфер уже в стоимости. Вылет 19 августа.</p>
-          <div class="ticket-meta">
+          <div class="ticket-includes">
+            <span><svg class="inc-icon"><use href="#ic-flight"/></svg><span data-i18n="inc_flight">Перелёт</span></span>
+            <span><svg class="inc-icon"><use href="#ic-hotel"/></svg><span data-i18n="inc_hotel">Отель</span></span>
+            <span><svg class="inc-icon"><use href="#ic-transfer"/></svg><span data-i18n="inc_transfer">Трансфер</span></span>
+            <span><svg class="inc-icon"><use href="#ic-shield"/></svg><span data-i18n="inc_insurance">Страховка</span></span>
+          </div>
+                    <div class="ticket-meta">
             <span class="duration mono" data-i18n="tour4_duration">7 ночей / 8 дней</span>
             <span class="price" data-i18n="tour4_price">от $519</span>
           </div>
@@ -249,12 +323,29 @@
 
       <!-- Tour 5: Maldives -->
       <div class="ticket" id="tour-maldives" data-reveal>
+        <div class="ticket-illustration">
+          <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="sky-maldives" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--teal)"/><stop offset="100%" stop-color="var(--cream)"/>
+            </linearGradient></defs>
+            <rect width="400" height="260" fill="url(#sky-maldives)"/>
+            <circle class="illu-sun" cx="335" cy="50" r="20" fill="var(--surface)"/>
+            <path d="M0 205 Q100 180 200 205 T400 200 V260 H0 Z" fill="var(--navy)" opacity=".14"/>
+            <g transform="translate(70,60) scale(6.2)" fill="none" stroke="var(--navy)" stroke-width="1" opacity=".55"><path d="M10 24v10M10 24l8-6v10M10 24l-6 4M2 34h36"/><path d="M2 28c4-3 8-3 12 0s8 3 12 0 8-3 12 0" stroke-width=".8"/></g>
+          </svg>
+          <span class="ticket-stars">★★★–★★★★★</span>
+        </div>
         <div class="ticket-stub"><span class="mono">TAS–MLE</span></div>
         <div class="ticket-body">
-          <svg class="ticket-icon" viewBox="0 0 40 40" fill="none" stroke="var(--gold)" stroke-width="1.6"><path d="M10 24v10M10 24l8-6v10M10 24l-6 4M2 34h36"/><path d="M2 28c4-3 8-3 12 0s8 3 12 0 8-3 12 0" stroke-width="1.4"/></svg>
           <h3 data-i18n="tour5_name">Мальдивы</h3>
           <p class="desc" data-i18n="tour5_desc">От уютных гестхаусов до курортов уровня Sheraton и Nova Maldives — подберём вариант под ваш бюджет.</p>
-          <div class="ticket-meta">
+          <div class="ticket-includes">
+            <span><svg class="inc-icon"><use href="#ic-flight"/></svg><span data-i18n="inc_flight">Перелёт</span></span>
+            <span><svg class="inc-icon"><use href="#ic-hotel"/></svg><span data-i18n="inc_hotel">Отель</span></span>
+            <span><svg class="inc-icon"><use href="#ic-transfer"/></svg><span data-i18n="inc_transfer">Трансфер</span></span>
+            <span><svg class="inc-icon"><use href="#ic-shield"/></svg><span data-i18n="inc_insurance">Страховка</span></span>
+          </div>
+                    <div class="ticket-meta">
             <span class="duration mono" data-i18n="tour5_duration">7 ночей / 8 дней</span>
             <span class="price" data-i18n="tour5_price">от 11,5 млн сум</span>
           </div>
@@ -264,12 +355,29 @@
 
       <!-- Tour 6: Azerbaijan -->
       <div class="ticket" id="tour-azerbaijan" data-reveal>
+        <div class="ticket-illustration">
+          <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="sky-azerbaijan" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--clay)"/><stop offset="100%" stop-color="var(--navy)"/>
+            </linearGradient></defs>
+            <rect width="400" height="260" fill="url(#sky-azerbaijan)"/>
+            <circle class="illu-sun" cx="330" cy="55" r="18" fill="var(--surface)"/>
+            <path d="M0 205 Q100 180 200 205 T400 200 V260 H0 Z" fill="var(--navy)" opacity=".14"/>
+            <g transform="translate(140,45) scale(6.2)" fill="none" stroke="var(--navy)" stroke-width="1" opacity=".6"><path d="M20 4c6 8 6 14 0 20-6-6-6-12 0-20zM20 24c3 3 3 7 0 10-3-3-3-7 0-10z"/></g>
+          </svg>
+          <span class="ticket-stars">★★★–★★★★</span>
+        </div>
         <div class="ticket-stub"><span class="mono">TAS–GYD</span></div>
         <div class="ticket-body">
-          <svg class="ticket-icon" viewBox="0 0 40 40" fill="none" stroke="var(--clay)" stroke-width="1.6"><path d="M20 4c6 8 6 14 0 20-6-6-6-12 0-20zM20 24c3 3 3 7 0 10-3-3-3-7 0-10z"/></svg>
           <h3 data-i18n="tour6_name">Азербайджан: Баку + Нафталан</h3>
           <p class="desc" data-i18n="tour6_desc">Современный Баку и лечебный курорт Нафталан — отдых и оздоровление в одном путешествии.</p>
-          <div class="ticket-meta">
+          <div class="ticket-includes">
+            <span><svg class="inc-icon"><use href="#ic-flight"/></svg><span data-i18n="inc_flight">Перелёт</span></span>
+            <span><svg class="inc-icon"><use href="#ic-hotel"/></svg><span data-i18n="inc_hotel">Отель</span></span>
+            <span><svg class="inc-icon"><use href="#ic-transfer"/></svg><span data-i18n="inc_transfer">Трансфер</span></span>
+            <span><svg class="inc-icon"><use href="#ic-shield"/></svg><span data-i18n="inc_insurance">Страховка</span></span>
+          </div>
+                    <div class="ticket-meta">
             <span class="duration mono" data-i18n="tour6_duration">по выбору</span>
             <span class="price" data-i18n="tour6_price">от $761</span>
           </div>
