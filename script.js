@@ -400,12 +400,32 @@ function updateActiveTicket(){
   });
   tickets.forEach(t=> t.classList.toggle('active', t === closest));
 }
+let toursAutoplayTimer = null;
+function toursAutoplayStep(){
+  const max = toursGrid.scrollWidth - toursGrid.clientWidth - 4;
+  if(toursGrid.scrollLeft >= max){
+    toursGrid.scrollTo({ left: 0, behavior: 'smooth' }); // loop back to the first card
+  } else {
+    scrollToursBy(1);
+  }
+}
+function startToursAutoplay(){
+  stopToursAutoplay();
+  toursAutoplayTimer = setInterval(toursAutoplayStep, 20000); // every 20s
+}
+function stopToursAutoplay(){
+  if(toursAutoplayTimer){ clearInterval(toursAutoplayTimer); toursAutoplayTimer = null; }
+}
 if(toursGrid && toursPrev && toursNext){
-  toursPrev.addEventListener('click', ()=> scrollToursBy(-1));
-  toursNext.addEventListener('click', ()=> scrollToursBy(1));
+  toursPrev.addEventListener('click', ()=>{ scrollToursBy(-1); startToursAutoplay(); });
+  toursNext.addEventListener('click', ()=>{ scrollToursBy(1); startToursAutoplay(); });
   toursGrid.addEventListener('scroll', ()=>{ updateCarouselArrows(); updateActiveTicket(); });
   window.addEventListener('resize', ()=>{ updateCarouselArrows(); updateActiveTicket(); });
+  toursGrid.addEventListener('mouseenter', stopToursAutoplay);
+  toursGrid.addEventListener('mouseleave', startToursAutoplay);
+  toursGrid.addEventListener('touchstart', stopToursAutoplay, { passive:true });
   updateCarouselArrows();
+  startToursAutoplay();
   updateActiveTicket();
 }
 
