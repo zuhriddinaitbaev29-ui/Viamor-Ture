@@ -601,4 +601,4 @@
     cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;
   }
   .ai-input-row button svg{width:16px; height:16px;}
-  @media (max-width:480px){ .ai-panel{right:16px; left:16px; width:auto; bottom:86px;} .ai-toggle{right:16px; bottom:16px;} }
+  @media (max-width:480px){ .ai-panel{right:16px; left:16px; width:auto; bottom:86px;} .ai-toggle{right:16px; bottom:16px;} }Ы
