@@ -37,6 +37,7 @@ const translations = {
     filter_favorites:"Избранное",
     tours_detail_cta:"Подробнее →",
     modal_duration_label:"ДЛИТЕЛЬНОСТЬ", modal_price_label:"ЦЕНА", modal_travelers_label:"ТУРИСТОВ",
+    modal_name_ph:"Ваше имя", modal_phone_ph:"Телефон",
     modal_book_btn:"Забронировать этот тур",
     ai_title:"Подбор тура",
     ai_greeting:"Расскажите, куда хотите поехать — например: «море, 7 дней, бюджет $1000, с семьёй» — подберу подходящие туры из наших предложений.",
@@ -126,6 +127,7 @@ const translations = {
     filter_favorites:"Sevimlilar",
     tours_detail_cta:"Batafsil →",
     modal_duration_label:"DAVOMIYLIGI", modal_price_label:"NARX", modal_travelers_label:"SAYOHATCHILAR",
+    modal_name_ph:"Ismingiz", modal_phone_ph:"Telefon",
     modal_book_btn:"Bu turni bron qilish",
     ai_title:"Tur tanlash",
     ai_greeting:"Qayerga borishni xohlashingizni ayting — masalan: «dengiz, 7 kun, $1000 byudjet, oila bilan» — mos turlarni topib beraman.",
@@ -215,6 +217,7 @@ const translations = {
     filter_favorites:"Favorites",
     tours_detail_cta:"Details →",
     modal_duration_label:"DURATION", modal_price_label:"PRICE", modal_travelers_label:"TRAVELERS",
+    modal_name_ph:"Your name", modal_phone_ph:"Phone",
     modal_book_btn:"Book this tour",
     ai_title:"Tour Finder",
     ai_greeting:"Tell me where you'd like to go — for example: \"beach, 7 days, $1000 budget, with family\" — I'll match tours from our current offers.",
@@ -618,8 +621,8 @@ function closeAuthOverlay(e){
 // RPC function (SECURITY DEFINER) — anon visitors can never list or bulk-read the table.
 // Only signed-in admins (admin.html, via Supabase Auth) can read the full leads list.
 const supabase = createClient(
-  "https://gsqpvfeogoansmpvwiva.supabase.co",
-  "sb_publishable_ruqP2NWUJbDIvRejkaiDZQ_Id8AOhfs"
+  "https://ifexxmqlsentbxdtsdvz.supabase.co",
+  "sb_publishable_j87wxmy8WgbVr5tP3Z9aHA_Ws_gWjJ-"
 );
 
 // Checks whether this identifier was seen before; saves it if not.
@@ -750,9 +753,14 @@ const tourModalClose = document.getElementById('tour-modal-close');
 const travelerCountEl = document.getElementById('traveler-count');
 const travelerMinus = document.getElementById('traveler-minus');
 const travelerPlus = document.getElementById('traveler-plus');
+const modalReqName = document.getElementById('modal-req-name');
+const modalReqPhone = document.getElementById('modal-req-phone');
+const modalReqDate = document.getElementById('modal-req-date');
 let travelerCount = 2;
 let currentModalTourName = '';
 let currentModalTourKey = null;
+let currentModalPrice = '';
+let currentModalDuration = '';
 
 const TOUR_PHOTOS = {
   georgia: [
@@ -791,9 +799,44 @@ function photoImg(src, alt){
 }
 function setModalMainImage(html){ tourModalMainImg.innerHTML = html; }
 
+function formatDateForMessage(isoDate){
+  if(!isoDate) return '—';
+  const d = new Date(isoDate + 'T00:00:00');
+  if(isNaN(d)) return '—';
+  const months = translations[currentLang].month_names || null;
+  const day = d.getDate();
+  const month = d.getMonth();
+  const monthNamesRu = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  return day + ' ' + monthNamesRu[month];
+}
+
 function updateModalBookLink(){
-  const msg = encodeURIComponent('Здравствуйте! Интересует тур "' + currentModalTourName + '", туристов: ' + travelerCount + '.');
+  const name = modalReqName.value.trim() || '—';
+  const phone = modalReqPhone.value.trim() || '—';
+  const dateText = modalReqDate.value ? formatDateForMessage(modalReqDate.value) : '—';
+  const lines = [
+    '🔔 НОВАЯ ЗАЯВКА', '',
+    '👤 Имя: ' + name,
+    '📞 Телефон: ' + phone,
+    '🌍 Тур: ' + currentModalTourName,
+    '📅 Дата: ' + dateText,
+    '👨\u200d👩\u200d👧 Туристы: ' + travelerCount,
+    '💰 Цена: ' + currentModalPrice + ' (' + currentModalDuration + ')'
+  ];
+  const msg = encodeURIComponent(lines.join('\n'));
   tourModalBook.href = 'https://t.me/Masturabilen?text=' + msg;
+}
+if(modalReqName && modalReqPhone && modalReqDate){
+  [modalReqName, modalReqPhone, modalReqDate].forEach(el=>{
+    el.addEventListener('input', updateModalBookLink);
+  });
+}
+if(tourModalBook){
+  tourModalBook.addEventListener('click', ()=>{
+    // Also log the booking attempt as a lead, same table admin.html reads from
+    const contact = modalReqPhone.value.trim() || modalReqName.value.trim();
+    if(contact) checkAndSaveLead(modalReqName.value.trim(), contact, 'booking_' + (currentModalTourKey || 'tour'));
+  });
 }
 
 function openTourModal(tourKey){
@@ -810,8 +853,10 @@ function openTourModal(tourKey){
   tourModalStars.textContent = ticket.querySelector('.ticket-stars').textContent;
   tourModalDesc.textContent = ticket.querySelector('.ticket-body p.desc').textContent;
   tourModalIncludes.innerHTML = ticket.querySelector('.ticket-includes').innerHTML;
-  tourModalDuration.textContent = ticket.querySelector('.duration').textContent;
-  tourModalPrice.textContent = ticket.querySelector('.price').textContent;
+  currentModalDuration = ticket.querySelector('.duration').textContent;
+  currentModalPrice = ticket.querySelector('.price').textContent;
+  tourModalDuration.textContent = currentModalDuration;
+  tourModalPrice.textContent = currentModalPrice;
 
   setModalMainImage(gallery[0]);
   tourModalThumbs.innerHTML = '';
@@ -829,6 +874,9 @@ function openTourModal(tourKey){
 
   travelerCount = 2;
   if(travelerCountEl) travelerCountEl.textContent = travelerCount;
+  if(modalReqName) modalReqName.value = '';
+  if(modalReqPhone) modalReqPhone.value = '';
+  if(modalReqDate) modalReqDate.value = '';
   updateModalBookLink();
 
   tourModalOverlay.classList.add('show');
