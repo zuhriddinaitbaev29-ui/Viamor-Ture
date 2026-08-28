@@ -45,6 +45,8 @@ const translations = {
     ai_found:"Вот что нашёл для вас:",
     ai_no_match:"Точного совпадения среди текущих туров нет — но напишите менеджеру, подберём индивидуально:",
     ai_manager_link:"написать в Telegram",
+    ai_channel_hint:"Ещё загляните в наш канал — там новые предложения почти каждый день:",
+    ai_channel_link:"открыть канал",
     tours_note_text:"Цены и даты действительны на момент публикации и могут измениться — уточняйте у менеджера при бронировании.",
     tours_note_link1:"Смотреть все туры →", tours_note_link2:"Написать менеджеру →",
     how_eyebrow:"КАК ЭТО РАБОТАЕТ", how_title:"От заявки до посадки — 4 шага",
@@ -135,6 +137,8 @@ const translations = {
     ai_found:"Siz uchun topganlarim:",
     ai_no_match:"Hozirgi turlar orasida aniq mos kelishi topilmadi — menejerga yozing, alohida tanlab beramiz:",
     ai_manager_link:"Telegramda yozish",
+    ai_channel_hint:"Kanalimizga ham qarab qo'ying — deyarli har kuni yangi takliflar bor:",
+    ai_channel_link:"kanalni ochish",
     tours_note_text:"Narxlar va sanalar e'lon qilingan vaqtga tegishli va o'zgarishi mumkin — bron qilishda menejerdan aniqlashtiring.",
     tours_note_link1:"Barcha turlarni ko'rish →", tours_note_link2:"Menejerga yozish →",
     how_eyebrow:"BU QANDAY ISHLAYDI", how_title:"Arizadan parvozgacha — 4 qadam",
@@ -225,6 +229,8 @@ const translations = {
     ai_found:"Here's what I found for you:",
     ai_no_match:"No exact match among current tours — message our manager and we'll find one for you:",
     ai_manager_link:"message on Telegram",
+    ai_channel_hint:"Also check our channel — new offers appear almost daily:",
+    ai_channel_link:"open channel",
     tours_note_text:"Prices and dates are valid as of the publication date and may change — please confirm with a manager when booking.",
     tours_note_link1:"See all tours →", tours_note_link2:"Message a manager →",
     how_eyebrow:"HOW IT WORKS", how_title:"From inquiry to boarding — 4 steps",
@@ -1010,7 +1016,11 @@ if(aiToggle && aiPanel){
 
     setTimeout(()=>{
       if(matches.length === 0){
-        addAiMessage(dict.ai_no_match + ' <a href="https://t.me/Masturabilen" target="_blank" rel="noopener">' + dict.ai_manager_link + '</a>', true);
+        addAiMessage(
+          dict.ai_no_match + ' <a href="https://t.me/Masturabilen" target="_blank" rel="noopener">' + dict.ai_manager_link + '</a>. ' +
+          dict.ai_channel_hint + ' <a href="https://t.me/viamor_tur" target="_blank" rel="noopener">' + dict.ai_channel_link + '</a>',
+          true
+        );
         return;
       }
       let html = dict.ai_found + '<div class="ai-results">';
