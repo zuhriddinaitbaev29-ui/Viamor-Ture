@@ -467,7 +467,7 @@
 </section>
 
 <!-- ============ REVIEWS ============ -->
-<section id="reviews">
+<section class="reviews-band" id="reviews">
   <div class="container">
     <h2 data-i18n="reviews_title">Отзывы наших туристов</h2>
     <p class="section-sub" data-i18n="reviews_subtitle">Что говорят те, кто уже летал с нами.</p>
@@ -475,24 +475,31 @@
     <div class="reviews-grid" id="reviews-grid" data-reveal></div>
     <p class="reviews-empty" id="reviews-empty" data-i18n="reviews_empty">Пока нет отзывов — станьте первым!</p>
 
-    <div class="review-form-wrap" data-reveal>
-      <h3 data-i18n="review_form_title">Оставить отзыв</h3>
-      <form id="review-form">
-        <input type="text" id="review-name" data-i18n-placeholder="review_name_ph" placeholder="Ваше имя" required>
-        <div class="review-stars-input" id="review-stars-input">
-          <button type="button" data-star="1" aria-label="1 star">★</button>
-          <button type="button" data-star="2" aria-label="2 stars">★</button>
-          <button type="button" data-star="3" aria-label="3 stars">★</button>
-          <button type="button" data-star="4" aria-label="4 stars">★</button>
-          <button type="button" data-star="5" aria-label="5 stars">★</button>
-        </div>
-        <textarea id="review-text" rows="3" data-i18n-placeholder="review_text_ph" placeholder="Расскажите о поездке..." required></textarea>
-        <button type="submit" class="btn btn-primary" data-i18n="review_submit_btn">Отправить отзыв</button>
-      </form>
-      <p class="review-note" id="review-note" data-i18n="review_note">Отзыв появится на сайте после проверки модератором.</p>
+    <div class="review-cta" data-reveal>
+      <div class="review-cta-copy">
+        <svg class="review-cta-icon" viewBox="0 0 48 48" fill="none" stroke="var(--gold)" stroke-width="1.4"><path d="M24 4l5.9 12.4L44 18.5l-10 9.9L36.5 44 24 36.9 11.5 44 14 28.4 4 18.5l14.1-2.1z"/></svg>
+        <h3 data-i18n="review_cta_title">Уже летали с нами?</h3>
+        <p data-i18n="review_cta_text">Ваш отзыв — 30 секунд, а другим путешественникам помогает выбрать тур увереннее. Мы читаем каждый.</p>
+      </div>
+      <div class="review-form-wrap">
+        <form id="review-form">
+          <input type="text" id="review-name" data-i18n-placeholder="review_name_ph" placeholder="Ваше имя" required>
+          <div class="review-stars-input" id="review-stars-input">
+            <button type="button" data-star="1" aria-label="1 star">★</button>
+            <button type="button" data-star="2" aria-label="2 stars">★</button>
+            <button type="button" data-star="3" aria-label="3 stars">★</button>
+            <button type="button" data-star="4" aria-label="4 stars">★</button>
+            <button type="button" data-star="5" aria-label="5 stars">★</button>
+          </div>
+          <textarea id="review-text" rows="3" data-i18n-placeholder="review_text_ph" placeholder="Расскажите о поездке..." required></textarea>
+          <button type="submit" class="btn btn-primary" data-i18n="review_submit_btn">Отправить отзыв</button>
+        </form>
+        <p class="review-note" id="review-note" data-i18n="review_note">Отзыв появится на сайте после проверки модератором.</p>
+      </div>
     </div>
   </div>
 </section>
+
 
 <!-- ============ FAQ ============ -->
 <section id="faq">
