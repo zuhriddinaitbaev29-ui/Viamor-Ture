@@ -57,6 +57,7 @@
       <a href="#about" data-i18n="nav_about">О нас</a>
       <a href="#tours" data-i18n="nav_tours">Туры</a>
       <a href="#why" data-i18n="nav_why">Почему мы</a>
+      <a href="#reviews" data-i18n="nav_reviews">Отзывы</a>
       <a href="#contact" data-i18n="nav_contact">Контакты</a>
     </nav>
     <div class="nav-right">
@@ -465,6 +466,34 @@
   </div>
 </section>
 
+<!-- ============ REVIEWS ============ -->
+<section id="reviews">
+  <div class="container">
+    <h2 data-i18n="reviews_title">Отзывы наших туристов</h2>
+    <p class="section-sub" data-i18n="reviews_subtitle">Что говорят те, кто уже летал с нами.</p>
+
+    <div class="reviews-grid" id="reviews-grid" data-reveal></div>
+    <p class="reviews-empty" id="reviews-empty" data-i18n="reviews_empty">Пока нет отзывов — станьте первым!</p>
+
+    <div class="review-form-wrap" data-reveal>
+      <h3 data-i18n="review_form_title">Оставить отзыв</h3>
+      <form id="review-form">
+        <input type="text" id="review-name" data-i18n-placeholder="review_name_ph" placeholder="Ваше имя" required>
+        <div class="review-stars-input" id="review-stars-input">
+          <button type="button" data-star="1" aria-label="1 star">★</button>
+          <button type="button" data-star="2" aria-label="2 stars">★</button>
+          <button type="button" data-star="3" aria-label="3 stars">★</button>
+          <button type="button" data-star="4" aria-label="4 stars">★</button>
+          <button type="button" data-star="5" aria-label="5 stars">★</button>
+        </div>
+        <textarea id="review-text" rows="3" data-i18n-placeholder="review_text_ph" placeholder="Расскажите о поездке..." required></textarea>
+        <button type="submit" class="btn btn-primary" data-i18n="review_submit_btn">Отправить отзыв</button>
+      </form>
+      <p class="review-note" id="review-note" data-i18n="review_note">Отзыв появится на сайте после проверки модератором.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ============ FAQ ============ -->
 <section id="faq">
   <div class="container">
@@ -594,6 +623,12 @@
           <span class="tour-modal-label mono" data-i18n="modal_price_label">ЦЕНА</span>
           <span class="tour-modal-value tour-modal-price" id="tour-modal-price"></span>
         </div>
+      </div>
+
+      <div class="tour-modal-fields">
+        <input type="text" id="modal-req-name" data-i18n-placeholder="modal_name_ph" placeholder="Ваше имя">
+        <input type="tel" id="modal-req-phone" data-i18n-placeholder="modal_phone_ph" placeholder="Телефон">
+        <input type="date" id="modal-req-date">
       </div>
 
       <div class="tour-modal-travelers">

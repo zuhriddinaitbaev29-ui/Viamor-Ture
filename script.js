@@ -45,6 +45,14 @@ const translations = {
     ai_found:"Вот что нашёл для вас:",
     ai_no_match:"Точного совпадения среди текущих туров нет — но напишите менеджеру, подберём индивидуально:",
     ai_manager_link:"написать в Telegram",
+    nav_reviews:"Отзывы",
+    reviews_title:"Отзывы наших туристов", reviews_subtitle:"Что говорят те, кто уже летал с нами.",
+    reviews_empty:"Пока нет отзывов — станьте первым!",
+    review_form_title:"Оставить отзыв", review_name_ph:"Ваше имя", review_text_ph:"Расскажите о поездке...",
+    review_submit_btn:"Отправить отзыв", review_note:"Отзыв появится на сайте после проверки модератором.",
+    review_need_rating:"Заполните имя, текст и поставьте оценку звёздами.",
+    review_error:"Не удалось отправить отзыв, попробуйте ещё раз.",
+    review_thanks:"Спасибо! Отзыв отправлен на проверку.",
     tours_note_text:"Цены и даты действительны на момент публикации и могут измениться — уточняйте у менеджера при бронировании.",
     tours_note_link1:"Смотреть все туры →", tours_note_link2:"Написать менеджеру →",
     how_eyebrow:"КАК ЭТО РАБОТАЕТ", how_title:"От заявки до посадки — 4 шага",
@@ -135,6 +143,14 @@ const translations = {
     ai_found:"Siz uchun topganlarim:",
     ai_no_match:"Hozirgi turlar orasida aniq mos kelishi topilmadi — menejerga yozing, alohida tanlab beramiz:",
     ai_manager_link:"Telegramda yozish",
+    nav_reviews:"Sharhlar",
+    reviews_title:"Sayohatchilarimiz sharhlari", reviews_subtitle:"Biz bilan uchgan mijozlar fikri.",
+    reviews_empty:"Hozircha sharhlar yo'q — birinchi bo'ling!",
+    review_form_title:"Sharh qoldirish", review_name_ph:"Ismingiz", review_text_ph:"Sayohat haqida yozing...",
+    review_submit_btn:"Sharhni yuborish", review_note:"Sharh moderatordan o'tgach saytda ko'rinadi.",
+    review_need_rating:"Ism, matn va yulduzcha bahoni to'ldiring.",
+    review_error:"Sharhni yuborib bo'lmadi, qayta urinib ko'ring.",
+    review_thanks:"Rahmat! Sharh tekshiruvga yuborildi.",
     tours_note_text:"Narxlar va sanalar e'lon qilingan vaqtga tegishli va o'zgarishi mumkin — bron qilishda menejerdan aniqlashtiring.",
     tours_note_link1:"Barcha turlarni ko'rish →", tours_note_link2:"Menejerga yozish →",
     how_eyebrow:"BU QANDAY ISHLAYDI", how_title:"Arizadan parvozgacha — 4 qadam",
@@ -225,6 +241,14 @@ const translations = {
     ai_found:"Here's what I found for you:",
     ai_no_match:"No exact match among current tours — message our manager and we'll find one for you:",
     ai_manager_link:"message on Telegram",
+    nav_reviews:"Reviews",
+    reviews_title:"What our travelers say", reviews_subtitle:"Real feedback from people who flew with us.",
+    reviews_empty:"No reviews yet — be the first!",
+    review_form_title:"Leave a review", review_name_ph:"Your name", review_text_ph:"Tell us about your trip...",
+    review_submit_btn:"Submit review", review_note:"Your review will appear after moderation.",
+    review_need_rating:"Please fill in your name, text, and a star rating.",
+    review_error:"Couldn't submit the review, please try again.",
+    review_thanks:"Thanks! Your review was sent for review.",
     tours_note_text:"Prices and dates are valid as of the publication date and may change — please confirm with a manager when booking.",
     tours_note_link1:"See all tours →", tours_note_link2:"Message a manager →",
     how_eyebrow:"HOW IT WORKS", how_title:"From inquiry to boarding — 4 steps",
@@ -1027,5 +1051,71 @@ if(aiToggle && aiPanel){
         });
       });
     }, 450);
+  });
+}
+
+/* ============ REVIEWS ============ */
+const reviewsGrid = document.getElementById('reviews-grid');
+const reviewsEmpty = document.getElementById('reviews-empty');
+const reviewForm = document.getElementById('review-form');
+const reviewStarsInput = document.getElementById('review-stars-input');
+const reviewNote = document.getElementById('review-note');
+let selectedRating = 0;
+
+async function loadApprovedReviews(){
+  if(!reviewsGrid) return;
+  const { data, error } = await supabase
+    .from('reviews')
+    .select('customer_name, review_text, rating, created_at')
+    .eq('approved', true)
+    .order('created_at', { ascending: false })
+    .limit(12);
+  if(error || !data || data.length === 0){
+    reviewsEmpty.classList.add('show');
+    return;
+  }
+  reviewsEmpty.classList.remove('show');
+  reviewsGrid.innerHTML = data.map(r => {
+    const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+    return '<div class="review-card"><div class="review-stars">' + stars + '</div>' +
+      '<p class="review-text">' + aiEscapeHtml(r.review_text) + '</p>' +
+      '<div class="review-author">' + aiEscapeHtml(r.customer_name) + '</div></div>';
+  }).join('');
+}
+loadApprovedReviews();
+
+if(reviewStarsInput){
+  const starBtns = reviewStarsInput.querySelectorAll('button');
+  starBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      selectedRating = Number(btn.dataset.star);
+      starBtns.forEach(b => b.classList.toggle('active', Number(b.dataset.star) <= selectedRating));
+    });
+  });
+}
+
+if(reviewForm){
+  reviewForm.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const name = document.getElementById('review-name').value.trim();
+    const text = document.getElementById('review-text').value.trim();
+    if(!name || !text || selectedRating === 0){
+      reviewNote.textContent = translations[currentLang].review_need_rating;
+      reviewNote.classList.remove('success');
+      return;
+    }
+    const { error } = await supabase.from('reviews').insert({
+      customer_name: name, review_text: text, rating: selectedRating, approved: false
+    });
+    if(error){
+      reviewNote.textContent = translations[currentLang].review_error;
+      reviewNote.classList.remove('success');
+      return;
+    }
+    reviewNote.textContent = translations[currentLang].review_thanks;
+    reviewNote.classList.add('success');
+    reviewForm.reset();
+    selectedRating = 0;
+    reviewStarsInput.querySelectorAll('button').forEach(b => b.classList.remove('active'));
   });
 }
