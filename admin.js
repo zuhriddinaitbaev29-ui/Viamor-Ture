@@ -139,9 +139,50 @@ async function loadLeads(password){
     return { ok: false };
   }
   allLeads = data || [];
+  renderStats(allLeads);
   await loadReviews();
   renderLeads(allLeads);
   return { ok: true };
+}
+
+function renderStats(leads){
+  const statToday = document.getElementById('stat-today');
+  const statMonth = document.getElementById('stat-month');
+  const statPopular = document.getElementById('stat-popular');
+  if(!statToday) return;
+
+  const now = new Date();
+  const todayStr = now.toDateString();
+  const thisMonth = now.getMonth();
+  const thisYear = now.getFullYear();
+
+  let todayCount = 0, monthCount = 0;
+  const tourCounts = {};
+  const TOUR_NAMES = {
+    georgia:'Грузия', turkey:'Турция', uae:'ОАЭ', egypt:'Египет', maldives:'Мальдивы', azerbaijan:'Азербайджан'
+  };
+
+  leads.forEach(l=>{
+    const d = new Date(l.created_at);
+    if(d.toDateString() === todayStr) todayCount++;
+    if(d.getMonth() === thisMonth && d.getFullYear() === thisYear) monthCount++;
+    if(l.source && l.source.startsWith('booking_')){
+      const key = l.source.replace('booking_', '');
+      tourCounts[key] = (tourCounts[key] || 0) + 1;
+    }
+  });
+
+  statToday.textContent = todayCount;
+  statMonth.textContent = monthCount;
+
+  const entries = Object.entries(tourCounts);
+  if(entries.length === 0){
+    statPopular.textContent = '—';
+  } else {
+    entries.sort((a,b)=> b[1] - a[1]);
+    const topKey = entries[0][0];
+    statPopular.textContent = TOUR_NAMES[topKey] || topKey;
+  }
 }
 
 async function loadReviews(){
