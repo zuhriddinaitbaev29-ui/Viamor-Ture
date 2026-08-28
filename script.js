@@ -38,6 +38,12 @@ const translations = {
     tours_detail_cta:"Подробнее →",
     modal_duration_label:"ДЛИТЕЛЬНОСТЬ", modal_price_label:"ЦЕНА", modal_travelers_label:"ТУРИСТОВ",
     modal_book_btn:"Забронировать этот тур",
+    ai_title:"Подбор тура",
+    ai_greeting:"Расскажите, куда хотите поехать — например: «море, 7 дней, бюджет $1000, с семьёй» — подберу подходящие туры из наших предложений.",
+    ai_placeholder:"Например: море, $1000, 7 дней...",
+    ai_found:"Вот что нашёл для вас:",
+    ai_no_match:"Точного совпадения среди текущих туров нет — но напишите менеджеру, подберём индивидуально:",
+    ai_manager_link:"написать в Telegram",
     tours_note_text:"Цены и даты действительны на момент публикации и могут измениться — уточняйте у менеджера при бронировании.",
     tours_note_link1:"Смотреть все туры →", tours_note_link2:"Написать менеджеру →",
     how_eyebrow:"КАК ЭТО РАБОТАЕТ", how_title:"От заявки до посадки — 4 шага",
@@ -121,6 +127,12 @@ const translations = {
     tours_detail_cta:"Batafsil →",
     modal_duration_label:"DAVOMIYLIGI", modal_price_label:"NARX", modal_travelers_label:"SAYOHATCHILAR",
     modal_book_btn:"Bu turni bron qilish",
+    ai_title:"Tur tanlash",
+    ai_greeting:"Qayerga borishni xohlashingizni ayting — masalan: «dengiz, 7 kun, $1000 byudjet, oila bilan» — mos turlarni topib beraman.",
+    ai_placeholder:"Masalan: dengiz, $1000, 7 kun...",
+    ai_found:"Siz uchun topganlarim:",
+    ai_no_match:"Hozirgi turlar orasida aniq mos kelishi topilmadi — menejerga yozing, alohida tanlab beramiz:",
+    ai_manager_link:"Telegramda yozish",
     tours_note_text:"Narxlar va sanalar e'lon qilingan vaqtga tegishli va o'zgarishi mumkin — bron qilishda menejerdan aniqlashtiring.",
     tours_note_link1:"Barcha turlarni ko'rish →", tours_note_link2:"Menejerga yozish →",
     how_eyebrow:"BU QANDAY ISHLAYDI", how_title:"Arizadan parvozgacha — 4 qadam",
@@ -204,6 +216,12 @@ const translations = {
     tours_detail_cta:"Details →",
     modal_duration_label:"DURATION", modal_price_label:"PRICE", modal_travelers_label:"TRAVELERS",
     modal_book_btn:"Book this tour",
+    ai_title:"Tour Finder",
+    ai_greeting:"Tell me where you'd like to go — for example: \"beach, 7 days, $1000 budget, with family\" — I'll match tours from our current offers.",
+    ai_placeholder:"E.g. beach, $1000, 7 days...",
+    ai_found:"Here's what I found for you:",
+    ai_no_match:"No exact match among current tours — message our manager and we'll find one for you:",
+    ai_manager_link:"message on Telegram",
     tours_note_text:"Prices and dates are valid as of the publication date and may change — please confirm with a manager when booking.",
     tours_note_link1:"See all tours →", tours_note_link2:"Message a manager →",
     how_eyebrow:"HOW IT WORKS", how_title:"From inquiry to boarding — 4 steps",
@@ -842,3 +860,124 @@ if(tourModalOverlay){
 document.addEventListener('keydown', (e)=>{
   if(e.key === 'Escape' && tourModalOverlay && tourModalOverlay.classList.contains('show')) closeTourModal();
 });
+
+/* ============ AI TOUR ASSISTANT (keyword-based smart matcher, no external API) ============ */
+const aiToggle = document.getElementById('ai-toggle');
+const aiPanel = document.getElementById('ai-panel');
+const aiClose = document.getElementById('ai-close');
+const aiMessages = document.getElementById('ai-messages');
+const aiForm = document.getElementById('ai-form');
+const aiInput = document.getElementById('ai-input');
+
+const AI_COUNTRY_KEYWORDS = {
+  georgia: ['грузия','батуми','тбилиси','georgia','gruziya','tbilisi','batumi'],
+  turkey: ['турция','анталь','turkey','turkiya','antaliya','antalya'],
+  uae: ['дубай','оаэ','эмират','dubai','uae','baa'],
+  egypt: ['египет','шарм','egypt','misr','sharm'],
+  maldives: ['мальдив','maldiv'],
+  azerbaijan: ['баку','азербайджан','нафталан','baku','ozarbayjon','azerbaijan']
+};
+const AI_TYPE_KEYWORDS = {
+  mountains: ['гор','природ','mountain','tog'],
+  wellness: ['лечен','здоров','spa','оздоров','sog\'lom','shifo'],
+  beach: ['море','пляж','sea','beach','dengiz','plyaj']
+};
+
+function aiEscapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function addAiMessage(html, isBot){
+  const div = document.createElement('div');
+  div.className = 'ai-msg ' + (isBot ? 'ai-msg-bot' : 'ai-msg-user');
+  div.innerHTML = html;
+  aiMessages.appendChild(div);
+  aiMessages.scrollTop = aiMessages.scrollHeight;
+  return div;
+}
+
+function parseAiQuery(text){
+  const lower = text.toLowerCase();
+  const budgetMatch = lower.match(/(\d{2,5})\s*\$|\$\s*(\d{2,5})|(\d{2,5})\s*(долл|бюджет|dollar)/);
+  const budget = budgetMatch ? Number(budgetMatch[1] || budgetMatch[2] || budgetMatch[3]) : null;
+
+  const countries = [];
+  for(const key in AI_COUNTRY_KEYWORDS){
+    if(AI_COUNTRY_KEYWORDS[key].some(w => lower.includes(w))) countries.push(key);
+  }
+  const types = [];
+  for(const key in AI_TYPE_KEYWORDS){
+    if(AI_TYPE_KEYWORDS[key].some(w => lower.includes(w))) types.push(key);
+  }
+  return { budget, countries, types };
+}
+
+function findAiMatches(parsed){
+  const tickets = Array.from(document.querySelectorAll('#tours-grid .ticket'));
+  let candidates = tickets.map(t => ({
+    key: t.dataset.country,
+    budget: Number(t.dataset.budget),
+    name: (t.querySelector('h3') || {}).textContent || '',
+    price: (t.querySelector('.price') || {}).textContent || '',
+    duration: (t.querySelector('.duration') || {}).textContent || '',
+    img: (t.querySelector('.ticket-illustration img') || {}).src || ''
+  }));
+
+  if(parsed.countries.length){
+    candidates = candidates.filter(c => parsed.countries.includes(c.key));
+  } else if(parsed.types.includes('mountains')){
+    candidates = candidates.filter(c => c.key === 'georgia');
+  } else if(parsed.types.includes('wellness')){
+    candidates = candidates.filter(c => c.key === 'azerbaijan');
+  } else if(parsed.types.includes('beach')){
+    candidates = candidates.filter(c => ['turkey','egypt','uae','maldives'].includes(c.key));
+  }
+
+  if(parsed.budget){
+    const withinBudget = candidates.filter(c => c.budget <= parsed.budget * 1.25);
+    const pool = withinBudget.length ? withinBudget : candidates;
+    pool.sort((a,b)=> Math.abs(a.budget - parsed.budget) - Math.abs(b.budget - parsed.budget));
+    candidates = pool;
+  } else {
+    candidates.sort((a,b)=> a.budget - b.budget);
+  }
+  return candidates.slice(0, 3);
+}
+
+if(aiToggle && aiPanel){
+  aiToggle.addEventListener('click', ()=> aiPanel.classList.toggle('open'));
+  aiClose.addEventListener('click', ()=> aiPanel.classList.remove('open'));
+  aiForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const text = aiInput.value.trim();
+    if(!text) return;
+    addAiMessage(aiEscapeHtml(text), false);
+    aiInput.value = '';
+
+    const parsed = parseAiQuery(text);
+    const matches = findAiMatches(parsed);
+    const dict = translations[currentLang];
+
+    setTimeout(()=>{
+      if(matches.length === 0){
+        addAiMessage(dict.ai_no_match + ' <a href="https://t.me/Masturabilen" target="_blank" rel="noopener">' + dict.ai_manager_link + '</a>', true);
+        return;
+      }
+      let html = dict.ai_found + '<div class="ai-results">';
+      matches.forEach(m=>{
+        html += '<div class="ai-result-card" data-tour-key="' + m.key + '"><img src="' + m.img + '" alt="">' +
+          '<div><b>' + aiEscapeHtml(m.name) + '</b><span>' + aiEscapeHtml(m.duration) + ' · ' + aiEscapeHtml(m.price) + '</span></div></div>';
+      });
+      html += '</div>';
+      const msgEl = addAiMessage(html, true);
+      msgEl.querySelectorAll('.ai-result-card').forEach(card=>{
+        card.addEventListener('click', ()=>{
+          aiPanel.classList.remove('open');
+          openTourModal(card.dataset.tourKey);
+        });
+      });
+    }, 450);
+  });
+}

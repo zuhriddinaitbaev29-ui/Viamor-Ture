@@ -610,6 +610,23 @@
   </div>
 </div>
 
+<button class="ai-toggle" id="ai-toggle" aria-label="AI помощник">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8L12 3z"/><path d="M19 14l.9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9L19 14z"/></svg>
+</button>
+<div class="ai-panel" id="ai-panel">
+  <div class="ai-panel-header">
+    <span data-i18n="ai_title">Подбор тура</span>
+    <button id="ai-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l16 16M20 4L4 20"/></svg></button>
+  </div>
+  <div class="ai-messages" id="ai-messages">
+    <div class="ai-msg ai-msg-bot" data-i18n="ai_greeting">Расскажите, куда хотите поехать — например: «море, 7 дней, бюджет $1000, с семьёй» — подберу подходящие туры из наших предложений.</div>
+  </div>
+  <form class="ai-input-row" id="ai-form">
+    <input type="text" id="ai-input" data-i18n-placeholder="ai_placeholder" placeholder="Например: море, $1000, 7 дней...">
+    <button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  </form>
+</div>
+
 <script src="https://accounts.google.com/gsi/client" async></script>
 <script src="https://telegram.org/js/telegram-widget.js?22" async></script>
 <script type="text/javascript" src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js" async></script>
