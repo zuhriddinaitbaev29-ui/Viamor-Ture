@@ -34,6 +34,7 @@ const translations = {
     filter_all_countries:"Все страны",
     filter_budget_all:"Любой бюджет", filter_budget_1:"до $700", filter_budget_2:"$700–950", filter_budget_3:"от $950",
     filter_empty:"Туров по этим критериям пока нет — напишите менеджеру, подберём индивидуально.",
+    filter_favorites:"Избранное",
     tours_note_text:"Цены и даты действительны на момент публикации и могут измениться — уточняйте у менеджера при бронировании.",
     tours_note_link1:"Смотреть все туры →", tours_note_link2:"Написать менеджеру →",
     how_eyebrow:"КАК ЭТО РАБОТАЕТ", how_title:"От заявки до посадки — 4 шага",
@@ -113,6 +114,7 @@ const translations = {
     filter_all_countries:"Barcha davlatlar",
     filter_budget_all:"Har qanday byudjet", filter_budget_1:"$700 gacha", filter_budget_2:"$700–950", filter_budget_3:"$950 dan",
     filter_empty:"Bu mezonlar bo'yicha turlar hozircha yo'q — menejerga yozing, alohida tanlab beramiz.",
+    filter_favorites:"Sevimlilar",
     tours_note_text:"Narxlar va sanalar e'lon qilingan vaqtga tegishli va o'zgarishi mumkin — bron qilishda menejerdan aniqlashtiring.",
     tours_note_link1:"Barcha turlarni ko'rish →", tours_note_link2:"Menejerga yozish →",
     how_eyebrow:"BU QANDAY ISHLAYDI", how_title:"Arizadan parvozgacha — 4 qadam",
@@ -192,6 +194,7 @@ const translations = {
     filter_all_countries:"All countries",
     filter_budget_all:"Any budget", filter_budget_1:"under $700", filter_budget_2:"$700–950", filter_budget_3:"$950+",
     filter_empty:"No tours match these filters yet — message our manager and we'll find one for you.",
+    filter_favorites:"Favorites",
     tours_note_text:"Prices and dates are valid as of the publication date and may change — please confirm with a manager when booking.",
     tours_note_link1:"See all tours →", tours_note_link2:"Message a manager →",
     how_eyebrow:"HOW IT WORKS", how_title:"From inquiry to boarding — 4 steps",
@@ -438,11 +441,51 @@ if(toursGrid && toursPrev && toursNext){
   updateActiveTicket();
 }
 
-/* ============ TOURS FILTER (country + budget) ============ */
+/* ============ TOURS FILTER (country + budget + favorites) ============ */
 const filterCountry = document.getElementById('filter-country');
-const filterChips = document.querySelectorAll('.filter-chip');
+const filterChips = document.querySelectorAll('.filter-budget-group > .filter-chip:not(.filter-fav-toggle)');
+const filterFavToggle = document.getElementById('filter-fav-toggle');
+const favCountEl = document.getElementById('fav-count');
 const filterEmpty = document.getElementById('filter-empty');
 let activeBudgetRange = 'all';
+let favOnlyMode = false;
+
+/* --- favorites storage (persists in this browser via localStorage) --- */
+const FAV_KEY = 'viamor_favorite_tours';
+function getFavorites(){
+  try{ return JSON.parse(localStorage.getItem(FAV_KEY)) || []; } catch(e){ return []; }
+}
+function setFavorites(list){
+  try{ localStorage.setItem(FAV_KEY, JSON.stringify(list)); } catch(e){}
+}
+function isFavorite(tourId){ return getFavorites().includes(tourId); }
+function toggleFavorite(tourId){
+  let list = getFavorites();
+  if(list.includes(tourId)) list = list.filter(id => id !== tourId);
+  else list.push(tourId);
+  setFavorites(list);
+  updateFavCount();
+  return list.includes(tourId);
+}
+function updateFavCount(){
+  if(favCountEl) favCountEl.textContent = '(' + getFavorites().length + ')';
+}
+function initFavButtons(){
+  document.querySelectorAll('.fav-btn').forEach(btn=>{
+    const ticket = btn.closest('.ticket');
+    if(!ticket) return;
+    btn.classList.toggle('active', isFavorite(ticket.id));
+    btn.addEventListener('click', (e)=>{
+      e.preventDefault(); e.stopPropagation();
+      const nowFav = toggleFavorite(ticket.id);
+      btn.classList.toggle('active', nowFav);
+      btn.classList.remove('pulse'); void btn.offsetWidth; btn.classList.add('pulse');
+      if(favOnlyMode) applyTourFilters();
+    });
+  });
+}
+initFavButtons();
+updateFavCount();
 
 function applyTourFilters(){
   const country = filterCountry.value;
@@ -456,7 +499,8 @@ function applyTourFilters(){
       const price = Number(t.dataset.budget);
       matchesBudget = price >= min && price <= max;
     }
-    const visible = matchesCountry && matchesBudget;
+    const matchesFav = !favOnlyMode || isFavorite(t.id);
+    const visible = matchesCountry && matchesBudget && matchesFav;
     t.style.display = visible ? '' : 'none';
     if(visible) visibleCount++;
   });
@@ -466,6 +510,13 @@ function applyTourFilters(){
   updateActiveTicket();
   stopToursAutoplay();
   startToursAutoplay();
+}
+if(filterFavToggle){
+  filterFavToggle.addEventListener('click', ()=>{
+    favOnlyMode = !favOnlyMode;
+    filterFavToggle.classList.toggle('active', favOnlyMode);
+    applyTourFilters();
+  });
 }
 if(filterCountry && filterChips.length){
   filterCountry.addEventListener('change', applyTourFilters);
@@ -651,4 +702,4 @@ document.getElementById('contact-form').addEventListener('submit', async functio
   } catch(err){
     noteErr.classList.add('show');
   }
-})      
+});

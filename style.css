@@ -216,6 +216,22 @@
     font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:.06em;
     padding:5px 12px; border-radius:20px;
   }
+  .fav-btn{
+    position:absolute; top:14px; right:14px; z-index:2;
+    width:38px; height:38px; border-radius:50%; border:none; cursor:pointer;
+    background:rgba(27,42,74,.55); backdrop-filter:blur(2px);
+    display:flex; align-items:center; justify-content:center;
+    color:#F1E3C6; transition:transform .2s ease, background .2s ease;
+  }
+  .fav-btn:hover{transform:scale(1.1);}
+  .fav-btn svg{width:19px; height:19px;}
+  .fav-btn.active{color:var(--clay);}
+  .fav-btn.active svg{fill:var(--clay); stroke:var(--clay);}
+  .fav-btn.pulse{animation:fav-pulse .4s ease;}
+  @keyframes fav-pulse{0%{transform:scale(1);} 40%{transform:scale(1.35);} 100%{transform:scale(1);}}
+  .filter-fav-toggle{display:inline-flex; align-items:center; gap:7px;}
+  .fav-toggle-icon{width:14px; height:14px; fill:none; stroke:currentColor;}
+  .filter-fav-toggle.active .fav-toggle-icon{fill:var(--clay); stroke:var(--clay);}
   .ticket-includes{display:flex; flex-wrap:wrap; gap:16px 22px; margin:18px 0 24px;}
   .ticket-includes span{display:inline-flex; align-items:center; gap:7px; font-size:12.5px; color:var(--ink-soft); font-family:'IBM Plex Mono',monospace;}
   .inc-icon{width:16px; height:16px; color:var(--teal); flex-shrink:0;}
@@ -467,4 +483,4 @@
     opacity:0; max-height:0; overflow:hidden; transition:opacity .3s ease, max-height .3s ease, margin .3s ease;
   }
   .auth-coming-note.show{opacity:1; max-height:120px; margin-top:16px;}
-  .auth-coming-note a{color:var(--teal); font-weight:600; border-bottom:1px solid var(--teal);} 
+  .auth-coming-note a{color:var(--teal); font-weight:600; border-bottom:1px solid var(--teal);}

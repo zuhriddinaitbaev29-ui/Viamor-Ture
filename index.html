@@ -17,6 +17,7 @@
   <symbol id="ic-hotel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V9l9-6 9 6v12M3 21h18M8 21v-6h8v6"/></symbol>
   <symbol id="ic-transfer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16V9a2 2 0 012-2h9l4 4v5M3 16h1M20 16h1M7 16a2 2 0 104 0 2 2 0 10-4 0M14 16a2 2 0 104 0 2 2 0 10-4 0"/></symbol>
   <symbol id="ic-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3.5v6c0 5-3.5 8.5-8 10.5-4.5-2-8-5.5-8-10.5v-6L12 2z"/></symbol>
+  <symbol id="ic-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.35-9.5-9A5.5 5.5 0 0112 6a5.5 5.5 0 019.5 6C19.5 16.65 12 21 12 21z"/></symbol>
 </svg>
 
 <div class="auth-overlay show" id="auth-overlay">
@@ -216,6 +217,10 @@
         <button class="filter-chip" data-budget="0-700" data-i18n="filter_budget_1">до $700</button>
         <button class="filter-chip" data-budget="700-950" data-i18n="filter_budget_2">$700–950</button>
         <button class="filter-chip" data-budget="950-99999" data-i18n="filter_budget_3">от $950</button>
+        <button class="filter-chip filter-fav-toggle" id="filter-fav-toggle">
+          <svg class="fav-toggle-icon"><use href="#ic-heart"/></svg>
+          <span data-i18n="filter_favorites">Избранное</span> <span id="fav-count">(0)</span>
+        </button>
       </div>
     </div>
     <p class="filter-empty" id="filter-empty" data-i18n="filter_empty">Туров по этим критериям пока нет — напишите менеджеру, подберём индивидуально.</p>
@@ -241,6 +246,7 @@
             <g transform="translate(70,55) scale(6.2)" fill="none" stroke="var(--navy)" stroke-width="1" opacity=".55"><path d="M3 30l9-13 6 7 8-14 11 20z"/><circle cx="30" cy="8" r="3" fill="var(--navy)" stroke="none"/></g>
           </svg>
           <span class="ticket-stars">★★★–★★★★</span>
+          <button class="fav-btn" aria-label="Favorite"><svg><use href="#ic-heart"/></svg></button>
         </div>
         <div class="ticket-stub"><span class="mono">TAS–BUS–TBS</span></div>
         <div class="ticket-body">
@@ -273,6 +279,7 @@
             <g transform="translate(75,50) scale(6.2)" fill="none" stroke="var(--navy)" stroke-width="1" opacity=".55"><circle cx="20" cy="14" r="6"/><path d="M2 32c4-6 10-9 18-9s14 3 18 9"/></g>
           </svg>
           <span class="ticket-stars">★★★–★★★★★</span>
+          <button class="fav-btn" aria-label="Favorite"><svg><use href="#ic-heart"/></svg></button>
         </div>
         <div class="ticket-stub"><span class="mono">TAS–AYT</span></div>
         <div class="ticket-body">
@@ -305,6 +312,7 @@
             <g transform="translate(65,45) scale(6.2)" fill="none" stroke="var(--navy)" stroke-width="1" opacity=".6"><path d="M6 34V16h5v18M15 34V10h5v24M24 34V20h5v14M33 34V6h2v28"/></g>
           </svg>
           <span class="ticket-stars">★★★★★ Amwaj Rotana</span>
+          <button class="fav-btn" aria-label="Favorite"><svg><use href="#ic-heart"/></svg></button>
         </div>
         <div class="ticket-stub"><span class="mono">TAS–DXB</span></div>
         <div class="ticket-body">
@@ -337,6 +345,7 @@
             <g transform="translate(70,50) scale(6.2)" fill="none" stroke="var(--navy)" stroke-width="1" opacity=".55"><path d="M4 32h32M8 32l12-20 12 20"/></g>
           </svg>
           <span class="ticket-stars">★★★★–★★★★★</span>
+          <button class="fav-btn" aria-label="Favorite"><svg><use href="#ic-heart"/></svg></button>
         </div>
         <div class="ticket-stub"><span class="mono">TAS–SSH</span></div>
         <div class="ticket-body">
@@ -369,6 +378,7 @@
             <g transform="translate(70,60) scale(6.2)" fill="none" stroke="var(--navy)" stroke-width="1" opacity=".55"><path d="M10 24v10M10 24l8-6v10M10 24l-6 4M2 34h36"/><path d="M2 28c4-3 8-3 12 0s8 3 12 0 8-3 12 0" stroke-width=".8"/></g>
           </svg>
           <span class="ticket-stars">★★★–★★★★★</span>
+          <button class="fav-btn" aria-label="Favorite"><svg><use href="#ic-heart"/></svg></button>
         </div>
         <div class="ticket-stub"><span class="mono">TAS–MLE</span></div>
         <div class="ticket-body">
@@ -401,6 +411,7 @@
             <g transform="translate(140,45) scale(6.2)" fill="none" stroke="var(--navy)" stroke-width="1" opacity=".6"><path d="M20 4c6 8 6 14 0 20-6-6-6-12 0-20zM20 24c3 3 3 7 0 10-3-3-3-7 0-10z"/></g>
           </svg>
           <span class="ticket-stars">★★★–★★★★</span>
+          <button class="fav-btn" aria-label="Favorite"><svg><use href="#ic-heart"/></svg></button>
         </div>
         <div class="ticket-stub"><span class="mono">TAS–GYD</span></div>
         <div class="ticket-body">
@@ -603,4 +614,4 @@
 <script type="text/javascript" src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js" async></script>
 <script type="module" src="script.js"></script>
 </body>
-</html>   
+</html>
