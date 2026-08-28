@@ -35,6 +35,9 @@ const translations = {
     filter_budget_all:"Любой бюджет", filter_budget_1:"до $700", filter_budget_2:"$700–950", filter_budget_3:"от $950",
     filter_empty:"Туров по этим критериям пока нет — напишите менеджеру, подберём индивидуально.",
     filter_favorites:"Избранное",
+    tours_detail_cta:"Подробнее →",
+    modal_duration_label:"ДЛИТЕЛЬНОСТЬ", modal_price_label:"ЦЕНА", modal_travelers_label:"ТУРИСТОВ",
+    modal_book_btn:"Забронировать этот тур",
     tours_note_text:"Цены и даты действительны на момент публикации и могут измениться — уточняйте у менеджера при бронировании.",
     tours_note_link1:"Смотреть все туры →", tours_note_link2:"Написать менеджеру →",
     how_eyebrow:"КАК ЭТО РАБОТАЕТ", how_title:"От заявки до посадки — 4 шага",
@@ -115,6 +118,9 @@ const translations = {
     filter_budget_all:"Har qanday byudjet", filter_budget_1:"$700 gacha", filter_budget_2:"$700–950", filter_budget_3:"$950 dan",
     filter_empty:"Bu mezonlar bo'yicha turlar hozircha yo'q — menejerga yozing, alohida tanlab beramiz.",
     filter_favorites:"Sevimlilar",
+    tours_detail_cta:"Batafsil →",
+    modal_duration_label:"DAVOMIYLIGI", modal_price_label:"NARX", modal_travelers_label:"SAYOHATCHILAR",
+    modal_book_btn:"Bu turni bron qilish",
     tours_note_text:"Narxlar va sanalar e'lon qilingan vaqtga tegishli va o'zgarishi mumkin — bron qilishda menejerdan aniqlashtiring.",
     tours_note_link1:"Barcha turlarni ko'rish →", tours_note_link2:"Menejerga yozish →",
     how_eyebrow:"BU QANDAY ISHLAYDI", how_title:"Arizadan parvozgacha — 4 qadam",
@@ -195,6 +201,9 @@ const translations = {
     filter_budget_all:"Any budget", filter_budget_1:"under $700", filter_budget_2:"$700–950", filter_budget_3:"$950+",
     filter_empty:"No tours match these filters yet — message our manager and we'll find one for you.",
     filter_favorites:"Favorites",
+    tours_detail_cta:"Details →",
+    modal_duration_label:"DURATION", modal_price_label:"PRICE", modal_travelers_label:"TRAVELERS",
+    modal_book_btn:"Book this tour",
     tours_note_text:"Prices and dates are valid as of the publication date and may change — please confirm with a manager when booking.",
     tours_note_link1:"See all tours →", tours_note_link2:"Message a manager →",
     how_eyebrow:"HOW IT WORKS", how_title:"From inquiry to boarding — 4 steps",
@@ -263,6 +272,9 @@ function applyLang(lang){
   });
   if(typeof activeDest !== 'undefined' && activeDest && typeof renderDestPanel === 'function'){
     renderDestPanel(activeDest);
+  }
+  if(typeof currentModalTourKey !== 'undefined' && currentModalTourKey && typeof openTourModal === 'function'){
+    openTourModal(currentModalTourKey);
   }
 }
 document.querySelectorAll('[data-lang-btn]').forEach(btn=>{
@@ -702,4 +714,104 @@ document.getElementById('contact-form').addEventListener('submit', async functio
   } catch(err){
     noteErr.classList.add('show');
   }
+});
+
+/* ============ TOUR DETAIL MODAL ============ */
+const tourModalOverlay = document.getElementById('tour-modal-overlay');
+const tourModalMainImg = document.getElementById('tour-modal-main-img');
+const tourModalThumbs = document.getElementById('tour-modal-thumbs');
+const tourModalRoute = document.getElementById('tour-modal-route');
+const tourModalTitle = document.getElementById('tour-modal-title');
+const tourModalStars = document.getElementById('tour-modal-stars');
+const tourModalDesc = document.getElementById('tour-modal-desc');
+const tourModalIncludes = document.getElementById('tour-modal-includes');
+const tourModalDuration = document.getElementById('tour-modal-duration');
+const tourModalPrice = document.getElementById('tour-modal-price');
+const tourModalBook = document.getElementById('tour-modal-book');
+const tourModalClose = document.getElementById('tour-modal-close');
+const travelerCountEl = document.getElementById('traveler-count');
+const travelerMinus = document.getElementById('traveler-minus');
+const travelerPlus = document.getElementById('traveler-plus');
+let travelerCount = 2;
+let currentModalTourName = '';
+let currentModalTourKey = null;
+
+const TOUR_GRADIENTS = { georgia:'sky-georgia', turkey:'sky-turkey', uae:'sky-uae', egypt:'sky-egypt', maldives:'sky-maldives', azerbaijan:'sky-azerbaijan' };
+
+function makeRoomSvg(gradId){
+  return '<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="url(#'+gradId+')"/><rect x="60" y="170" width="140" height="70" rx="6" fill="var(--surface)" opacity=".85"/><rect x="70" y="150" width="50" height="35" rx="4" fill="var(--surface)" opacity=".7"/><rect x="260" y="60" width="90" height="120" rx="4" fill="var(--surface)" opacity=".25"/></svg>';
+}
+function makePoolSvg(gradId){
+  return '<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="url(#'+gradId+')"/><circle cx="330" cy="55" r="24" fill="var(--surface)" opacity=".8"/><path d="M0 210 Q60 190 120 210 T240 210 T360 210 T480 210" fill="none" stroke="var(--surface)" stroke-width="3" opacity=".6"/><path d="M0 235 Q60 215 120 235 T240 235 T360 235 T480 235" fill="none" stroke="var(--surface)" stroke-width="3" opacity=".4"/></svg>';
+}
+function setModalMainImage(html){ tourModalMainImg.innerHTML = html; }
+
+function updateModalBookLink(){
+  const msg = encodeURIComponent('Здравствуйте! Интересует тур "' + currentModalTourName + '", туристов: ' + travelerCount + '.');
+  tourModalBook.href = 'https://t.me/Masturabilen?text=' + msg;
+}
+
+function openTourModal(tourKey){
+  const ticket = document.getElementById('tour-' + tourKey);
+  if(!ticket) return;
+  currentModalTourKey = tourKey;
+  const heroSvg = ticket.querySelector('.ticket-illustration svg').outerHTML;
+  const gradId = TOUR_GRADIENTS[tourKey];
+  const gallery = [heroSvg, makeRoomSvg(gradId), makePoolSvg(gradId)];
+
+  currentModalTourName = ticket.querySelector('h3').textContent;
+  tourModalRoute.textContent = ticket.querySelector('.ticket-stub .mono').textContent;
+  tourModalTitle.textContent = currentModalTourName;
+  tourModalStars.textContent = ticket.querySelector('.ticket-stars').textContent;
+  tourModalDesc.textContent = ticket.querySelector('.ticket-body p.desc').textContent;
+  tourModalIncludes.innerHTML = ticket.querySelector('.ticket-includes').innerHTML;
+  tourModalDuration.textContent = ticket.querySelector('.duration').textContent;
+  tourModalPrice.textContent = ticket.querySelector('.price').textContent;
+
+  setModalMainImage(gallery[0]);
+  tourModalThumbs.innerHTML = '';
+  gallery.forEach((html, i)=>{
+    const thumb = document.createElement('div');
+    thumb.className = 'tour-modal-thumb' + (i === 0 ? ' active' : '');
+    thumb.innerHTML = html;
+    thumb.addEventListener('click', ()=>{
+      setModalMainImage(html);
+      tourModalThumbs.querySelectorAll('.tour-modal-thumb').forEach(t=> t.classList.remove('active'));
+      thumb.classList.add('active');
+    });
+    tourModalThumbs.appendChild(thumb);
+  });
+
+  travelerCount = 2;
+  if(travelerCountEl) travelerCountEl.textContent = travelerCount;
+  updateModalBookLink();
+
+  tourModalOverlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeTourModal(){
+  tourModalOverlay.classList.remove('show');
+  document.body.style.overflow = '';
+  currentModalTourKey = null;
+}
+if(travelerMinus && travelerPlus){
+  travelerMinus.addEventListener('click', ()=>{
+    if(travelerCount > 1){ travelerCount--; travelerCountEl.textContent = travelerCount; updateModalBookLink(); }
+  });
+  travelerPlus.addEventListener('click', ()=>{
+    if(travelerCount < 12){ travelerCount++; travelerCountEl.textContent = travelerCount; updateModalBookLink(); }
+  });
+}
+document.querySelectorAll('.ticket-detail-btn').forEach(btn=>{
+  btn.addEventListener('click', (e)=>{
+    e.preventDefault();
+    openTourModal(btn.dataset.tour);
+  });
+});
+if(tourModalClose) tourModalClose.addEventListener('click', closeTourModal);
+if(tourModalOverlay){
+  tourModalOverlay.addEventListener('click', (e)=>{ if(e.target === tourModalOverlay) closeTourModal(); });
+}
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape' && tourModalOverlay && tourModalOverlay.classList.contains('show')) closeTourModal();
 });

@@ -263,6 +263,7 @@
             <span class="price" data-i18n="tour1_price">от $827</span>
           </div>
           <a href="https://t.me/Masturabilen" target="_blank" rel="noopener" class="ticket-cta" data-i18n="tours_cta">Забронировать</a>
+          <button class="ticket-detail-btn" data-tour="georgia" data-i18n="tours_detail_cta">Подробнее →</button>
         </div>
       </div>
 
@@ -296,6 +297,7 @@
             <span class="price" data-i18n="tour2_price">от $754</span>
           </div>
           <a href="https://t.me/Masturabilen" target="_blank" rel="noopener" class="ticket-cta" data-i18n="tours_cta">Забронировать</a>
+          <button class="ticket-detail-btn" data-tour="turkey" data-i18n="tours_detail_cta">Подробнее →</button>
         </div>
       </div>
 
@@ -329,6 +331,7 @@
             <span class="price" data-i18n="tour3_price">от $1 059</span>
           </div>
           <a href="https://t.me/Masturabilen" target="_blank" rel="noopener" class="ticket-cta" data-i18n="tours_cta">Забронировать</a>
+          <button class="ticket-detail-btn" data-tour="uae" data-i18n="tours_detail_cta">Подробнее →</button>
         </div>
       </div>
 
@@ -362,6 +365,7 @@
             <span class="price" data-i18n="tour4_price">от $519</span>
           </div>
           <a href="https://t.me/Masturabilen" target="_blank" rel="noopener" class="ticket-cta" data-i18n="tours_cta">Забронировать</a>
+          <button class="ticket-detail-btn" data-tour="egypt" data-i18n="tours_detail_cta">Подробнее →</button>
         </div>
       </div>
 
@@ -395,6 +399,7 @@
             <span class="price" data-i18n="tour5_price">от 11,5 млн сум</span>
           </div>
           <a href="https://t.me/Masturabilen" target="_blank" rel="noopener" class="ticket-cta" data-i18n="tours_cta">Забронировать</a>
+          <button class="ticket-detail-btn" data-tour="maldives" data-i18n="tours_detail_cta">Подробнее →</button>
         </div>
       </div>
 
@@ -428,6 +433,7 @@
             <span class="price" data-i18n="tour6_price">от $761</span>
           </div>
           <a href="https://t.me/Masturabilen" target="_blank" rel="noopener" class="ticket-cta" data-i18n="tours_cta">Забронировать</a>
+          <button class="ticket-detail-btn" data-tour="azerbaijan" data-i18n="tours_detail_cta">Подробнее →</button>
         </div>
       </div>
     </div>
@@ -608,6 +614,49 @@
     <p class="footer-rights" data-i18n="footer_rights">© 2026 Viamor Tour. Все права защищены.</p>
   </div>
 </footer>
+
+<!-- ============ TOUR DETAIL MODAL ============ -->
+<div class="tour-modal-overlay" id="tour-modal-overlay">
+  <div class="tour-modal">
+    <button class="tour-modal-close" id="tour-modal-close" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l16 16M20 4L4 20"/></svg>
+    </button>
+    <div class="tour-modal-gallery">
+      <div class="tour-modal-main-img" id="tour-modal-main-img"></div>
+      <div class="tour-modal-thumbs" id="tour-modal-thumbs"></div>
+    </div>
+    <div class="tour-modal-body">
+      <span class="tour-modal-route mono" id="tour-modal-route"></span>
+      <h2 id="tour-modal-title"></h2>
+      <span class="tour-modal-stars" id="tour-modal-stars"></span>
+      <p class="tour-modal-desc" id="tour-modal-desc"></p>
+
+      <div class="tour-modal-includes" id="tour-modal-includes"></div>
+
+      <div class="tour-modal-row">
+        <div>
+          <span class="tour-modal-label mono" data-i18n="modal_duration_label">ДЛИТЕЛЬНОСТЬ</span>
+          <span class="tour-modal-value" id="tour-modal-duration"></span>
+        </div>
+        <div>
+          <span class="tour-modal-label mono" data-i18n="modal_price_label">ЦЕНА</span>
+          <span class="tour-modal-value tour-modal-price" id="tour-modal-price"></span>
+        </div>
+      </div>
+
+      <div class="tour-modal-travelers">
+        <span class="tour-modal-label mono" data-i18n="modal_travelers_label">ТУРИСТОВ</span>
+        <div class="traveler-stepper">
+          <button type="button" id="traveler-minus" aria-label="Minus">−</button>
+          <span id="traveler-count">2</span>
+          <button type="button" id="traveler-plus" aria-label="Plus">+</button>
+        </div>
+      </div>
+
+      <a href="#" id="tour-modal-book" target="_blank" rel="noopener" class="btn btn-primary tour-modal-book" data-i18n="modal_book_btn">Забронировать этот тур</a>
+    </div>
+  </div>
+</div>
 
 <script src="https://accounts.google.com/gsi/client" async></script>
 <script src="https://telegram.org/js/telegram-widget.js?22" async></script>
