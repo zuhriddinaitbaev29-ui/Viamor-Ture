@@ -99,3 +99,10 @@
   .stat-box-value{display:block; font-family:'Fraunces',serif; font-size:28px; font-weight:600; color:var(--clay);}
   .stat-box-label{display:block; font-size:11.5px; letter-spacing:.05em; color:var(--ink-soft); margin-top:4px; text-transform:uppercase;}
   .stats-honesty-note{font-size:11.5px; color:var(--ink-soft); margin-bottom:18px; font-style:italic;}
+
+  .delete-lead-btn{
+    background:none; border:none; cursor:pointer; font-size:16px; padding:4px 8px; border-radius:6px;
+    opacity:.65; transition:opacity .15s ease, background .15s ease;
+  }
+  .delete-lead-btn:hover{opacity:1; background:rgba(193,98,58,.12);}
+  .delete-lead-btn:disabled{opacity:.3; cursor:default;}

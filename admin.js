@@ -64,12 +64,33 @@ function renderLeads(list){
       '<td class="mono">' + (lead.contact || '—') + '</td>' +
       '<td><span class="source-tag">' + (sourceLabels[lead.source] || lead.source || '—') + '</span></td>' +
       '<td class="row-date">' + formatDate(lead.created_at) + '</td>' +
-      '<td class="review-cell">' + reviewCellHtml(lead) + '</td>';
+      '<td class="review-cell">' + reviewCellHtml(lead) + '</td>' +
+      '<td><button type="button" class="delete-lead-btn" data-lead-id="' + lead.id + '" aria-label="Удалить" title="Удалить заявку">🗑</button></td>';
     leadsBody.appendChild(tr);
   });
 }
 
 leadsBody.addEventListener('click', async (e)=>{
+  const delBtn = e.target.closest('.delete-lead-btn');
+  if(delBtn){
+    const id = delBtn.dataset.leadId;
+    const lead = allLeads.find(l => l.id === id);
+    const label = (lead && lead.name) || 'эту заявку';
+    if(!confirm('Удалить заявку от «' + label + '»? Это необратимо.')) return;
+    delBtn.disabled = true;
+    delBtn.textContent = '…';
+    const { error } = await sb.rpc('delete_lead', { p_password: currentPassword, p_id: id });
+    if(!error){
+      allLeads = allLeads.filter(l => l.id !== id);
+      renderStats(allLeads);
+      renderLeads(allLeads);
+    } else {
+      delBtn.disabled = false;
+      delBtn.textContent = '🗑';
+      alert('Не удалось удалить, попробуйте ещё раз.');
+    }
+    return;
+  }
   const addBtn = e.target.closest('.add-review-btn');
   if(addBtn){
     const form = leadsBody.querySelector('.review-form[data-lead-id="' + addBtn.dataset.leadId + '"]');
@@ -203,4 +224,4 @@ loginForm.addEventListener('submit', async (e)=>{
     loginError.textContent = 'Неверный пароль.';
     loginError.classList.add('show');
   }
-});
+}); 
