@@ -673,6 +673,8 @@ function isValidPhone(phone){
   const clean = phone.replace(/[\s\-()]/g, '');
   return /^\+?998\d{9}$/.test(clean) || /^\+\d{7,14}$/.test(clean);
 }
+const NAME_BLOCKLIST = ['дебил','идиот','придурок','дурак','тупой','урод','кретин','долбоеб','долбоёб','мудак'];
+
 function isValidFullName(name){
   const trimmed = name.trim().replace(/\s+/g, ' ');
   const words = trimmed.split(' ');
@@ -681,6 +683,7 @@ function isValidFullName(name){
   const consonants = "bcdfghjklmnpqrstvwxzБВГДЖЗЙКЛМНПРСТФХЦЧШЩбвгджзйклмнпрстфхцчшщ";
   for(const w of words){
     if(!wordPattern.test(w)) return false;
+    if(NAME_BLOCKLIST.includes(w.toLowerCase())) return false;
     let run = 0, maxRun = 0;
     for(const ch of w){
       if(consonants.includes(ch)){ run++; maxRun = Math.max(maxRun, run); } else { run = 0; }
@@ -817,20 +820,9 @@ function formatDateForMessage(isoDate){
 }
 
 function updateModalBookLink(){
-  const name = modalReqName.value.trim() || '—';
-  const phone = modalReqPhone.value.trim() || '—';
-  const dateText = modalReqDate.value ? formatDateForMessage(modalReqDate.value) : '—';
-  const lines = [
-    '🔔 НОВАЯ ЗАЯВКА', '',
-    '👤 Имя: ' + name,
-    '📞 Телефон: ' + phone,
-    '🌍 Тур: ' + currentModalTourName,
-    '📅 Дата: ' + dateText,
-    '👨\u200d👩\u200d👧 Туристы: ' + travelerCount,
-    '💰 Цена: ' + currentModalPrice + ' (' + currentModalDuration + ')'
-  ];
-  const msg = encodeURIComponent(lines.join('\n'));
-  tourModalBook.href = 'https://t.me/Masturabilen?text=' + msg;
+  // Goes through the bot now: bot shows the tour, "Забронировать" inside the
+  // bot saves the lead and notifies the manager automatically.
+  tourModalBook.href = 'https://t.me/Viamor_Tour_Bot?start=' + (currentModalTourKey || '');
 }
 if(modalReqName && modalReqPhone && modalReqDate){
   [modalReqName, modalReqPhone, modalReqDate].forEach(el=>{
@@ -841,7 +833,9 @@ if(tourModalBook){
   tourModalBook.addEventListener('click', ()=>{
     // Also log the booking attempt as a lead, same table admin.html reads from
     const contact = modalReqPhone.value.trim() || modalReqName.value.trim();
-    if(contact) checkAndSaveLead(modalReqName.value.trim(), contact, 'booking_' + (currentModalTourKey || 'tour'));
+    const nameVal = modalReqName.value.trim();
+    const nameFine = !nameVal || isValidFullName(nameVal); // empty name is fine here, it's optional
+    if(contact && nameFine) checkAndSaveLead(nameVal, contact, 'booking_' + (currentModalTourKey || 'tour'));
   });
 }
 
