@@ -1033,3 +1033,29 @@ if(aiToggle && aiPanel){
     }, 450);
   });
 }
+
+/* ============ 3D TILT ON HOVER (tour cards + why-us cards) ============ */
+function initTiltEffect(selector, maxTilt){
+  const els = document.querySelectorAll(selector);
+  const isTouch = matchMedia('(hover: none)').matches;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(isTouch || reduceMotion) return; // skip on touch devices and when the user prefers less motion
+
+  els.forEach(el=>{
+    el.style.transformStyle = 'preserve-3d';
+    el.style.willChange = 'transform';
+    el.addEventListener('mousemove', (e)=>{
+      const rect = el.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;  // -0.5 .. 0.5
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      const rotateY = x * maxTilt * 2;
+      const rotateX = -y * maxTilt * 2;
+      el.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(4px)`;
+    });
+    el.addEventListener('mouseleave', ()=>{
+      el.style.transform = '';
+    });
+  });
+}
+initTiltEffect('.tours-grid .ticket', 4);
+initTiltEffect('.why-item', 6);
