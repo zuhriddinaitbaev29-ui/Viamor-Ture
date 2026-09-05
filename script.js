@@ -1037,9 +1037,9 @@ if(aiToggle && aiPanel){
 /* ============ 3D TILT ON HOVER (tour cards + why-us cards) ============ */
 function initTiltEffect(selector, maxTilt){
   const els = document.querySelectorAll(selector);
-  const isTouch = matchMedia('(hover: none)').matches;
+  const hasHover = matchMedia('(any-hover: hover)').matches; // true if ANY input (even alongside touch) supports hover
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(isTouch || reduceMotion) return; // skip on touch devices and when the user prefers less motion
+  if(!hasHover || reduceMotion) return;
 
   els.forEach(el=>{
     el.style.transformStyle = 'preserve-3d';
