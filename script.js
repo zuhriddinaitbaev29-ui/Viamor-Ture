@@ -5,6 +5,7 @@ const translations = {
   ru: {
     nav_home:"Главная", nav_about:"О нас", nav_tours:"Туры", nav_why:"Почему мы", nav_contact:"Контакты",
     hero_eyebrow:"VIAMOR TOUR · ТАШКЕНТ", hero_title:"Путешествие к мечте — каждый день",
+    hero_titles:["Путешествие к мечте — каждый день","Горящие туры из Ташкента — новые каждый день","От Турции до Мальдив — весь мир ближе, чем кажется"],
     hero_subtitle:"Горящие турпакеты из Ташкента: Турция, ОАЭ, Грузия, Египет, Мальдивы и другие направления — прямые рейсы, лучшие цены, полное сопровождение.",
     hero_cta:"Смотреть горящие туры", hero_cta_secondary:"Написать в Telegram",
     dest_eyebrow:"НАПРАВЛЕНИЯ",
@@ -97,6 +98,7 @@ const translations = {
   uz: {
     nav_home:"Bosh sahifa", nav_about:"Biz haqimizda", nav_tours:"Turlar", nav_why:"Nega biz", nav_contact:"Aloqa",
     hero_eyebrow:"VIAMOR TOUR · TOSHKENT", hero_title:"Orzular sari safar — har kuni",
+    hero_titles:["Orzular sari safar — har kuni","Toshkentdan qaynoq turlar — har kuni yangi","Turkiyadan Maldivgacha — dunyo o'ylagandan yaqinroq"],
     hero_subtitle:"Toshkentdan qaynoq turpaketlar: Turkiya, BAA, Gruziya, Misr, Maldiv orollari va boshqa yo'nalishlar — to'g'ridan-to'g'ri parvozlar, eng yaxshi narxlar, to'liq xizmat.",
     hero_cta:"Qaynoq turlarni ko'rish", hero_cta_secondary:"Telegramda yozish",
     dest_eyebrow:"YO'NALISHLAR",
@@ -189,6 +191,7 @@ const translations = {
   en: {
     nav_home:"Home", nav_about:"About", nav_tours:"Tours", nav_why:"Why us", nav_contact:"Contact",
     hero_eyebrow:"VIAMOR TOUR · TASHKENT", hero_title:"A journey to your dreams — every day",
+    hero_titles:["A journey to your dreams — every day","Hot deals from Tashkent — new every day","From Turkey to the Maldives — the world is closer than you think"],
     hero_subtitle:"Hot tour packages from Tashkent: Turkey, the UAE, Georgia, Egypt, the Maldives, and more — direct flights, best prices, full support.",
     hero_cta:"See hot deals", hero_cta_secondary:"Message us on Telegram",
     dest_eyebrow:"DESTINATIONS",
@@ -303,6 +306,7 @@ function applyLang(lang){
   if(typeof currentModalTourKey !== 'undefined' && currentModalTourKey && typeof openTourModal === 'function'){
     openTourModal(currentModalTourKey);
   }
+  if(typeof startHeroTitleRotation === 'function') startHeroTitleRotation();
 }
 document.querySelectorAll('[data-lang-btn]').forEach(btn=>{
   btn.addEventListener('click', ()=> applyLang(btn.getAttribute('data-lang-btn')));
@@ -1161,3 +1165,24 @@ if(hasHoverInput && !prefersReducedMotion){
     el.addEventListener('mouseleave', ()=> cursorEl.classList.remove('grow'));
   });
 }
+
+/* ============ HERO TITLE ROTATION (slideshow-style, every 15s) ============ */
+let heroTitleIndex = 0;
+let heroTitleTimer = null;
+function rotateHeroTitle(){
+  const h1 = document.querySelector('.hero h1');
+  const titles = translations[currentLang].hero_titles;
+  if(!h1 || !titles || titles.length < 2 || prefersReducedMotion) return;
+  h1.style.opacity = '0';
+  setTimeout(()=>{
+    heroTitleIndex = (heroTitleIndex + 1) % titles.length;
+    h1.textContent = titles[heroTitleIndex];
+    h1.style.opacity = '1';
+  }, 500);
+}
+function startHeroTitleRotation(){
+  heroTitleIndex = 0;
+  if(heroTitleTimer) clearInterval(heroTitleTimer);
+  heroTitleTimer = setInterval(rotateHeroTitle, 15000);
+}
+startHeroTitleRotation();
