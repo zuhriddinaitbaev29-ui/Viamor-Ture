@@ -665,6 +665,7 @@ async function afterAuthSuccess(name, contact, source){
   const dict = translations[currentLang];
   authStatus.textContent = (result && result.isNew === false) ? dict.auth_status_back : dict.auth_status_new;
   authStatus.classList.add('show');
+  fireConfetti(authStatus);
   setTimeout(closeAuthOverlay, 850);
 }
 
@@ -836,6 +837,7 @@ if(tourModalBook){
     const nameVal = modalReqName.value.trim();
     const nameFine = !nameVal || isValidFullName(nameVal); // empty name is fine here, it's optional
     if(contact && nameFine) checkAndSaveLead(nameVal, contact, 'booking_' + (currentModalTourKey || 'tour'));
+    fireConfetti(tourModalBook);
   });
 }
 
@@ -1059,3 +1061,103 @@ function initTiltEffect(selector, maxTilt){
 }
 initTiltEffect('.tours-grid .ticket', 4);
 initTiltEffect('.why-item', 6);
+
+/* ============ WOW EFFECTS: magnetic buttons, cursor spotlight, photo wipe, confetti, custom cursor ============ */
+const hasHoverInput = matchMedia('(any-hover: hover)').matches;
+const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* --- 1. Magnetic buttons --- */
+function initMagneticButtons(selector, strength){
+  if(!hasHoverInput || prefersReducedMotion) return;
+  document.querySelectorAll(selector).forEach(btn=>{
+    btn.addEventListener('mousemove', (e)=>{
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${x / strength}px, ${y / strength - 2}px)`;
+    });
+    btn.addEventListener('mouseleave', ()=>{ btn.style.transform = ''; });
+  });
+}
+initMagneticButtons('.btn-primary, .nav-tg-btn, .tg-btn', 6);
+
+/* --- 2. Cursor spotlight in the hero --- */
+const heroSection = document.querySelector('.hero');
+if(heroSection && hasHoverInput && !prefersReducedMotion){
+  heroSection.addEventListener('mouseenter', ()=> heroSection.classList.add('spot-active'));
+  heroSection.addEventListener('mouseleave', ()=> heroSection.classList.remove('spot-active'));
+  heroSection.addEventListener('mousemove', (e)=>{
+    const rect = heroSection.getBoundingClientRect();
+    heroSection.style.setProperty('--spot-x', ((e.clientX - rect.left) / rect.width * 100) + '%');
+    heroSection.style.setProperty('--spot-y', ((e.clientY - rect.top) / rect.height * 100) + '%');
+  });
+}
+
+/* --- 3. Photo wipe reveal (tour card thumbnails) --- */
+if(!prefersReducedMotion && 'IntersectionObserver' in window){
+  const wipeObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('wiped');
+        wipeObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.ticket-illustration img').forEach(img => wipeObserver.observe(img));
+} else {
+  document.querySelectorAll('.ticket-illustration img').forEach(img => img.classList.add('wiped'));
+}
+// Modal gallery images wipe in as soon as they're set (openTourModal / thumbnail clicks already re-run this).
+function wipeModalImages(){
+  document.querySelectorAll('.tour-modal-main-img img, .tour-modal-thumb img').forEach(img=>{
+    requestAnimationFrame(()=> img.classList.add('wiped'));
+  });
+}
+const modalImgObserver = new MutationObserver(wipeModalImages);
+if(tourModalMainImg) modalImgObserver.observe(tourModalMainImg, { childList: true });
+if(tourModalThumbs) modalImgObserver.observe(tourModalThumbs, { childList: true });
+
+/* --- 4. Confetti burst --- */
+function fireConfetti(originEl){
+  if(prefersReducedMotion) return;
+  const colors = ['#C1623A', '#2E8C82', '#A97627', '#1B2A4A'];
+  const rect = originEl.getBoundingClientRect();
+  const originX = rect.left + rect.width / 2;
+  const originY = rect.top + rect.height / 2;
+  for(let i = 0; i < 26; i++){
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    const size = 5 + Math.random() * 4;
+    piece.style.width = size + 'px';
+    piece.style.height = (size * 0.4) + 'px';
+    piece.style.background = colors[i % colors.length];
+    piece.style.left = originX + 'px';
+    piece.style.top = originY + 'px';
+    document.body.appendChild(piece);
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 70 + Math.random() * 90;
+    const dx = Math.cos(angle) * dist;
+    const dy = Math.sin(angle) * dist - 30;
+    const rot = Math.random() * 360;
+    const anim = piece.animate([
+      { transform: 'translate(-50%,-50%) rotate(0deg)', opacity: 1 },
+      { transform: `translate(${dx - size/2}px, ${dy + 130}px) rotate(${rot}deg)`, opacity: 0 }
+    ], { duration: 850 + Math.random() * 400, easing: 'cubic-bezier(.2,.8,.3,1)' });
+    anim.onfinish = () => piece.remove();
+  }
+}
+
+/* --- 5. Custom cursor that grows over interactive elements --- */
+if(hasHoverInput && !prefersReducedMotion){
+  const cursorEl = document.createElement('div');
+  cursorEl.className = 'custom-cursor';
+  document.body.appendChild(cursorEl);
+  window.addEventListener('mousemove', (e)=>{
+    cursorEl.style.left = e.clientX + 'px';
+    cursorEl.style.top = e.clientY + 'px';
+  });
+  document.querySelectorAll('button, a, .ticket, .fav-btn, input[type="submit"]').forEach(el=>{
+    el.addEventListener('mouseenter', ()=> cursorEl.classList.add('grow'));
+    el.addEventListener('mouseleave', ()=> cursorEl.classList.remove('grow'));
+  });
+}
