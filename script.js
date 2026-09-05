@@ -637,12 +637,12 @@ const supabase = createClient(
 
 // Checks whether this identifier was seen before; saves it if not.
 // Returns { isNew, error }. Fails open (treats as "new", doesn't block) on any error.
-async function checkAndSaveLead(name, contact, source){
+async function checkAndSaveLead(name, contact, source, travelDate){
   const rawKey = source + ':' + (contact || name || 'unknown');
   const key = rawKey.toLowerCase().replace(/[^a-z0-9:._@+-]/g,'') || (source + ':unknown');
   try{
     const { data, error } = await supabase.rpc('check_and_save_lead', {
-      p_lead_key: key, p_name: name || '', p_contact: contact || '', p_source: source
+      p_lead_key: key, p_name: name || '', p_contact: contact || '', p_source: source, p_travel_date: travelDate || null
     });
     if(error) throw error;
     const alreadyExisted = data === true;
@@ -839,8 +839,9 @@ if(tourModalBook){
     // Also log the booking attempt as a lead, same table admin.html reads from
     const contact = modalReqPhone.value.trim() || modalReqName.value.trim();
     const nameVal = modalReqName.value.trim();
+    const dateVal = modalReqDate.value ? formatDateForMessage(modalReqDate.value) : '';
     const nameFine = !nameVal || isValidFullName(nameVal); // empty name is fine here, it's optional
-    if(contact && nameFine) checkAndSaveLead(nameVal, contact, 'booking_' + (currentModalTourKey || 'tour'));
+    if(contact && nameFine) checkAndSaveLead(nameVal, contact, 'booking_' + (currentModalTourKey || 'tour'), dateVal);
     fireConfetti(tourModalBook);
   });
 }
