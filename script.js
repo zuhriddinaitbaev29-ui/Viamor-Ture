@@ -354,9 +354,9 @@ const destInfo = {
     egypt:{ text:"Шарм-эль-Шейх — всё включено на Красном море: питание, напитки и трансфер уже в цене.", duration:"7 ночей / 8 дней", price:"от $519", cta:"Смотреть тур ↓", href:"#tour-egypt" },
     maldives:{ text:"От уютных гестхаусов до курортов уровня Sheraton и Nova Maldives — под любой бюджет.", duration:"7 ночей / 8 дней", price:"от 11,5 млн сум", cta:"Смотреть тур ↓", href:"#tour-maldives" },
     azerbaijan:{ text:"Баку + Нафталан — современный город и лечебный курорт в одном путешествии.", duration:"по выбору", price:"от $761", cta:"Смотреть тур ↓", href:"#tour-azerbaijan" },
-    vietnam:{ text:"Пхукуок — тропический остров, белые пляжи и новый сезон с октября, отели 5★ от известных сетей.", duration:"уточняйте у менеджера", price:"от $947", cta:"Написать менеджеру →", href:"https://t.me/Masturabilen", external:true },
-    bali:{ text:"Вулканы, рисовые террасы и океан — перелёт, завтраки и провоз багажа уже в пакете.", duration:"уточняйте у менеджера", price:"уточняйте у менеджера", cta:"Написать менеджеру →", href:"https://t.me/Masturabilen", external:true },
-    issykkul:{ text:"Озеро Иссык-Куль — короткий перелёт, горный воздух и спокойный отдых у воды.", duration:"10 ночей", price:"от $483", cta:"Написать менеджеру →", href:"https://t.me/Masturabilen", external:true }
+    vietnam:{ text:"Пхукуок — тропический остров, белые пляжи и новый сезон с октября, отели 5★ от известных сетей.", duration:"уточняйте у менеджера", price:"от $947", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true },
+    bali:{ text:"Вулканы, рисовые террасы и океан — перелёт, завтраки и провоз багажа уже в пакете.", duration:"уточняйте у менеджера", price:"уточняйте у менеджера", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true },
+    issykkul:{ text:"Озеро Иссык-Куль — короткий перелёт, горный воздух и спокойный отдых у воды.", duration:"10 ночей", price:"от $483", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true }
   },
   uz: {
     turkey:{ text:"Antaliya, Bodrum, Marmaris — Toshkentdan to'g'ridan-to'g'ri parvozlar bilan plyaj dam olishi, 3★dan 5★ all inclusive mehmonxonalargacha.", duration:"7 tun / 8 kun", price:"$754 dan", cta:"Turni ko'rish ↓", href:"#tour-turkey" },
@@ -365,9 +365,9 @@ const destInfo = {
     egypt:{ text:"Sharm-el-Shayx — Qizil dengizda hammasi narxga kiritilgan: ovqatlanish, ichimlik va transfer.", duration:"7 tun / 8 kun", price:"$519 dan", cta:"Turni ko'rish ↓", href:"#tour-egypt" },
     maldives:{ text:"Qulay gesthauslardan Sheraton va Nova Maldives darajasidagi kurortlargacha — har qanday byudjetga.", duration:"7 tun / 8 kun", price:"11,5 mln so'mdan", cta:"Turni ko'rish ↓", href:"#tour-maldives" },
     azerbaijan:{ text:"Boku + Naftalan — zamonaviy shahar va shifobaxsh kurort bitta safarda.", duration:"moslashuvchan", price:"$761 dan", cta:"Turni ko'rish ↓", href:"#tour-azerbaijan" },
-    vietnam:{ text:"Fukuok — tropik orol, oq qumli plyajlar va oktabrdan yangi mavsum, mashhur tarmoqlarning 5★ mehmonxonalari.", duration:"menejerdan so'rang", price:"$947 dan", cta:"Menejerga yozish →", href:"https://t.me/Masturabilen", external:true },
-    bali:{ text:"Vulqonlar, guruch teraslari va okean — parvoz, nonushta va bagaj tashish paketga kiradi.", duration:"menejerdan so'rang", price:"menejerdan so'rang", cta:"Menejerga yozish →", href:"https://t.me/Masturabilen", external:true },
-    issykkul:{ text:"Issiqko'l — qisqa parvoz, tog' havosi va suv bo'yida tinch dam olish.", duration:"10 tun", price:"$483 dan", cta:"Menejerga yozish →", href:"https://t.me/Masturabilen", external:true }
+    vietnam:{ text:"Fukuok — tropik orol, oq qumli plyajlar va oktabrdan yangi mavsum, mashhur tarmoqlarning 5★ mehmonxonalari.", duration:"menejerdan so'rang", price:"$947 dan", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true },
+    bali:{ text:"Vulqonlar, guruch teraslari va okean — parvoz, nonushta va bagaj tashish paketga kiradi.", duration:"menejerdan so'rang", price:"menejerdan so'rang", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true },
+    issykkul:{ text:"Issiqko'l — qisqa parvoz, tog' havosi va suv bo'yida tinch dam olish.", duration:"10 tun", price:"$483 dan", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true }
   },
   en: {
     turkey:{ text:"Antalya, Bodrum, Marmaris — beach holidays with direct flights from Tashkent, hotels from 3★ to 5★ all-inclusive.", duration:"7 nights / 8 days", price:"from $754", cta:"See the tour ↓", href:"#tour-turkey" },
@@ -376,9 +376,9 @@ const destInfo = {
     egypt:{ text:"Sharm El Sheikh — all-inclusive on the Red Sea: meals, drinks, and transfer already in the price.", duration:"7 nights / 8 days", price:"from $519", cta:"See the tour ↓", href:"#tour-egypt" },
     maldives:{ text:"From cozy guesthouses to resorts like Sheraton and Nova Maldives — for any budget.", duration:"7 nights / 8 days", price:"from 11.5M UZS", cta:"See the tour ↓", href:"#tour-maldives" },
     azerbaijan:{ text:"Baku + Naftalan — a modern city and a healing resort in one trip.", duration:"flexible", price:"from $761", cta:"See the tour ↓", href:"#tour-azerbaijan" },
-    vietnam:{ text:"Phu Quoc — a tropical island, white-sand beaches, and a new season starting October, 5★ hotels from major chains.", duration:"ask your manager", price:"from $947", cta:"Message a manager →", href:"https://t.me/Masturabilen", external:true },
-    bali:{ text:"Volcanoes, rice terraces, and the ocean — flight, breakfast, and baggage included.", duration:"ask your manager", price:"ask your manager", cta:"Message a manager →", href:"https://t.me/Masturabilen", external:true },
-    issykkul:{ text:"Lake Issyk-Kul — a short flight, mountain air, and a calm lakeside stay.", duration:"10 nights", price:"from $483", cta:"Message a manager →", href:"https://t.me/Masturabilen", external:true }
+    vietnam:{ text:"Phu Quoc — a tropical island, white-sand beaches, and a new season starting October, 5★ hotels from major chains.", duration:"ask your manager", price:"from $947", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true },
+    bali:{ text:"Volcanoes, rice terraces, and the ocean — flight, breakfast, and baggage included.", duration:"ask your manager", price:"ask your manager", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true },
+    issykkul:{ text:"Lake Issyk-Kul — a short flight, mountain air, and a calm lakeside stay.", duration:"10 nights", price:"from $483", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true }
   }
 };
 
@@ -1018,7 +1018,7 @@ if(aiToggle && aiPanel){
     setTimeout(()=>{
       if(matches.length === 0){
         addAiMessage(
-          dict.ai_no_match + ' <a href="https://t.me/Masturabilen" target="_blank" rel="noopener">' + dict.ai_manager_link + '</a>. ' +
+          dict.ai_no_match + ' <a href="https://t.me/viamor_tour" target="_blank" rel="noopener">' + dict.ai_manager_link + '</a>. ' +
           dict.ai_channel_hint + ' <a href="https://t.me/viamor_tur" target="_blank" rel="noopener">' + dict.ai_channel_link + '</a>',
           true
         );
