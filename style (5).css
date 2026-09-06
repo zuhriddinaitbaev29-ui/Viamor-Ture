@@ -153,6 +153,17 @@
 
   /* ============ HERO ============ */
   .hero{padding:172px 0 90px; overflow:hidden; position:relative;}
+  .hero-particles-canvas{position:absolute; inset:0; z-index:0; pointer-events:none; display:none;}
+  .hero-globe-canvas{position:absolute; inset:0; z-index:1; display:none;}
+  @media (min-width:900px){
+    .hero-particles-canvas{display:block;}
+    .hero-globe-canvas{display:block;}
+    .route-map svg{opacity:0;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .hero-particles-canvas,.hero-globe-canvas{display:none !important;}
+    .route-map svg{opacity:1 !important;}
+  }
   .hero::before{
     content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
     background:radial-gradient(500px circle at var(--spot-x,50%) var(--spot-y,20%), rgba(193,98,58,.10), transparent 55%);

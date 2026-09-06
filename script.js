@@ -1187,3 +1187,138 @@ function startHeroTitleRotation(){
   heroTitleTimer = setInterval(rotateHeroTitle, 15000);
 }
 startHeroTitleRotation();
+
+/* ============ 3D GLOBE + PARTICLES IN HERO (Three.js, desktop only) ============ */
+(function initHero3D(){
+  if(typeof THREE === 'undefined') return; // CDN failed to load — fail silently, SVG fallback stays visible
+  if(!matchMedia('(min-width: 900px)').matches) return; // mobile keeps the lightweight flat SVG
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const DESTINATIONS = [
+    { lat: 41.6, lon: 41.6 },  // Batumi, Georgia
+    { lat: 36.9, lon: 30.7 },  // Antalya, Turkey
+    { lat: 25.2, lon: 55.3 },  // Dubai, UAE
+    { lat: 27.9, lon: 34.3 },  // Sharm El Sheikh, Egypt
+    { lat: 3.2,  lon: 73.2 },  // Maldives
+    { lat: 40.4, lon: 49.9 },  // Baku, Azerbaijan
+    { lat: 10.2, lon: 103.9 }, // Phu Quoc, Vietnam
+    { lat: -8.3, lon: 115.1 },  // Bali
+    { lat: 42.4, lon: 77.2 },  // Issyk-Kul
+  ];
+  const HUB = { lat: 41.3, lon: 69.2 }; // Tashkent
+
+  function latLonToVec3(lat, lon, radius){
+    const phi = (90 - lat) * (Math.PI / 180);
+    const theta = (lon + 180) * (Math.PI / 180);
+    return new THREE.Vector3(
+      -radius * Math.sin(phi) * Math.cos(theta),
+      radius * Math.cos(phi),
+      radius * Math.sin(phi) * Math.sin(theta)
+    );
+  }
+
+  /* --- Globe --- */
+  const globeCanvas = document.getElementById('hero-globe-canvas');
+  if(globeCanvas){
+    const globeScene = new THREE.Scene();
+    const globeCamera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    globeCamera.position.set(0, 0.3, 4.2);
+    const globeRenderer = new THREE.WebGLRenderer({ canvas: globeCanvas, alpha: true, antialias: true });
+
+    const navy = 0x1B2A4A, clay = 0xC1623A, gold = 0xA97627;
+    const globeGroup = new THREE.Group();
+    globeScene.add(globeGroup);
+
+    const sphereGeo = new THREE.SphereGeometry(1.5, 28, 20);
+    const wireMat = new THREE.MeshBasicMaterial({ color: navy, wireframe: true, transparent: true, opacity: 0.28 });
+    globeGroup.add(new THREE.Mesh(sphereGeo, wireMat));
+
+    // Subtle inner fill so the wireframe reads as a sphere, not just lines
+    const fillMat = new THREE.MeshBasicMaterial({ color: navy, transparent: true, opacity: 0.05 });
+    globeGroup.add(new THREE.Mesh(new THREE.SphereGeometry(1.49, 28, 20), fillMat));
+
+    // Hub marker (Tashkent)
+    const hubPos = latLonToVec3(HUB.lat, HUB.lon, 1.5);
+    const hubMarker = new THREE.Mesh(new THREE.SphereGeometry(0.045, 12, 12), new THREE.MeshBasicMaterial({ color: clay }));
+    hubMarker.position.copy(hubPos);
+    globeGroup.add(hubMarker);
+
+    // Destination markers
+    DESTINATIONS.forEach(d=>{
+      const pos = latLonToVec3(d.lat, d.lon, 1.5);
+      const marker = new THREE.Mesh(new THREE.SphereGeometry(0.032, 10, 10), new THREE.MeshBasicMaterial({ color: gold }));
+      marker.position.copy(pos);
+      globeGroup.add(marker);
+      // Faint line from hub to destination, hugging the sphere surface a little above it
+      const mid = hubPos.clone().add(pos).normalize().multiplyScalar(1.7);
+      const curve = new THREE.QuadraticBezierCurve3(hubPos, mid, pos);
+      const lineGeo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(24));
+      const lineMat = new THREE.LineBasicMaterial({ color: clay, transparent: true, opacity: 0.35 });
+      globeGroup.add(new THREE.Line(lineGeo, lineMat));
+    });
+
+    function resizeGlobe(){
+      const rect = globeCanvas.parentElement.getBoundingClientRect();
+      const size = Math.min(rect.width, rect.height) || 380;
+      globeRenderer.setSize(size, size, false);
+      globeCamera.aspect = 1;
+      globeCamera.updateProjectionMatrix();
+      globeCanvas.style.width = size + 'px';
+      globeCanvas.style.height = size + 'px';
+      globeCanvas.style.left = ((rect.width - size) / 2) + 'px';
+      globeCanvas.style.top = ((rect.height - size) / 2) + 'px';
+    }
+    resizeGlobe();
+    window.addEventListener('resize', resizeGlobe);
+
+    function animateGlobe(){
+      globeGroup.rotation.y += 0.0022;
+      globeRenderer.render(globeScene, globeCamera);
+      requestAnimationFrame(animateGlobe);
+    }
+    animateGlobe();
+  }
+
+  /* --- Ambient drifting particles across the hero --- */
+  const particlesCanvas = document.getElementById('hero-particles-canvas');
+  if(particlesCanvas){
+    const pScene = new THREE.Scene();
+    const pCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
+    pCamera.position.z = 1;
+    const pRenderer = new THREE.WebGLRenderer({ canvas: particlesCanvas, alpha: true, antialias: false });
+
+    const COUNT = 90;
+    const positions = new Float32Array(COUNT * 3);
+    const speeds = new Float32Array(COUNT);
+    for(let i = 0; i < COUNT; i++){
+      positions[i*3] = (Math.random() * 2 - 1);
+      positions[i*3+1] = (Math.random() * 2 - 1);
+      positions[i*3+2] = 0;
+      speeds[i] = 0.00025 + Math.random() * 0.00035;
+    }
+    const pGeo = new THREE.BufferGeometry();
+    pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const pMat = new THREE.PointsMaterial({ color: 0xF1E3C6, size: 0.012, transparent: true, opacity: 0.5, depthWrite: false });
+    const points = new THREE.Points(pGeo, pMat);
+    pScene.add(points);
+
+    function resizeParticles(){
+      const rect = particlesCanvas.parentElement.getBoundingClientRect();
+      pRenderer.setSize(rect.width, rect.height, false);
+    }
+    resizeParticles();
+    window.addEventListener('resize', resizeParticles);
+
+    function animateParticles(){
+      const pos = pGeo.attributes.position.array;
+      for(let i = 0; i < COUNT; i++){
+        pos[i*3+1] += speeds[i];
+        if(pos[i*3+1] > 1) pos[i*3+1] = -1;
+      }
+      pGeo.attributes.position.needsUpdate = true;
+      pRenderer.render(pScene, pCamera);
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  }
+})();
