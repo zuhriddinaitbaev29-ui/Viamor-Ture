@@ -10,7 +10,7 @@ const translations = {
     hero_cta:"Смотреть горящие туры", hero_cta_secondary:"Написать в Telegram",
     dest_eyebrow:"НАПРАВЛЕНИЯ",
     dest_turkey:"Турция", dest_uae:"ОАЭ", dest_georgia:"Грузия", dest_egypt:"Египет", dest_maldives:"Мальдивы",
-    dest_azerbaijan:"Азербайджан", dest_vietnam:"Вьетнам", dest_bali:"Бали", dest_issykkul:"Иссык-Куль",
+    dest_azerbaijan:"Азербайджан", dest_vietnam:"Вьетнам", dest_indonesia:"Индонезия", dest_srilanka:"Шри-Ланка", dest_mauritius:"Маврикий", dest_issykkul:"Иссык-Куль",
     about_eyebrow:"О КОМПАНИИ", about_title:"Горящие туры каждый день — без переплат и лишних хлопот",
     about_text:"Viamor Tour — тревел-агентство в Ташкенте. Каждый день собираем турпакеты по лучшим ценам: перелёт, отель, трансфер и страховка — одним пакетом. Работаем напрямую с крупными авиакомпаниями — вылеты из Ташкента без лишних пересадок.",
     stat1_value:"15+", stat1_label:"НАПРАВЛЕНИЙ", stat2_value:"5", stat2_label:"АВИАКОМПАНИЙ",
@@ -18,10 +18,10 @@ const translations = {
     tours_eyebrow:"ГОРЯЩИЕ ТУРЫ", tours_title:"Горящие туры",
     tours_subtitle:"Подборка ближайших вылетов. Актуальные цены и даты — в нашем Telegram-канале.",
     tours_live_badge:"ОБНОВЛЯЕМ ЕЖЕДНЕВНО",
-    tour1_name:"Грузия: Батуми + Тбилиси", tour1_duration:"8 ночей", tour1_price:"от $827",
-    tour1_desc:"Море и горы в одном туре: пляжный отдых в Батуми и прогулки по атмосферному Тбилиси. Ближайшие вылеты — 16, 23 и 30 августа.",
+    tour1_name:"Грузия: Чудеса Грузии — Батуми + Тбилиси", tour1_duration:"8 ночей", tour1_price:"от $827",
+    tour1_desc:"«Чудеса Грузии» — море и горы в одном туре: пляжный отдых в Батуми и прогулки по атмосферному Тбилиси. Ближайшие вылеты — 16, 23 и 30 августа.",
     tour2_name:"Турция: Анталья", tour2_duration:"7 ночей / 8 дней", tour2_price:"от $754",
-    tour2_desc:"Прямые вылеты из Ташкента, десятки отелей на выбор — от бюджетных 3* до люксовых 5* курортов с all inclusive.",
+    tour2_desc:"Прямые вылеты из Ташкента, десятки отелей на выбор — от бюджетных 3* до люксовых 5* курортов с all inclusive. По желанию — экскурсия в Стамбул «Великолепный век»: дворец Топкапы, Айя-София и места, связанные с легендарным сериалом.",
     tour3_name:"ОАЭ: Дубай", tour3_duration:"7 ночей", tour3_price:"от $1 059",
     tour3_desc:"Amwaj Rotana Jumeirah Beach 5* — в самом сердце JBR, в 3 минутах от пляжа и променада The Walk.",
     tour4_name:"Египет: Шарм-эль-Шейх", tour4_duration:"7 ночей / 8 дней", tour4_price:"от $519",
@@ -103,7 +103,7 @@ const translations = {
     hero_cta:"Qaynoq turlarni ko'rish", hero_cta_secondary:"Telegramda yozish",
     dest_eyebrow:"YO'NALISHLAR",
     dest_turkey:"Turkiya", dest_uae:"BAA", dest_georgia:"Gruziya", dest_egypt:"Misr", dest_maldives:"Maldiv orollari",
-    dest_azerbaijan:"Ozarbayjon", dest_vietnam:"Vyetnam", dest_bali:"Bali", dest_issykkul:"Issiqko'l",
+    dest_azerbaijan:"Ozarbayjon", dest_vietnam:"Vyetnam", dest_indonesia:"Indoneziya", dest_srilanka:"Shri-Lanka", dest_mauritius:"Mavrikiy", dest_issykkul:"Issiqko'l",
     about_eyebrow:"KOMPANIYA HAQIDA", about_title:"Har kuni qaynoq turlar — ortiqcha xarajatlarsiz",
     about_text:"Viamor Tour — Toshkentdagi sayohat agentligi. Har kuni eng yaxshi narxlarda turpaketlar tayyorlaymiz: parvoz, mehmonxona, transfer va sug'urta — bitta paketda. Biz yirik aviakompaniyalar bilan bevosita ishlaymiz — Toshkentdan ortiqcha qo'nishlarsiz parvozlar.",
     stat1_value:"15+", stat1_label:"YO'NALISH", stat2_value:"5", stat2_label:"AVIAKOMPANIYA",
@@ -111,10 +111,10 @@ const translations = {
     tours_eyebrow:"QAYNOQ TURLAR", tours_title:"Qaynoq turlar",
     tours_subtitle:"Yaqin parvozlar bo'yicha tanlov. Dolzarb narxlar va sanalar — Telegram kanalimizda.",
     tours_live_badge:"HAR KUNI YANGILANADI",
-    tour1_name:"Gruziya: Batumi + Tbilisi", tour1_duration:"8 tun", tour1_price:"$827 dan",
-    tour1_desc:"Bitta safarda dengiz va tog'lar: Batumida plyaj dam olishi va Tbilisining betakror ko'chalarida sayr. Yaqin parvozlar — 16, 23 va 30 avgust.",
+    tour1_name:"Gruziya: Gruziya mo'jizalari — Batumi + Tbilisi", tour1_duration:"8 tun", tour1_price:"$827 dan",
+    tour1_desc:"«Gruziya mo'jizalari» — bitta safarda dengiz va tog'lar: Batumida plyaj dam olishi va Tbilisining betakror ko'chalarida sayr. Yaqin parvozlar — 16, 23 va 30 avgust.",
     tour2_name:"Turkiya: Antaliya", tour2_duration:"7 tun / 8 kun", tour2_price:"$754 dan",
-    tour2_desc:"Toshkentdan to'g'ridan-to'g'ri parvozlar, tanlash uchun o'nlab mehmonxonalar — arzon 3 yulduzdan hashamatli 5 yulduzli all inclusive kurortlargacha.",
+    tour2_desc:"Toshkentdan to'g'ridan-to'g'ri parvozlar, tanlash uchun o'nlab mehmonxonalar — arzon 3 yulduzdan hashamatli 5 yulduzli all inclusive kurortlargacha. Xohishga ko'ra — Istanbulga «Muhtasham asr» ekskursiyasi: Topqopi saroyi, Ayasofiya va mashhur serial bilan bog'liq joylar.",
     tour3_name:"BAA: Dubay", tour3_duration:"7 tun", tour3_price:"$1 059 dan",
     tour3_desc:"Amwaj Rotana Jumeirah Beach 5* — JBR markazida, plyaj va The Walk aylanma yo'lagidan 3 daqiqa masofada.",
     tour4_name:"Misr: Sharm-el-Shayx", tour4_duration:"7 tun / 8 kun", tour4_price:"$519 dan",
@@ -196,7 +196,7 @@ const translations = {
     hero_cta:"See hot deals", hero_cta_secondary:"Message us on Telegram",
     dest_eyebrow:"DESTINATIONS",
     dest_turkey:"Turkey", dest_uae:"UAE", dest_georgia:"Georgia", dest_egypt:"Egypt", dest_maldives:"Maldives",
-    dest_azerbaijan:"Azerbaijan", dest_vietnam:"Vietnam", dest_bali:"Bali", dest_issykkul:"Issyk-Kul",
+    dest_azerbaijan:"Azerbaijan", dest_vietnam:"Vietnam", dest_indonesia:"Indonesia", dest_srilanka:"Sri Lanka", dest_mauritius:"Mauritius", dest_issykkul:"Issyk-Kul",
     about_eyebrow:"ABOUT", about_title:"Hot tours every day — no markups, no hassle",
     about_text:"Viamor Tour is a Tashkent-based travel agency. Every day we put together package deals at the best prices — flight, hotel, transfer, and insurance in one booking. We work directly with major airlines, with direct departures from Tashkent.",
     stat1_value:"15+", stat1_label:"DESTINATIONS", stat2_value:"5", stat2_label:"AIRLINES",
@@ -204,10 +204,10 @@ const translations = {
     tours_eyebrow:"HOT DEALS", tours_title:"Hot Deals",
     tours_subtitle:"A selection of upcoming departures. Live prices and dates are in our Telegram channel.",
     tours_live_badge:"UPDATED DAILY",
-    tour1_name:"Georgia: Batumi + Tbilisi", tour1_duration:"8 nights", tour1_price:"from $827",
-    tour1_desc:"Sea and mountains in one trip: beach time in Batumi and walks through atmospheric Tbilisi. Upcoming departures — August 16, 23, and 30.",
+    tour1_name:"Georgia: Wonders of Georgia — Batumi + Tbilisi", tour1_duration:"8 nights", tour1_price:"from $827",
+    tour1_desc:"\"Wonders of Georgia\" — sea and mountains in one trip: beach time in Batumi and walks through atmospheric Tbilisi. Upcoming departures — August 16, 23, and 30.",
     tour2_name:"Turkey: Antalya", tour2_duration:"7 nights / 8 days", tour2_price:"from $754",
-    tour2_desc:"Direct flights from Tashkent, dozens of hotels to choose from — from budget 3-star to luxury 5-star all-inclusive resorts.",
+    tour2_desc:"Direct flights from Tashkent, dozens of hotels to choose from — from budget 3-star to luxury 5-star all-inclusive resorts. Optional excursion to Istanbul \"Magnificent Century\": Topkapi Palace, Hagia Sophia, and locations tied to the legendary TV series.",
     tour3_name:"UAE: Dubai", tour3_duration:"7 nights", tour3_price:"from $1,059",
     tour3_desc:"Amwaj Rotana Jumeirah Beach 5★ — right in the heart of JBR, 3 minutes from the beach and The Walk promenade.",
     tour4_name:"Egypt: Sharm El Sheikh", tour4_duration:"7 nights / 8 days", tour4_price:"from $519",
@@ -355,7 +355,9 @@ const destInfo = {
     maldives:{ text:"От уютных гестхаусов до курортов уровня Sheraton и Nova Maldives — под любой бюджет.", duration:"7 ночей / 8 дней", price:"от 11,5 млн сум", cta:"Смотреть тур ↓", href:"#tour-maldives" },
     azerbaijan:{ text:"Баку + Нафталан — современный город и лечебный курорт в одном путешествии.", duration:"по выбору", price:"от $761", cta:"Смотреть тур ↓", href:"#tour-azerbaijan" },
     vietnam:{ text:"Пхукуок — тропический остров, белые пляжи и новый сезон с октября, отели 5★ от известных сетей.", duration:"уточняйте у менеджера", price:"от $947", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true },
-    bali:{ text:"Вулканы, рисовые террасы и океан — перелёт, завтраки и провоз багажа уже в пакете.", duration:"уточняйте у менеджера", price:"уточняйте у менеджера", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true },
+    indonesia:{ text:"Остров Бали — вулканы, рисовые террасы и океан. Перелёт, завтраки и провоз багажа уже в пакете.", duration:"уточняйте у менеджера", price:"уточняйте у менеджера", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true },
+    srilanka:{ text:"Пляжи, чайные плантации и древние храмы — тропический остров с богатой природой и историей.", duration:"уточняйте у менеджера", price:"уточняйте у менеджера", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true },
+    mauritius:{ text:"Белоснежные пляжи и лагуны в Индийском океане — один из самых красивых островов для отдыха.", duration:"уточняйте у менеджера", price:"уточняйте у менеджера", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true },
     issykkul:{ text:"Озеро Иссык-Куль — короткий перелёт, горный воздух и спокойный отдых у воды.", duration:"10 ночей", price:"от $483", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true }
   },
   uz: {
@@ -366,7 +368,9 @@ const destInfo = {
     maldives:{ text:"Qulay gesthauslardan Sheraton va Nova Maldives darajasidagi kurortlargacha — har qanday byudjetga.", duration:"7 tun / 8 kun", price:"11,5 mln so'mdan", cta:"Turni ko'rish ↓", href:"#tour-maldives" },
     azerbaijan:{ text:"Boku + Naftalan — zamonaviy shahar va shifobaxsh kurort bitta safarda.", duration:"moslashuvchan", price:"$761 dan", cta:"Turni ko'rish ↓", href:"#tour-azerbaijan" },
     vietnam:{ text:"Fukuok — tropik orol, oq qumli plyajlar va oktabrdan yangi mavsum, mashhur tarmoqlarning 5★ mehmonxonalari.", duration:"menejerdan so'rang", price:"$947 dan", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true },
-    bali:{ text:"Vulqonlar, guruch teraslari va okean — parvoz, nonushta va bagaj tashish paketga kiradi.", duration:"menejerdan so'rang", price:"menejerdan so'rang", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true },
+    indonesia:{ text:"Bali oroli — vulqonlar, guruch teraslari va okean. Parvoz, nonushta va bagaj tashish paketga kiradi.", duration:"menejerdan so'rang", price:"menejerdan so'rang", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true },
+    srilanka:{ text:"Plyajlar, choy plantatsiyalari va qadimiy ibodatxonalar — boy tabiat va tarixga ega tropik orol.", duration:"menejerdan so'rang", price:"menejerdan so'rang", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true },
+    mauritius:{ text:"Hind okeanidagi oppoq plyajlar va lagunalar — dam olish uchun eng chiroyli orollardan biri.", duration:"menejerdan so'rang", price:"menejerdan so'rang", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true },
     issykkul:{ text:"Issiqko'l — qisqa parvoz, tog' havosi va suv bo'yida tinch dam olish.", duration:"10 tun", price:"$483 dan", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true }
   },
   en: {
@@ -377,7 +381,9 @@ const destInfo = {
     maldives:{ text:"From cozy guesthouses to resorts like Sheraton and Nova Maldives — for any budget.", duration:"7 nights / 8 days", price:"from 11.5M UZS", cta:"See the tour ↓", href:"#tour-maldives" },
     azerbaijan:{ text:"Baku + Naftalan — a modern city and a healing resort in one trip.", duration:"flexible", price:"from $761", cta:"See the tour ↓", href:"#tour-azerbaijan" },
     vietnam:{ text:"Phu Quoc — a tropical island, white-sand beaches, and a new season starting October, 5★ hotels from major chains.", duration:"ask your manager", price:"from $947", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true },
-    bali:{ text:"Volcanoes, rice terraces, and the ocean — flight, breakfast, and baggage included.", duration:"ask your manager", price:"ask your manager", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true },
+    indonesia:{ text:"The island of Bali — volcanoes, rice terraces, and the ocean. Flight, breakfast, and baggage included.", duration:"ask your manager", price:"ask your manager", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true },
+    srilanka:{ text:"Beaches, tea plantations, and ancient temples — a tropical island rich in nature and history.", duration:"ask your manager", price:"ask your manager", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true },
+    mauritius:{ text:"Snow-white beaches and lagoons in the Indian Ocean — one of the most beautiful islands to unwind on.", duration:"ask your manager", price:"ask your manager", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true },
     issykkul:{ text:"Lake Issyk-Kul — a short flight, mountain air, and a calm lakeside stay.", duration:"10 nights", price:"from $483", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true }
   }
 };
@@ -398,6 +404,19 @@ function renderDestPanel(key){
   cta.href = info.href;
   if(info.external){ cta.target = '_blank'; cta.rel = 'noopener'; }
   else { cta.removeAttribute('target'); cta.removeAttribute('rel'); }
+
+  // Reuse the real tour photo already on the page for destinations that have one
+  const destImg = document.getElementById('dest-detail-img');
+  const tourKeyForDest = { turkey:'turkey', uae:'uae', georgia:'georgia', egypt:'egypt', maldives:'maldives', azerbaijan:'azerbaijan' }[key];
+  const sourceImg = tourKeyForDest ? document.querySelector('#tour-' + tourKeyForDest + ' .ticket-illustration img') : null;
+  if(sourceImg){
+    destImg.src = sourceImg.src;
+    destImg.alt = dict['dest_' + key] || '';
+    destImg.classList.add('has-img');
+  } else {
+    destImg.removeAttribute('src');
+    destImg.classList.remove('has-img');
+  }
 }
 
 destPills.forEach(pill=>{
