@@ -11,6 +11,7 @@ const translations = {
     dest_eyebrow:"НАПРАВЛЕНИЯ",
     dest_turkey:"Турция", dest_uae:"ОАЭ", dest_georgia:"Грузия", dest_egypt:"Египет", dest_maldives:"Мальдивы",
     dest_azerbaijan:"Азербайджан", dest_vietnam:"Вьетнам", dest_indonesia:"Индонезия", dest_srilanka:"Шри-Ланка", dest_mauritius:"Маврикий", dest_issykkul:"Иссык-Куль",
+    dest_thailand:"Таиланд", dest_malaysia:"Малайзия", dest_qatar:"Катар", dest_china:"Китай (Хайнань)", dest_cruise:"Круизы",
     about_eyebrow:"О КОМПАНИИ", about_title:"Горящие туры каждый день — без переплат и лишних хлопот",
     about_text:"Viamor Tour — тревел-агентство в Ташкенте. Каждый день собираем турпакеты по лучшим ценам: перелёт, отель, трансфер и страховка — одним пакетом. Работаем напрямую с крупными авиакомпаниями — вылеты из Ташкента без лишних пересадок.",
     stat1_value:"15+", stat1_label:"НАПРАВЛЕНИЙ", stat2_value:"5", stat2_label:"АВИАКОМПАНИЙ",
@@ -104,6 +105,7 @@ const translations = {
     dest_eyebrow:"YO'NALISHLAR",
     dest_turkey:"Turkiya", dest_uae:"BAA", dest_georgia:"Gruziya", dest_egypt:"Misr", dest_maldives:"Maldiv orollari",
     dest_azerbaijan:"Ozarbayjon", dest_vietnam:"Vyetnam", dest_indonesia:"Indoneziya", dest_srilanka:"Shri-Lanka", dest_mauritius:"Mavrikiy", dest_issykkul:"Issiqko'l",
+    dest_thailand:"Tailand", dest_malaysia:"Malayziya", dest_qatar:"Qatar", dest_china:"Xitoy (Xaynan)", dest_cruise:"Kruizlar",
     about_eyebrow:"KOMPANIYA HAQIDA", about_title:"Har kuni qaynoq turlar — ortiqcha xarajatlarsiz",
     about_text:"Viamor Tour — Toshkentdagi sayohat agentligi. Har kuni eng yaxshi narxlarda turpaketlar tayyorlaymiz: parvoz, mehmonxona, transfer va sug'urta — bitta paketda. Biz yirik aviakompaniyalar bilan bevosita ishlaymiz — Toshkentdan ortiqcha qo'nishlarsiz parvozlar.",
     stat1_value:"15+", stat1_label:"YO'NALISH", stat2_value:"5", stat2_label:"AVIAKOMPANIYA",
@@ -197,6 +199,7 @@ const translations = {
     dest_eyebrow:"DESTINATIONS",
     dest_turkey:"Turkey", dest_uae:"UAE", dest_georgia:"Georgia", dest_egypt:"Egypt", dest_maldives:"Maldives",
     dest_azerbaijan:"Azerbaijan", dest_vietnam:"Vietnam", dest_indonesia:"Indonesia", dest_srilanka:"Sri Lanka", dest_mauritius:"Mauritius", dest_issykkul:"Issyk-Kul",
+    dest_thailand:"Thailand", dest_malaysia:"Malaysia", dest_qatar:"Qatar", dest_china:"China (Hainan)", dest_cruise:"Cruises",
     about_eyebrow:"ABOUT", about_title:"Hot tours every day — no markups, no hassle",
     about_text:"Viamor Tour is a Tashkent-based travel agency. Every day we put together package deals at the best prices — flight, hotel, transfer, and insurance in one booking. We work directly with major airlines, with direct departures from Tashkent.",
     stat1_value:"15+", stat1_label:"DESTINATIONS", stat2_value:"5", stat2_label:"AIRLINES",
@@ -358,7 +361,12 @@ const destInfo = {
     indonesia:{ text:"Остров Бали — вулканы, рисовые террасы и океан. Перелёт, завтраки и провоз багажа уже в пакете.", duration:"уточняйте у менеджера", price:"уточняйте у менеджера", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true },
     srilanka:{ text:"Пляжи, чайные плантации и древние храмы — тропический остров с богатой природой и историей.", duration:"уточняйте у менеджера", price:"уточняйте у менеджера", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true },
     mauritius:{ text:"Белоснежные пляжи и лагуны в Индийском океане — один из самых красивых островов для отдыха.", duration:"уточняйте у менеджера", price:"уточняйте у менеджера", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true },
-    issykkul:{ text:"Озеро Иссык-Куль — короткий перелёт, горный воздух и спокойный отдых у воды.", duration:"10 ночей", price:"от $483", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true }
+    issykkul:{ text:"Озеро Иссык-Куль — короткий перелёт, горный воздух и спокойный отдых у воды.", duration:"10 ночей", price:"от $483", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true },
+    thailand:{ text:"Белоснежные пляжи Пхукета и Самуи, шумный Бангкок с буддийскими храмами и небоскрёбами — «страна улыбок» подходит и для пляжного отдыха, и для активных экскурсий.", duration:"уточняйте у менеджера", price:"уточняйте у менеджера", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true },
+    malaysia:{ text:"Куала-Лумпур с башнями-близнецами «Петронас» и остров Лангкави с пляжами из белого песка — сочетание современного мегаполиса и тропического курорта.", duration:"уточняйте у менеджера", price:"уточняйте у менеджера", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true },
+    qatar:{ text:"Доха — футуристический город в пустыне на берегу Персидского залива: небоскрёбы, набережная Корниш и Музей исламского искусства.", duration:"уточняйте у менеджера", price:"уточняйте у менеджера", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true },
+    china:{ text:"Остров Хайнань — «китайские Гавайи»: тропический климат, белоснежные пляжи и термальные источники на юге Китая.", duration:"уточняйте у менеджера", price:"уточняйте у менеджера", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true },
+    cruise:{ text:"Морские круизы — путешествие сразу по нескольким странам на одном лайнере, с каютой, питанием и развлечениями на борту.", duration:"уточняйте у менеджера", price:"уточняйте у менеджера", cta:"Написать менеджеру →", href:"https://t.me/viamor_tour", external:true }
   },
   uz: {
     turkey:{ text:"Antaliya, Bodrum, Marmaris — Toshkentdan to'g'ridan-to'g'ri parvozlar bilan plyaj dam olishi, 3★dan 5★ all inclusive mehmonxonalargacha.", duration:"7 tun / 8 kun", price:"$754 dan", cta:"Turni ko'rish ↓", href:"#tour-turkey" },
@@ -371,7 +379,12 @@ const destInfo = {
     indonesia:{ text:"Bali oroli — vulqonlar, guruch teraslari va okean. Parvoz, nonushta va bagaj tashish paketga kiradi.", duration:"menejerdan so'rang", price:"menejerdan so'rang", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true },
     srilanka:{ text:"Plyajlar, choy plantatsiyalari va qadimiy ibodatxonalar — boy tabiat va tarixga ega tropik orol.", duration:"menejerdan so'rang", price:"menejerdan so'rang", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true },
     mauritius:{ text:"Hind okeanidagi oppoq plyajlar va lagunalar — dam olish uchun eng chiroyli orollardan biri.", duration:"menejerdan so'rang", price:"menejerdan so'rang", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true },
-    issykkul:{ text:"Issiqko'l — qisqa parvoz, tog' havosi va suv bo'yida tinch dam olish.", duration:"10 tun", price:"$483 dan", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true }
+    issykkul:{ text:"Issiqko'l — qisqa parvoz, tog' havosi va suv bo'yida tinch dam olish.", duration:"10 tun", price:"$483 dan", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true },
+    thailand:{ text:"Fuket va Samuidagi oppoq plyajlar, buddist ibodatxonalari va osmono'par binolari bilan gavjum Bangkok — «tabassumlar mamlakati» ham plyaj dam olishi, ham faol ekskursiyalar uchun mos keladi.", duration:"menejerdan so'rang", price:"menejerdan so'rang", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true },
+    malaysia:{ text:"«Petronas» egizak minoralari bilan Kuala-Lumpur va oq qumli plyajlari bilan Langkavi oroli — zamonaviy megapolis va tropik kurortning uyg'unligi.", duration:"menejerdan so'rang", price:"menejerdan so'rang", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true },
+    qatar:{ text:"Doha — Fors ko'rfazi bo'yidagi cho'ldagi futuristik shahar: osmono'par binolar, Korniche sohili va Islom san'ati muzeyi.", duration:"menejerdan so'rang", price:"menejerdan so'rang", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true },
+    china:{ text:"Xaynan oroli — «xitoy Gavayi»: Xitoyning janubida tropik iqlim, oppoq plyajlar va termal buloqlar.", duration:"menejerdan so'rang", price:"menejerdan so'rang", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true },
+    cruise:{ text:"Dengiz kruizlari — bitta layner bilan bir nechta davlat bo'ylab sayohat, kayut, ovqatlanish va bortda ko'ngil ochish bilan.", duration:"menejerdan so'rang", price:"menejerdan so'rang", cta:"Menejerga yozish →", href:"https://t.me/viamor_tour", external:true }
   },
   en: {
     turkey:{ text:"Antalya, Bodrum, Marmaris — beach holidays with direct flights from Tashkent, hotels from 3★ to 5★ all-inclusive.", duration:"7 nights / 8 days", price:"from $754", cta:"See the tour ↓", href:"#tour-turkey" },
@@ -384,7 +397,12 @@ const destInfo = {
     indonesia:{ text:"The island of Bali — volcanoes, rice terraces, and the ocean. Flight, breakfast, and baggage included.", duration:"ask your manager", price:"ask your manager", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true },
     srilanka:{ text:"Beaches, tea plantations, and ancient temples — a tropical island rich in nature and history.", duration:"ask your manager", price:"ask your manager", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true },
     mauritius:{ text:"Snow-white beaches and lagoons in the Indian Ocean — one of the most beautiful islands to unwind on.", duration:"ask your manager", price:"ask your manager", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true },
-    issykkul:{ text:"Lake Issyk-Kul — a short flight, mountain air, and a calm lakeside stay.", duration:"10 nights", price:"from $483", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true }
+    issykkul:{ text:"Lake Issyk-Kul — a short flight, mountain air, and a calm lakeside stay.", duration:"10 nights", price:"from $483", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true },
+    thailand:{ text:"Snow-white beaches of Phuket and Koh Samui, bustling Bangkok with Buddhist temples and skyscrapers — the \"Land of Smiles\" suits both beach holidays and active sightseeing.", duration:"ask your manager", price:"ask your manager", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true },
+    malaysia:{ text:"Kuala Lumpur with its twin Petronas Towers and the island of Langkawi with white-sand beaches — a blend of a modern metropolis and a tropical resort.", duration:"ask your manager", price:"ask your manager", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true },
+    qatar:{ text:"Doha — a futuristic desert city on the Persian Gulf: skyscrapers, the Corniche waterfront, and the Museum of Islamic Art.", duration:"ask your manager", price:"ask your manager", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true },
+    china:{ text:"Hainan Island — \"China's Hawaii\": tropical climate, white-sand beaches, and hot springs in southern China.", duration:"ask your manager", price:"ask your manager", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true },
+    cruise:{ text:"Sea cruises — visit several countries on one ship, with a cabin, meals, and onboard entertainment included.", duration:"ask your manager", price:"ask your manager", cta:"Message a manager →", href:"https://t.me/viamor_tour", external:true }
   }
 };
 
