@@ -57,6 +57,7 @@
       <a href="#about" data-i18n="nav_about">О нас</a>
       <a href="#tours" data-i18n="nav_tours">Туры</a>
       <a href="#why" data-i18n="nav_why">Почему мы</a>
+      <a href="#subscribe" data-i18n="nav_subscribe">Подписка</a>
       <a href="#contact" data-i18n="nav_contact">Контакты</a>
     </nav>
     <div class="nav-right">
@@ -515,6 +516,83 @@
         <p data-i18n="faq6_a">Горящие туры обычно улетают в течение 1–2 недель — чем раньше бронируете, тем больше выбор отелей.</p>
       </details>
     </div>
+  </div>
+</section>
+
+<!-- ============ TOUR SUBSCRIPTION ============ -->
+<section id="subscribe" class="subscribe-band">
+  <div class="container">
+    <h2 data-i18n="sub_title">Подпишитесь на нужные туры</h2>
+    <p class="section-sub" data-i18n="sub_subtitle">Выберите параметры — пришлём в Telegram, как только появится подходящий тур.</p>
+
+    <form id="subscribe-form" class="subscribe-form" data-reveal>
+      <div class="subscribe-row">
+        <label>
+          <span data-i18n="sub_name">Ваше имя</span>
+          <input type="text" id="sub-name" required>
+        </label>
+        <label>
+          <span data-i18n="sub_contact">Телефон или Telegram</span>
+          <input type="text" id="sub-contact" required>
+        </label>
+      </div>
+      <div class="subscribe-row">
+        <label>
+          <span data-i18n="sub_city">Город вылета</span>
+          <input type="text" id="sub-city" value="Ташкент">
+        </label>
+        <label>
+          <span data-i18n="sub_country">Страна</span>
+          <select id="sub-country">
+            <option value="" data-i18n="sub_any_country">Любая</option>
+            <option value="Грузия">Грузия</option>
+            <option value="Турция">Турция</option>
+            <option value="ОАЭ">ОАЭ</option>
+            <option value="Египет">Египет</option>
+            <option value="Мальдивы">Мальдивы</option>
+            <option value="Азербайджан">Азербайджан</option>
+            <option value="Другое">Другое</option>
+          </select>
+        </label>
+      </div>
+      <div class="subscribe-row">
+        <label>
+          <span data-i18n="sub_date_from">Даты вылета — от</span>
+          <input type="date" id="sub-date-from">
+        </label>
+        <label>
+          <span data-i18n="sub_date_to">Даты вылета — до</span>
+          <input type="date" id="sub-date-to">
+        </label>
+      </div>
+      <div class="subscribe-row">
+        <label>
+          <span data-i18n="sub_hotel">Отель</span>
+          <select id="sub-hotel">
+            <option value="" data-i18n="sub_any_hotel">Любой</option>
+            <option value="3*">3*</option>
+            <option value="4*">4*</option>
+            <option value="5*">5*</option>
+          </select>
+        </label>
+        <label>
+          <span data-i18n="sub_budget">Бюджет (USD)</span>
+          <input type="number" id="sub-budget" min="0" placeholder="1000">
+        </label>
+      </div>
+      <div class="subscribe-row">
+        <label>
+          <span data-i18n="sub_nights">Ночи</span>
+          <input type="number" id="sub-nights" min="1" placeholder="7">
+        </label>
+        <label>
+          <span data-i18n="sub_discount">Скидка от, %</span>
+          <input type="number" id="sub-discount" min="0" max="100" placeholder="10">
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary" data-i18n="sub_submit">Подписаться</button>
+      <p class="subscribe-note" id="subscribe-note" data-i18n="sub_note">Мы будем присылать уведомление только о турах, подходящих под эти параметры.</p>
+    </form>
   </div>
 </section>
 

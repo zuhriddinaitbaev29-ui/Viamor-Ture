@@ -4,6 +4,14 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 const translations = {
   ru: {
     nav_home:"Главная", nav_about:"О нас", nav_tours:"Туры", nav_why:"Почему мы", nav_contact:"Контакты",
+    nav_subscribe:"Подписка",
+    sub_title:"Подпишитесь на нужные туры", sub_subtitle:"Выберите параметры — пришлём в Telegram, как только появится подходящий тур.",
+    sub_name:"Ваше имя", sub_contact:"Телефон или Telegram", sub_city:"Город вылета", sub_country:"Страна", sub_any_country:"Любая",
+    sub_date_from:"Даты вылета — от", sub_date_to:"Даты вылета — до", sub_hotel:"Отель", sub_any_hotel:"Любой",
+    sub_budget:"Бюджет (USD)", sub_nights:"Ночи", sub_discount:"Скидка от, %", sub_submit:"Подписаться",
+    sub_note:"Мы будем присылать уведомление только о турах, подходящих под эти параметры.",
+    sub_thanks:"Готово! Вы подписаны — пришлём уведомление, как появится подходящий тур.",
+    sub_error:"Не удалось отправить. Заполните хотя бы телефон или Telegram.",
     hero_eyebrow:"VIAMOR TOUR · ТАШКЕНТ", hero_title:"Путешествие к мечте — каждый день",
     hero_titles:["Путешествие к мечте — каждый день","Горящие туры из Ташкента — новые каждый день","От Турции до Мальдив — весь мир ближе, чем кажется"],
     hero_subtitle:"Горящие турпакеты из Ташкента: Турция, ОАЭ, Грузия, Египет, Мальдивы и другие направления — прямые рейсы, лучшие цены, полное сопровождение.",
@@ -98,6 +106,14 @@ const translations = {
   },
   uz: {
     nav_home:"Bosh sahifa", nav_about:"Biz haqimizda", nav_tours:"Turlar", nav_why:"Nega biz", nav_contact:"Aloqa",
+    nav_subscribe:"Obuna",
+    sub_title:"Kerakli turlarga obuna bo'ling", sub_subtitle:"Parametrlarni tanlang — mos tur paydo bo'lishi bilan Telegramga yuboramiz.",
+    sub_name:"Ismingiz", sub_contact:"Telefon yoki Telegram", sub_city:"Uchish shahri", sub_country:"Davlat", sub_any_country:"Har qanday",
+    sub_date_from:"Uchish sanasi — dan", sub_date_to:"Uchish sanasi — gacha", sub_hotel:"Mehmonxona", sub_any_hotel:"Har qanday",
+    sub_budget:"Byudjet (USD)", sub_nights:"Tunlar", sub_discount:"Chegirma dan, %", sub_submit:"Obuna bo'lish",
+    sub_note:"Faqat shu parametrlarga mos turlar haqida xabar yuboramiz.",
+    sub_thanks:"Tayyor! Siz obuna bo'ldingiz — mos tur paydo bo'lishi bilan xabar beramiz.",
+    sub_error:"Yuborib bo'lmadi. Kamida telefon yoki Telegram kiriting.",
     hero_eyebrow:"VIAMOR TOUR · TOSHKENT", hero_title:"Orzular sari safar — har kuni",
     hero_titles:["Orzular sari safar — har kuni","Toshkentdan qaynoq turlar — har kuni yangi","Turkiyadan Maldivgacha — dunyo o'ylagandan yaqinroq"],
     hero_subtitle:"Toshkentdan qaynoq turpaketlar: Turkiya, BAA, Gruziya, Misr, Maldiv orollari va boshqa yo'nalishlar — to'g'ridan-to'g'ri parvozlar, eng yaxshi narxlar, to'liq xizmat.",
@@ -192,6 +208,14 @@ const translations = {
   },
   en: {
     nav_home:"Home", nav_about:"About", nav_tours:"Tours", nav_why:"Why us", nav_contact:"Contact",
+    nav_subscribe:"Subscribe",
+    sub_title:"Subscribe to tours you want", sub_subtitle:"Pick your criteria — we'll message you on Telegram as soon as a matching tour appears.",
+    sub_name:"Your name", sub_contact:"Phone or Telegram", sub_city:"Departure city", sub_country:"Country", sub_any_country:"Any",
+    sub_date_from:"Departure dates — from", sub_date_to:"Departure dates — to", sub_hotel:"Hotel", sub_any_hotel:"Any",
+    sub_budget:"Budget (USD)", sub_nights:"Nights", sub_discount:"Discount from, %", sub_submit:"Subscribe",
+    sub_note:"We'll only notify you about tours matching these criteria.",
+    sub_thanks:"Done! You're subscribed — we'll notify you as soon as a matching tour appears.",
+    sub_error:"Couldn't submit. Please fill in at least phone or Telegram.",
     hero_eyebrow:"VIAMOR TOUR · TASHKENT", hero_title:"A journey to your dreams — every day",
     hero_titles:["A journey to your dreams — every day","Hot deals from Tashkent — new every day","From Turkey to the Maldives — the world is closer than you think"],
     hero_subtitle:"Hot tour packages from Tashkent: Turkey, the UAE, Georgia, Egypt, the Maldives, and more — direct flights, best prices, full support.",
@@ -1224,3 +1248,39 @@ function startHeroTitleRotation(){
   heroTitleTimer = setInterval(rotateHeroTitle, 15000);
 }
 startHeroTitleRotation();
+/* ============ TOUR SUBSCRIPTION FORM ============ */
+const subscribeForm = document.getElementById('subscribe-form');
+const subscribeNote = document.getElementById('subscribe-note');
+if(subscribeForm){
+  subscribeForm.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const dict = translations[currentLang];
+    const payload = {
+      name: document.getElementById('sub-name').value.trim(),
+      contact: document.getElementById('sub-contact').value.trim(),
+      departure_city: document.getElementById('sub-city').value.trim() || null,
+      country: document.getElementById('sub-country').value || null,
+      date_from: document.getElementById('sub-date-from').value || null,
+      date_to: document.getElementById('sub-date-to').value || null,
+      hotel_stars: document.getElementById('sub-hotel').value || null,
+      budget_usd: document.getElementById('sub-budget').value ? Number(document.getElementById('sub-budget').value) : null,
+      nights: document.getElementById('sub-nights').value ? Number(document.getElementById('sub-nights').value) : null,
+      min_discount: document.getElementById('sub-discount').value ? Number(document.getElementById('sub-discount').value) : null,
+    };
+    if(!payload.contact){
+      subscribeNote.textContent = dict.sub_error;
+      subscribeNote.classList.remove('success');
+      return;
+    }
+    const { error } = await supabase.from('tour_subscriptions').insert(payload);
+    if(error){
+      subscribeNote.textContent = dict.sub_error;
+      subscribeNote.classList.remove('success');
+      return;
+    }
+    subscribeNote.textContent = dict.sub_thanks;
+    subscribeNote.classList.add('success');
+    subscribeForm.reset();
+    document.getElementById('sub-city').value = 'Ташкент';
+  });
+}
