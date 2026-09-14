@@ -650,3 +650,65 @@
 
   /* ============ CONFETTI PARTICLE ============ */
   .confetti-piece{position:fixed; pointer-events:none; z-index:9998; border-radius:2px;}
+
+  /* ============ HERO SEARCH BAR ============ */
+  .hero-search{
+    margin-top:48px; display:flex; flex-wrap:wrap; align-items:end; gap:14px;
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:22px 26px; position:relative; z-index:1;
+  }
+  .hero-search-field{display:flex; flex-direction:column; gap:6px; flex:1; min-width:120px;}
+  .hero-search-field label{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.05em; color:var(--ink-soft);}
+  .hero-search-field input, .hero-search-field select{
+    padding:10px 12px; border-radius:8px; border:1px solid var(--border); background:var(--bg);
+    color:var(--ink); font-family:'Manrope',sans-serif; font-size:14px;
+  }
+  .hero-search-field input:focus, .hero-search-field select:focus{outline:none; border-color:var(--teal);}
+  .hero-search-field input[readonly]{opacity:.7; cursor:default;}
+  .hero-search-btn{flex:0 0 auto; white-space:nowrap;}
+  @media (max-width:900px){
+    .hero-search{flex-direction:column; align-items:stretch;}
+    .hero-search-field{min-width:0;}
+    .hero-search-btn{width:100%; justify-content:center;}
+  }
+
+  /* ============ TOUR SUBSCRIPTION (premium card redesign) ============ */
+  .subscribe-band{background:var(--bg-alt); border-top:1px solid var(--border); border-bottom:1px solid var(--border);}
+  .subscribe-form{max-width:720px; margin:40px auto 0; text-align:center;}
+
+  .sub-categories{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:32px;
+  }
+  @media (max-width:640px){ .sub-categories{grid-template-columns:repeat(2,1fr);} }
+  .sub-cat-card{
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    padding:22px 14px; background:var(--surface); border:1.5px solid var(--border); border-radius:20px;
+    cursor:pointer; transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+    font-family:'Manrope',sans-serif; font-size:13.5px; color:var(--ink); text-align:center;
+  }
+  .sub-cat-card:hover{transform:translateY(-3px); box-shadow:0 14px 30px -12px rgba(27,42,74,.25); border-color:var(--teal);}
+  .sub-cat-card.selected{
+    border-color:var(--clay); background:rgba(193,98,58,.07);
+    box-shadow:0 0 0 1px var(--clay), 0 14px 30px -14px rgba(193,98,58,.35);
+  }
+  .sub-cat-icon{font-size:26px; line-height:1; transition:transform .2s ease;}
+  .sub-cat-card.selected .sub-cat-icon{transform:scale(1.12);}
+
+  .sub-contact-input{
+    width:100%; max-width:420px; margin:0 auto 20px; display:block;
+    padding:14px 20px; border-radius:18px; border:1.5px solid var(--border); background:var(--surface);
+    color:var(--ink); font-family:'Manrope',sans-serif; font-size:15px; text-align:center;
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .sub-contact-input:focus{outline:none; border-color:var(--teal); box-shadow:0 0 0 3px rgba(46,140,130,.12);}
+
+  .sub-submit-btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:14px 34px; border-radius:20px; border:none; background:var(--clay); color:var(--on-accent);
+    font-family:'IBM Plex Mono',monospace; font-size:13.5px; letter-spacing:.04em; cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .sub-submit-btn:hover{transform:translateY(-2px); box-shadow:0 12px 26px -10px rgba(193,98,58,.5);}
+
+  .subscribe-note{margin-top:16px; font-size:12px; color:var(--ink-soft); text-align:center;}
+  .subscribe-note.success{color:var(--teal); font-weight:600;}

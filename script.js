@@ -5,13 +5,14 @@ const translations = {
   ru: {
     nav_home:"Главная", nav_about:"О нас", nav_tours:"Туры", nav_why:"Почему мы", nav_contact:"Контакты",
     nav_subscribe:"Подписка",
-    sub_title:"Подпишитесь на нужные туры", sub_subtitle:"Выберите параметры — пришлём в Telegram, как только появится подходящий тур.",
-    sub_name:"Ваше имя", sub_contact:"Телефон или Telegram", sub_city:"Город вылета", sub_country:"Страна", sub_any_country:"Любая",
-    sub_date_from:"Даты вылета — от", sub_date_to:"Даты вылета — до", sub_hotel:"Отель", sub_any_hotel:"Любой",
-    sub_budget:"Бюджет (USD)", sub_nights:"Ночи", sub_discount:"Скидка от, %", sub_submit:"Подписаться",
-    sub_note:"Мы будем присылать уведомление только о турах, подходящих под эти параметры.",
-    sub_thanks:"Готово! Вы подписаны — пришлём уведомление, как появится подходящий тур.",
-    sub_error:"Не удалось отправить. Заполните хотя бы телефон или Telegram.",
+    sub_title:"Подпишитесь на нужные туры", sub_subtitle:"Получайте только те предложения, которые интересны именно вам.",
+    sub_submit:"Получать предложения",
+    sub_note:"Без спама. Только актуальные предложения Viamor.",
+    sub_thanks:"Готово! Мы будем отправлять вам подходящие туры.",
+    sub_error:"Не удалось отправить. Заполните телефон или email.",
+    sub_contact_ph:"Телефон или email", sub_any_country:"Любая",
+    cat_beach:"Пляжный отдых", cat_mountain:"Горные туры", cat_abroad:"Зарубежные путешествия",
+    cat_excursion:"Экскурсии", cat_family:"Семейный отдых", cat_premium:"Premium-туры",
     search_from:"Откуда", search_to:"Куда", search_date:"Дата", search_travelers:"Туристы", search_budget:"Бюджет, $", search_submit:"Найти",
     hero_eyebrow:"VIAMOR TOUR · ТАШКЕНТ", hero_title:"Путешествие к мечте — каждый день",
     hero_titles:["Путешествие к мечте — каждый день","Горящие туры из Ташкента — новые каждый день","От Турции до Мальдив — весь мир ближе, чем кажется"],
@@ -108,13 +109,14 @@ const translations = {
   uz: {
     nav_home:"Bosh sahifa", nav_about:"Biz haqimizda", nav_tours:"Turlar", nav_why:"Nega biz", nav_contact:"Aloqa",
     nav_subscribe:"Obuna",
-    sub_title:"Kerakli turlarga obuna bo'ling", sub_subtitle:"Parametrlarni tanlang — mos tur paydo bo'lishi bilan Telegramga yuboramiz.",
-    sub_name:"Ismingiz", sub_contact:"Telefon yoki Telegram", sub_city:"Uchish shahri", sub_country:"Davlat", sub_any_country:"Har qanday",
-    sub_date_from:"Uchish sanasi — dan", sub_date_to:"Uchish sanasi — gacha", sub_hotel:"Mehmonxona", sub_any_hotel:"Har qanday",
-    sub_budget:"Byudjet (USD)", sub_nights:"Tunlar", sub_discount:"Chegirma dan, %", sub_submit:"Obuna bo'lish",
-    sub_note:"Faqat shu parametrlarga mos turlar haqida xabar yuboramiz.",
-    sub_thanks:"Tayyor! Siz obuna bo'ldingiz — mos tur paydo bo'lishi bilan xabar beramiz.",
-    sub_error:"Yuborib bo'lmadi. Kamida telefon yoki Telegram kiriting.",
+    sub_title:"Kerakli turlarga obuna bo'ling", sub_subtitle:"Faqat siz uchun qiziqarli takliflarni oling.",
+    sub_submit:"Takliflarni olish",
+    sub_note:"Spam yo'q. Faqat Viamor'ning dolzarb takliflari.",
+    sub_thanks:"Tayyor! Sizga mos turlarni yuborib turamiz.",
+    sub_error:"Yuborib bo'lmadi. Telefon yoki email kiriting.",
+    sub_contact_ph:"Telefon yoki email", sub_any_country:"Har qanday",
+    cat_beach:"Plyaj dam olishi", cat_mountain:"Tog' turlari", cat_abroad:"Xorijiy sayohatlar",
+    cat_excursion:"Ekskursiyalar", cat_family:"Oilaviy dam olish", cat_premium:"Premium turlar",
     search_from:"Qayerdan", search_to:"Qayerga", search_date:"Sana", search_travelers:"Sayohatchilar", search_budget:"Byudjet, $", search_submit:"Qidirish",
     hero_eyebrow:"VIAMOR TOUR · TOSHKENT", hero_title:"Orzular sari safar — har kuni",
     hero_titles:["Orzular sari safar — har kuni","Toshkentdan qaynoq turlar — har kuni yangi","Turkiyadan Maldivgacha — dunyo o'ylagandan yaqinroq"],
@@ -211,13 +213,14 @@ const translations = {
   en: {
     nav_home:"Home", nav_about:"About", nav_tours:"Tours", nav_why:"Why us", nav_contact:"Contact",
     nav_subscribe:"Subscribe",
-    sub_title:"Subscribe to tours you want", sub_subtitle:"Pick your criteria — we'll message you on Telegram as soon as a matching tour appears.",
-    sub_name:"Your name", sub_contact:"Phone or Telegram", sub_city:"Departure city", sub_country:"Country", sub_any_country:"Any",
-    sub_date_from:"Departure dates — from", sub_date_to:"Departure dates — to", sub_hotel:"Hotel", sub_any_hotel:"Any",
-    sub_budget:"Budget (USD)", sub_nights:"Nights", sub_discount:"Discount from, %", sub_submit:"Subscribe",
-    sub_note:"We'll only notify you about tours matching these criteria.",
-    sub_thanks:"Done! You're subscribed — we'll notify you as soon as a matching tour appears.",
-    sub_error:"Couldn't submit. Please fill in at least phone or Telegram.",
+    sub_title:"Subscribe to tours you want", sub_subtitle:"Get only the offers that interest you.",
+    sub_submit:"Get offers",
+    sub_note:"No spam. Only current Viamor offers.",
+    sub_thanks:"Done! We'll send you tours that match your interests.",
+    sub_error:"Couldn't submit. Please fill in phone or email.",
+    sub_contact_ph:"Phone or email", sub_any_country:"Any",
+    cat_beach:"Beach holidays", cat_mountain:"Mountain tours", cat_abroad:"Trips abroad",
+    cat_excursion:"Excursions", cat_family:"Family holidays", cat_premium:"Premium tours",
     search_from:"From", search_to:"To", search_date:"Date", search_travelers:"Travelers", search_budget:"Budget, $", search_submit:"Search",
     hero_eyebrow:"VIAMOR TOUR · TASHKENT", hero_title:"A journey to your dreams — every day",
     hero_titles:["A journey to your dreams — every day","Hot deals from Tashkent — new every day","From Turkey to the Maldives — the world is closer than you think"],
@@ -1256,30 +1259,39 @@ function startHeroTitleRotation(){
   heroTitleTimer = setInterval(rotateHeroTitle, 15000);
 }
 startHeroTitleRotation();
-/* ============ TOUR SUBSCRIPTION FORM ============ */
+/* ============ TOUR SUBSCRIPTION FORM (category cards) ============ */
 const subscribeForm = document.getElementById('subscribe-form');
 const subscribeNote = document.getElementById('subscribe-note');
+const subCategoryCards = document.querySelectorAll('.sub-cat-card');
+let selectedCategories = [];
+
+subCategoryCards.forEach(card=>{
+  card.addEventListener('click', ()=>{
+    const cat = card.dataset.cat;
+    if(selectedCategories.includes(cat)){
+      selectedCategories = selectedCategories.filter(c => c !== cat);
+      card.classList.remove('selected');
+    } else {
+      selectedCategories.push(cat);
+      card.classList.add('selected');
+    }
+  });
+});
+
 if(subscribeForm){
   subscribeForm.addEventListener('submit', async (e)=>{
     e.preventDefault();
     const dict = translations[currentLang];
-    const payload = {
-      name: document.getElementById('sub-name').value.trim(),
-      contact: document.getElementById('sub-contact').value.trim(),
-      departure_city: document.getElementById('sub-city').value.trim() || null,
-      country: document.getElementById('sub-country').value || null,
-      date_from: document.getElementById('sub-date-from').value || null,
-      date_to: document.getElementById('sub-date-to').value || null,
-      hotel_stars: document.getElementById('sub-hotel').value || null,
-      budget_usd: document.getElementById('sub-budget').value ? Number(document.getElementById('sub-budget').value) : null,
-      nights: document.getElementById('sub-nights').value ? Number(document.getElementById('sub-nights').value) : null,
-      min_discount: document.getElementById('sub-discount').value ? Number(document.getElementById('sub-discount').value) : null,
-    };
-    if(!payload.contact){
+    const contact = document.getElementById('sub-contact').value.trim();
+    if(!contact){
       subscribeNote.textContent = dict.sub_error;
       subscribeNote.classList.remove('success');
       return;
     }
+    const payload = {
+      contact,
+      categories: selectedCategories.length ? selectedCategories : null,
+    };
     const { error } = await supabase.from('tour_subscriptions').insert(payload);
     if(error){
       subscribeNote.textContent = dict.sub_error;
@@ -1289,7 +1301,8 @@ if(subscribeForm){
     subscribeNote.textContent = dict.sub_thanks;
     subscribeNote.classList.add('success');
     subscribeForm.reset();
-    document.getElementById('sub-city').value = 'Ташкент';
+    selectedCategories = [];
+    subCategoryCards.forEach(card => card.classList.remove('selected'));
   });
 }
 /* ============ HERO SEARCH BAR (feeds into the AI search) ============ */

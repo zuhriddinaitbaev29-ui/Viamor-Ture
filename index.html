@@ -561,80 +561,42 @@
 
 <!-- ============ TOUR SUBSCRIPTION ============ -->
 <section id="subscribe" class="subscribe-band">
-  <div class="container subscribe-grid">
-    <div class="subscribe-intro" data-reveal>
-      <svg class="subscribe-bell" viewBox="0 0 24 24"><use href="#ic-bell"/></svg>
-      <h2 data-i18n="sub_title">Подпишитесь на нужные туры</h2>
-      <p class="section-sub" data-i18n="sub_subtitle">Выберите параметры — пришлём в Telegram, как только появится подходящий тур.</p>
-    </div>
+  <div class="container">
+    <h2 data-i18n="sub_title">Подпишитесь на нужные туры</h2>
+    <p class="section-sub" data-i18n="sub_subtitle">Получайте только те предложения, которые интересны именно вам.</p>
 
     <form id="subscribe-form" class="subscribe-form" data-reveal>
-      <div class="subscribe-row">
-        <label>
-          <span data-i18n="sub_name">Ваше имя</span>
-          <input type="text" id="sub-name" required>
-        </label>
-        <label>
-          <span data-i18n="sub_contact">Телефон или Telegram</span>
-          <input type="text" id="sub-contact" required>
-        </label>
+      <div class="sub-categories" id="sub-categories">
+        <button type="button" class="sub-cat-card" data-cat="beach">
+          <span class="sub-cat-icon">🌴</span>
+          <span data-i18n="cat_beach">Пляжный отдых</span>
+        </button>
+        <button type="button" class="sub-cat-card" data-cat="mountain">
+          <span class="sub-cat-icon">🏔</span>
+          <span data-i18n="cat_mountain">Горные туры</span>
+        </button>
+        <button type="button" class="sub-cat-card" data-cat="abroad">
+          <span class="sub-cat-icon">✈️</span>
+          <span data-i18n="cat_abroad">Зарубежные путешествия</span>
+        </button>
+        <button type="button" class="sub-cat-card" data-cat="excursion">
+          <span class="sub-cat-icon">🏛</span>
+          <span data-i18n="cat_excursion">Экскурсии</span>
+        </button>
+        <button type="button" class="sub-cat-card" data-cat="family">
+          <span class="sub-cat-icon">👨‍👩‍👧</span>
+          <span data-i18n="cat_family">Семейный отдых</span>
+        </button>
+        <button type="button" class="sub-cat-card" data-cat="premium">
+          <span class="sub-cat-icon">💎</span>
+          <span data-i18n="cat_premium">Premium-туры</span>
+        </button>
       </div>
-      <div class="subscribe-row">
-        <label class="has-icon">
-          <span><svg class="field-icon"><use href="#ic-pin"/></svg><span data-i18n="sub_city">Город вылета</span></span>
-          <input type="text" id="sub-city" value="Ташкент">
-        </label>
-        <label class="has-icon">
-          <span><svg class="field-icon"><use href="#ic-pin"/></svg><span data-i18n="sub_country">Страна</span></span>
-          <select id="sub-country">
-            <option value="" data-i18n="sub_any_country">Любая</option>
-            <option value="Грузия">Грузия</option>
-            <option value="Турция">Турция</option>
-            <option value="ОАЭ">ОАЭ</option>
-            <option value="Египет">Египет</option>
-            <option value="Мальдивы">Мальдивы</option>
-            <option value="Азербайджан">Азербайджан</option>
-            <option value="Другое">Другое</option>
-          </select>
-        </label>
-      </div>
-      <div class="subscribe-row">
-        <label class="has-icon">
-          <span><svg class="field-icon"><use href="#ic-calendar"/></svg><span data-i18n="sub_date_from">Даты вылета — от</span></span>
-          <input type="date" id="sub-date-from">
-        </label>
-        <label class="has-icon">
-          <span><svg class="field-icon"><use href="#ic-calendar"/></svg><span data-i18n="sub_date_to">Даты вылета — до</span></span>
-          <input type="date" id="sub-date-to">
-        </label>
-      </div>
-      <div class="subscribe-row">
-        <label class="has-icon">
-          <span><svg class="field-icon"><use href="#ic-hotel-bed"/></svg><span data-i18n="sub_hotel">Отель</span></span>
-          <select id="sub-hotel">
-            <option value="" data-i18n="sub_any_hotel">Любой</option>
-            <option value="3*">3*</option>
-            <option value="4*">4*</option>
-            <option value="5*">5*</option>
-          </select>
-        </label>
-        <label class="has-icon">
-          <span><svg class="field-icon"><use href="#ic-dollar"/></svg><span data-i18n="sub_budget">Бюджет (USD)</span></span>
-          <input type="number" id="sub-budget" min="0" placeholder="1000">
-        </label>
-      </div>
-      <div class="subscribe-row">
-        <label class="has-icon">
-          <span><svg class="field-icon"><use href="#ic-moon"/></svg><span data-i18n="sub_nights">Ночи</span></span>
-          <input type="number" id="sub-nights" min="1" placeholder="7">
-        </label>
-        <label class="has-icon">
-          <span><svg class="field-icon"><use href="#ic-percent"/></svg><span data-i18n="sub_discount">Скидка от, %</span></span>
-          <input type="number" id="sub-discount" min="0" max="100" placeholder="10">
-        </label>
-      </div>
-      <button type="submit" class="btn btn-primary" data-i18n="sub_submit">Подписаться</button>
-      <p class="subscribe-note" id="subscribe-note" data-i18n="sub_note">Мы будем присылать уведомление только о турах, подходящих под эти параметры.</p>
+
+      <input type="text" id="sub-contact" class="sub-contact-input" data-i18n-placeholder="sub_contact_ph" placeholder="Телефон или email" required>
+
+      <button type="submit" class="sub-submit-btn" data-i18n="sub_submit">Получать предложения</button>
+      <p class="subscribe-note" id="subscribe-note" data-i18n="sub_note">Без спама. Только актуальные предложения Viamor.</p>
     </form>
   </div>
 </section>
