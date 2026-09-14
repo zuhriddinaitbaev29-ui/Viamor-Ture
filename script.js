@@ -12,6 +12,7 @@ const translations = {
     sub_note:"Мы будем присылать уведомление только о турах, подходящих под эти параметры.",
     sub_thanks:"Готово! Вы подписаны — пришлём уведомление, как появится подходящий тур.",
     sub_error:"Не удалось отправить. Заполните хотя бы телефон или Telegram.",
+    search_from:"Откуда", search_to:"Куда", search_date:"Дата", search_travelers:"Туристы", search_budget:"Бюджет, $", search_submit:"Найти",
     hero_eyebrow:"VIAMOR TOUR · ТАШКЕНТ", hero_title:"Путешествие к мечте — каждый день",
     hero_titles:["Путешествие к мечте — каждый день","Горящие туры из Ташкента — новые каждый день","От Турции до Мальдив — весь мир ближе, чем кажется"],
     hero_subtitle:"Горящие турпакеты из Ташкента: Турция, ОАЭ, Грузия, Египет, Мальдивы и другие направления — прямые рейсы, лучшие цены, полное сопровождение.",
@@ -114,6 +115,7 @@ const translations = {
     sub_note:"Faqat shu parametrlarga mos turlar haqida xabar yuboramiz.",
     sub_thanks:"Tayyor! Siz obuna bo'ldingiz — mos tur paydo bo'lishi bilan xabar beramiz.",
     sub_error:"Yuborib bo'lmadi. Kamida telefon yoki Telegram kiriting.",
+    search_from:"Qayerdan", search_to:"Qayerga", search_date:"Sana", search_travelers:"Sayohatchilar", search_budget:"Byudjet, $", search_submit:"Qidirish",
     hero_eyebrow:"VIAMOR TOUR · TOSHKENT", hero_title:"Orzular sari safar — har kuni",
     hero_titles:["Orzular sari safar — har kuni","Toshkentdan qaynoq turlar — har kuni yangi","Turkiyadan Maldivgacha — dunyo o'ylagandan yaqinroq"],
     hero_subtitle:"Toshkentdan qaynoq turpaketlar: Turkiya, BAA, Gruziya, Misr, Maldiv orollari va boshqa yo'nalishlar — to'g'ridan-to'g'ri parvozlar, eng yaxshi narxlar, to'liq xizmat.",
@@ -216,6 +218,7 @@ const translations = {
     sub_note:"We'll only notify you about tours matching these criteria.",
     sub_thanks:"Done! You're subscribed — we'll notify you as soon as a matching tour appears.",
     sub_error:"Couldn't submit. Please fill in at least phone or Telegram.",
+    search_from:"From", search_to:"To", search_date:"Date", search_travelers:"Travelers", search_budget:"Budget, $", search_submit:"Search",
     hero_eyebrow:"VIAMOR TOUR · TASHKENT", hero_title:"A journey to your dreams — every day",
     hero_titles:["A journey to your dreams — every day","Hot deals from Tashkent — new every day","From Turkey to the Maldives — the world is closer than you think"],
     hero_subtitle:"Hot tour packages from Tashkent: Turkey, the UAE, Georgia, Egypt, the Maldives, and more — direct flights, best prices, full support.",
@@ -1062,6 +1065,39 @@ function findAiMatches(parsed){
   return candidates.slice(0, 3);
 }
 
+function runAiSearch(text){
+  if(!text) return;
+  addAiMessage(aiEscapeHtml(text), false);
+
+  const parsed = parseAiQuery(text);
+  const matches = findAiMatches(parsed);
+  const dict = translations[currentLang];
+
+  setTimeout(()=>{
+    if(matches.length === 0){
+      addAiMessage(
+        dict.ai_no_match + ' <a href="https://t.me/viamor_tour" target="_blank" rel="noopener">' + dict.ai_manager_link + '</a>. ' +
+        dict.ai_channel_hint + ' <a href="https://t.me/viamor_tur" target="_blank" rel="noopener">' + dict.ai_channel_link + '</a>',
+        true
+      );
+      return;
+    }
+    let html = dict.ai_found + '<div class="ai-results">';
+    matches.forEach(m=>{
+      html += '<div class="ai-result-card" data-tour-key="' + m.key + '"><img src="' + m.img + '" alt="">' +
+        '<div><b>' + aiEscapeHtml(m.name) + '</b><span>' + aiEscapeHtml(m.duration) + ' · ' + aiEscapeHtml(m.price) + '</span></div></div>';
+    });
+    html += '</div>';
+    const msgEl = addAiMessage(html, true);
+    msgEl.querySelectorAll('.ai-result-card').forEach(card=>{
+      card.addEventListener('click', ()=>{
+        aiPanel.classList.remove('open');
+        openTourModal(card.dataset.tourKey);
+      });
+    });
+  }, 450);
+}
+
 if(aiToggle && aiPanel){
   aiToggle.addEventListener('click', ()=> aiPanel.classList.toggle('open'));
   aiClose.addEventListener('click', ()=> aiPanel.classList.remove('open'));
@@ -1069,36 +1105,8 @@ if(aiToggle && aiPanel){
     e.preventDefault();
     const text = aiInput.value.trim();
     if(!text) return;
-    addAiMessage(aiEscapeHtml(text), false);
     aiInput.value = '';
-
-    const parsed = parseAiQuery(text);
-    const matches = findAiMatches(parsed);
-    const dict = translations[currentLang];
-
-    setTimeout(()=>{
-      if(matches.length === 0){
-        addAiMessage(
-          dict.ai_no_match + ' <a href="https://t.me/viamor_tour" target="_blank" rel="noopener">' + dict.ai_manager_link + '</a>. ' +
-          dict.ai_channel_hint + ' <a href="https://t.me/viamor_tur" target="_blank" rel="noopener">' + dict.ai_channel_link + '</a>',
-          true
-        );
-        return;
-      }
-      let html = dict.ai_found + '<div class="ai-results">';
-      matches.forEach(m=>{
-        html += '<div class="ai-result-card" data-tour-key="' + m.key + '"><img src="' + m.img + '" alt="">' +
-          '<div><b>' + aiEscapeHtml(m.name) + '</b><span>' + aiEscapeHtml(m.duration) + ' · ' + aiEscapeHtml(m.price) + '</span></div></div>';
-      });
-      html += '</div>';
-      const msgEl = addAiMessage(html, true);
-      msgEl.querySelectorAll('.ai-result-card').forEach(card=>{
-        card.addEventListener('click', ()=>{
-          aiPanel.classList.remove('open');
-          openTourModal(card.dataset.tourKey);
-        });
-      });
-    }, 450);
+    runAiSearch(text);
   });
 }
 
@@ -1282,5 +1290,29 @@ if(subscribeForm){
     subscribeNote.classList.add('success');
     subscribeForm.reset();
     document.getElementById('sub-city').value = 'Ташкент';
+  });
+}
+/* ============ HERO SEARCH BAR (feeds into the AI search) ============ */
+const heroSearchForm = document.getElementById('hero-search-form');
+if(heroSearchForm && typeof runAiSearch === 'function'){
+  heroSearchForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const dict = translations[currentLang];
+    const toKey = document.getElementById('search-to').value;
+    const toLabel = toKey ? dict['dest_' + toKey] : '';
+    const travelers = document.getElementById('search-travelers').value;
+    const budget = document.getElementById('search-budget').value;
+    const date = document.getElementById('search-date').value;
+
+    const parts = [];
+    if(toLabel) parts.push(toLabel);
+    if(budget) parts.push('$' + budget);
+    if(travelers) parts.push(travelers + ' ' + (currentLang === 'ru' ? 'туриста' : currentLang === 'uz' ? 'sayohatchi' : 'travelers'));
+    if(date) parts.push(date);
+    const query = parts.length ? parts.join(', ') : 'тур';
+
+    if(aiPanel) aiPanel.classList.add('open');
+    runAiSearch(query);
+    document.getElementById('ai-panel').scrollIntoView({ behavior:'smooth', block:'center' });
   });
 }

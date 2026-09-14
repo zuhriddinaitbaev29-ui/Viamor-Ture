@@ -651,12 +651,46 @@
   /* ============ CONFETTI PARTICLE ============ */
   .confetti-piece{position:fixed; pointer-events:none; z-index:9998; border-radius:2px;}
 
-  /* ============ TOUR SUBSCRIPTION ============ */
-  .subscribe-band{background:var(--bg-alt); border-top:1px solid var(--border); border-bottom:1px solid var(--border);}
-  .subscribe-form{max-width:640px; margin:36px auto 0; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:32px;}
+  /* ============ HERO SEARCH BAR ============ */
+  .hero-search{
+    margin-top:48px; display:flex; flex-wrap:wrap; align-items:end; gap:14px;
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:22px 26px; position:relative; z-index:1;
+  }
+  .hero-search-field{display:flex; flex-direction:column; gap:6px; flex:1; min-width:120px;}
+  .hero-search-field label{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.05em; color:var(--ink-soft);}
+  .hero-search-field input, .hero-search-field select{
+    padding:10px 12px; border-radius:8px; border:1px solid var(--border); background:var(--bg);
+    color:var(--ink); font-family:'Manrope',sans-serif; font-size:14px;
+  }
+  .hero-search-field input:focus, .hero-search-field select:focus{outline:none; border-color:var(--teal);}
+  .hero-search-field input[readonly]{opacity:.7; cursor:default;}
+  .hero-search-btn{flex:0 0 auto; white-space:nowrap;}
+  @media (max-width:900px){
+    .hero-search{flex-direction:column; align-items:stretch;}
+    .hero-search-field{min-width:0;}
+    .hero-search-btn{width:100%; justify-content:center;}
+  }
+
+  /* ============ TOUR SUBSCRIPTION (modern redesign) ============ */
+  .subscribe-band{
+    background:linear-gradient(160deg, var(--navy) 0%, #23345c 100%);
+    padding:80px 0; color:#F1E3C6;
+  }
+  .subscribe-grid{display:grid; grid-template-columns:.85fr 1.15fr; gap:52px; align-items:center;}
+  @media (max-width:900px){ .subscribe-grid{grid-template-columns:1fr;} }
+  .subscribe-bell{width:46px; height:46px; color:var(--gold); margin-bottom:18px; animation:bell-swing 3.5s ease-in-out infinite;}
+  @keyframes bell-swing{0%,100%{transform:rotate(0);} 10%{transform:rotate(12deg);} 20%{transform:rotate(-10deg);} 30%{transform:rotate(6deg);} 40%{transform:rotate(0);}}
+  @media (prefers-reduced-motion:reduce){ .subscribe-bell{animation:none;} }
+  .subscribe-intro h2{color:#F1E3C6; font-family:'Fraunces',serif; font-size:30px; line-height:1.2; margin-bottom:14px;}
+  .subscribe-intro .section-sub{color:rgba(241,227,198,.75); font-size:16px; max-width:400px;}
+
+  .subscribe-form{background:var(--surface); border-radius:var(--radius); box-shadow:0 24px 60px -20px rgba(0,0,0,.5); padding:34px;}
   .subscribe-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;}
   @media (max-width:560px){ .subscribe-row{grid-template-columns:1fr;} }
-  .subscribe-form label{display:flex; flex-direction:column; gap:6px; font-size:12.5px; color:var(--ink-soft); font-family:'IBM Plex Mono',monospace;}
+  .subscribe-form label{display:flex; flex-direction:column; gap:7px; font-size:12.5px; color:var(--ink-soft); font-family:'IBM Plex Mono',monospace;}
+  .subscribe-form label.has-icon span:first-child{display:flex; align-items:center; gap:6px;}
+  .field-icon{width:13px; height:13px; color:var(--teal); flex-shrink:0;}
   .subscribe-form input, .subscribe-form select{
     padding:11px 14px; border-radius:8px; border:1px solid var(--border); background:var(--bg);
     color:var(--ink); font-family:'Manrope',sans-serif; font-size:14px;
@@ -664,4 +698,4 @@
   .subscribe-form input:focus, .subscribe-form select:focus{outline:none; border-color:var(--teal);}
   .subscribe-form .btn{width:100%; justify-content:center; margin-top:6px;}
   .subscribe-note{margin-top:14px; font-size:12px; color:var(--ink-soft); text-align:center;}
-  .subscribe-note.success{color:var(--teal); font-weight:600;}  
+  .subscribe-note.success{color:var(--teal); font-weight:600;}
