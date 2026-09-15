@@ -1305,27 +1305,19 @@ if(subscribeForm){
     subCategoryCards.forEach(card => card.classList.remove('selected'));
   });
 }
-/* ============ HERO SEARCH BAR (feeds into the AI search) ============ */
+/* ============ HERO SEARCH BAR (sends the search into the Telegram bot) ============ */
 const heroSearchForm = document.getElementById('hero-search-form');
-if(heroSearchForm && typeof runAiSearch === 'function'){
+if(heroSearchForm){
   heroSearchForm.addEventListener('submit', (e)=>{
     e.preventDefault();
-    const dict = translations[currentLang];
-    const toKey = document.getElementById('search-to').value;
-    const toLabel = toKey ? dict['dest_' + toKey] : '';
-    const travelers = document.getElementById('search-travelers').value;
+    const toKey = document.getElementById('search-to').value; // e.g. 'turkey', or '' for any
     const budget = document.getElementById('search-budget').value;
-    const date = document.getElementById('search-date').value;
 
-    const parts = [];
-    if(toLabel) parts.push(toLabel);
-    if(budget) parts.push('$' + budget);
-    if(travelers) parts.push(travelers + ' ' + (currentLang === 'ru' ? 'туриста' : currentLang === 'uz' ? 'sayohatchi' : 'travelers'));
-    if(date) parts.push(date);
-    const query = parts.length ? parts.join(', ') : 'тур';
+    const params = ['search'];
+    params.push(toKey || 'any');
+    params.push(budget || '0');
+    const startParam = params.join('_');
 
-    if(aiPanel) aiPanel.classList.add('open');
-    runAiSearch(query);
-    document.getElementById('ai-panel').scrollIntoView({ behavior:'smooth', block:'center' });
+    window.open('https://t.me/Viamor_Tour_Bot?start=' + startParam, '_blank');
   });
 }
